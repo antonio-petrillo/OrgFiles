@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       6f630b1f-546a-40c1-86a9-1ce7faf36391
+:END:
+#+title: My Setup
+
+* What I use
++ Thinkpad E495
++ Arch
++ Emacs
++ Sway
++ Ipad air 2022
++ Raspberry pi 4
++ Dactyl manuform 5x7
++ Anne pro 2
+* TODO Workflow
+* Resources
+** Ipad + pi4 setup
+*** Guides
++ [[https://magpi.raspberrypi.com/articles/connect-raspberry-pi-4-to-ipad-pro-with-a-usb-c-cable][connect pi 4 over usb C]]
+** Thinkpad E495

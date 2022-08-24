@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       8ff012c8-88e3-4a58-98bb-b1c34c078c7f
+:END:
+#+title: Emacs
+
+* The one true editor
+By far the more extensible editor on the market.

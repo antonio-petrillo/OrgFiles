@@ -1,0 +1,4 @@
+* TODO Controlla spedizione X222                                       :ebay:
+SCHEDULED: <2022-08-26 Fri>
+* TODO Controlla spedizione NH-D15                                     :ebay:
+SCHEDULED: <2022-08-26 Fri>

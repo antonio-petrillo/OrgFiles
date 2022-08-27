@@ -1,9 +1,0 @@
-:PROPERTIES:
-:ID:       8b1fdf1e-9194-42d8-ab3a-28d81c43d2b0
-:END:
-#+title: Org Mode
-
-* What is
-It's a markup language (maybe this definition is reductive), based on plain text.
-Extremely simple to use, it has few construct so it's easy to learn.
-It's one of the killer feature of [[id:8ff012c8-88e3-4a58-98bb-b1c34c078c7f][Emacs]].

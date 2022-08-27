@@ -1,4 +1,24 @@
-* TODO Controlla spedizione X222                                       :ebay:
-SCHEDULED: <2022-08-26 Fri>
-* TODO Controlla spedizione NH-D15                                     :ebay:
-SCHEDULED: <2022-08-26 Fri>
+* TODO X220 [1/2]                                                      :ebay:
+SCHEDULED: <2022-08-29 Mon>
++ [X] In consegna
++ [ ] Attendi pagamento [0/2]
+  + [ ] Ricevi pagamento
+  + [ ] Rimborsa 20 Eur per RAM rotta
+* TODO NH-D15 [2/3]                                                    :ebay:
+SCHEDULED: <2022-08-28 Sun>
+Il prodotto e' arrivato e l'acquirente e' soddisfatto
+Pagamento effettuato da ebay.
++ [X] Consegnato
++ [X] Soldi trasf. da ebay
++ [ ] Attendi trasf.
+* TODO RAM [1/2]                                                       :ebay:
+SCHEDULED: <2022-08-29 Mon>
++ [X] Consegnato
++ [ ] Attendi pagamento (l'acquirente sta testando il prodotto)
+* TODO Da vendere: [0/5]                                               :ebay:
+DEADLINE: <2022-09-05 Mon>
++ [ ] Set ventole noctua
++ [ ] Alimentatore Seasonic
++ [ ] Pokemon smeraldo
++ [ ] Silverstone powerbutton
++ [ ] case ? (troppo rovinato e spedizione costosa)

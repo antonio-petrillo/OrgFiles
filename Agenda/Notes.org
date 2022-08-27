@@ -1,0 +1,15 @@
+* TODO Denote VS ORG Roam
+I have just started using _Org Roam_ so my notes' network is not big.
+_Denote_ is interesting, it's completely indipendent from external software (like SQLite for org roam), with Roam I have already faced difficulty trying to make it work on Windows11 (I didn't spend to much time trying to fix SQLite dependencies), I think that I will have the same problem on my Ipad.
+** Org Roam
+| Pro                    | Versus             |
+|------------------------+--------------------|
+| Plain text note (.org) | SQLite dependecies |
+| Most widespread        |                    |
+| Already configured     |                    |
+** Denote
+| Pro                                | Versus                                                                     |
+|------------------------------------+----------------------------------------------------------------------------|
+| One dependecies Emacs              | Maybe with a big network it will become slow                               |
+| Plain text note (.txt, .md, .org)  | Just published, maybe there are bugs                                       |
+| Interesting file naming convention | No visualization of the network (I didn't find this feature on the manual) |

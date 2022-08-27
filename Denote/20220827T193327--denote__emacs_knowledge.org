@@ -1,0 +1,11 @@
+#+title:      Denote
+#+date:       [2022-08-27 Sat 19:33]
+#+filetags:   :emacs:knowledge:
+#+identifier: 20220827T193327
+
+* What is
+It's an alternative to [[https://www.orgroam.com/][Org Roam]], long story short it let the use create a network of note (in plain text/org/md file), basically it's [[https://en.wikipedia.org/wiki/Zettelkasten][Zettelkasten]] implementation.
+* Note
++ Developed by [[https://protesilaos.com/][Protesilaos Stavrou]]
++ One dependencies Emacs
++ Extremely hackable

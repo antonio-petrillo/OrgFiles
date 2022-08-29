@@ -1,9 +1,9 @@
 * TODO X220 [1/2]                                                      :ebay:
 SCHEDULED: <2022-08-29 Mon>
 + [X] In consegna
-+ [ ] Attendi pagamento [0/2]
++ [-] Attendi pagamento [1/2]
   + [ ] Ricevi pagamento
-  + [ ] Rimborsa 20 Eur per RAM rotta
+  + [X] Rimborsa 20 Eur per RAM rotta
 * TODO NH-D15 [2/3]                                                    :ebay:
 SCHEDULED: <2022-08-28 Sun>
 Il prodotto e' arrivato e l'acquirente e' soddisfatto
@@ -11,14 +11,16 @@ Pagamento effettuato da ebay.
 + [X] Consegnato
 + [X] Soldi trasf. da ebay
 + [ ] Attendi trasf.
-* TODO RAM [1/2]                                                       :ebay:
-SCHEDULED: <2022-08-29 Mon>
+* DONE RAM [2/2]                                                       :ebay:
+CLOSED: [2022-08-27 Sat 20:26]
 + [X] Consegnato
-+ [ ] Attendi pagamento (l'acquirente sta testando il prodotto)
-* TODO Da vendere: [0/5]                                               :ebay:
++ [X] Attendi pagamento (l'acquirente sta testando il prodotto)
+* TODO Da vendere: [0/7]                                               :ebay:
 DEADLINE: <2022-09-05 Mon>
 + [ ] Set ventole noctua
 + [ ] Alimentatore Seasonic
 + [ ] Pokemon smeraldo
++ [ ] Pokemon verde foglia (da trovare)
++ [ ] Monitor Aoc
 + [ ] Silverstone powerbutton
 + [ ] case ? (troppo rovinato e spedizione costosa)

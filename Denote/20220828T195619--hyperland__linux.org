@@ -1,0 +1,7 @@
+#+title:      Hyperland
+#+date:       [2022-08-28 Sun 19:56]
+#+filetags:   :linux:
+#+identifier: 20220828T195619
+
+* What is it?
+A window manager for Wayland.

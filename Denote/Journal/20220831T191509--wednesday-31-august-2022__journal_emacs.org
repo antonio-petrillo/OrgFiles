@@ -1,0 +1,9 @@
+#+title:      Wednesday 31 August 2022
+#+date:       [2022-08-31 Wed 19:15]
+#+filetags:   :journal:emacs:
+#+identifier: 20220831T191509
+
+* Thoughts
+Start keep a journal, in the best case a daily journal.
+* Tasks
++ [X] Add shortcut for 'journaling' in denote configuration

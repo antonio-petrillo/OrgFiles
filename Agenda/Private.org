@@ -21,6 +21,6 @@ DEADLINE: <2022-09-05 Mon>
 + [ ] Alimentatore Seasonic
 + [ ] Pokemon smeraldo
 + [ ] Pokemon verde foglia (da trovare)
-+ [ ] Monitor Aoc
++ [ ] Monitor AOC
 + [ ] Silverstone powerbutton
-+ [ ] case ? (troppo rovinato e spedizione costosa)
++ [ ] case NZXT (S340)? (troppo rovinato e spedizione costosa)

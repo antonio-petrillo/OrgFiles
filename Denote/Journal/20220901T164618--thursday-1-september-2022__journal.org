@@ -1,0 +1,10 @@
+#+title:      Thursday  1 September 2022
+#+date:       [2022-09-01 Thu 16:46]
+#+filetags:   :journal:
+#+identifier: 20220901T164618
+
+* Tasks
+Trying emacs configuration on Windows, seems to work.
+Found a little bug in my function ~denote-journal~ inside ~init-org.el~ file, already fixed.
+* Remember
+Clone org files repository to ~\AppData\Roaming\Documents~ path, I need also to create a ~Documents~ folder.

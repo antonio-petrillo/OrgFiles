@@ -1,0 +1,12 @@
+#+title:      TryHackMe_Logbook
+#+date:       [2022-09-09 Fri 10:11]
+#+filetags:   :emacs:knowledge:linux:tryhackme:
+#+identifier: 20220909T101107
+
+* <2022-09-09 Fri> Starting journey
+Starting learning path on [[https://tryhackme.com/paths][tryhackme]].
+I've already started the learning path a year ago, but I'm not happy with the way I studied from it, so I'm starting from the beginning.
+** What I will use
++ Emacs
++ Kali linux (maybe in the future I will try something else, see [[https://blackarch.org/][blackarch]], [[https://www.parrotsec.org][parrot]])
++ Denote, as a logbook and notetaking

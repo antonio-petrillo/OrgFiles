@@ -1,0 +1,7 @@
+#+title:      Friday  9 September 2022
+#+date:       [2022-09-09 Fri 09:54]
+#+filetags:   :journal:knowledge:linux:tryhackme:
+#+identifier: 20220909T095450
+
+* Thoughts
+Start learning path on tryhackme, from 0 ignoring what I've already done.

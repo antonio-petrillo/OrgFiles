@@ -1,0 +1,47 @@
+#+title:      Intro_to_offensive_security
+#+date:       [2022-09-09 Fri 10:54]
+#+filetags:   :tryhackme:
+#+identifier: 20220909T105412
+
+* First section
+** [[denote:20220909T111158][Gobuster]]
+#+begin_quote
+We will use a command-line application called "GoBuster" to brute-force FakeBank's website to find hidden directories and pages.
+#+end_quote
+*** Use the command.
+#+begin_src
+gobuster -u http://fakebank.com -w wordlist.txt dir
+#+end_src
+**** Description
++ ~-u~ specify the target
++ ~-w~ specify wich wordlist to use (there should be one in something like ~/usr/share/someghing~)
++ ~dir~ set search mode for directory
+**** Output
+#+begin_example
+=====================================================
+Gobuster v2.0.1              OJ Reeves (@TheColonial)
+=====================================================
+[+] Mode         : dir
+[+] Url/Domain   : http://fakebank.com/
+[+] Threads      : 10
+[+] Wordlist     : wordlist.txt
+[+] Status codes : 200,204,301,302,307,403
+[+] Timeout      : 10s
+=====================================================
+2022/09/09 08:58:44 Starting gobuster
+=====================================================
+/images (Status: 301)
+/bank-transfer (Status: 200)
+=====================================================
+2022/09/09 08:58:53 Finished
+=====================================================
+#+end_example
+**** And now
+There is a page named ~bank-transfer~ which is an interesting name, now go to site and add ~/bank-transfer~ to the url.
+Following instruction to trasfer money.
+** Answer
+After transfering the money, on my balance page, I can see the answer ~BANK-HACKED~, interactive exercise completed.
+* Second section
+Description of offensive security.
+* Third section
+Link to successful stories /through/ tryhackme.

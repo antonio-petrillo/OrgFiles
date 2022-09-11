@@ -1,0 +1,118 @@
+#+title:      What is networking
+#+date:       [2022-09-11 Sun 10:21]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220911T102120
+
+* What is Networking?
+Networks are simply things connected, basically a graph with vertices and edges.
+In computing the vertices are the computer connected and edges the physical connetions, wifi, bluetooth, ecc... are also physical.
+** Answer 1
+What is the key term for devices that are connected together?
+#+begin_quote
+network
+#+end_quote
+* What is the internet?
+Internet is one giant network that consist of many small networks within itself.
+Think about your home-network and the network of your ISP (Internet Service Provider)
+** A little bit of history
+The first prototype/implementation of Internet was within the ARPANET project in the late 1960s.
+The project was founded by the US Defence Department.
+In the 1989 Tim Berners-Lee, at CERN in Geneva, invented the World Wide Web (WWW) together with the first version of HTTP protocol, he also winned a Turing Prize of 2017 for this.
+** Answer 1
+Who invented the World Wide Web?
+#+begin_quote
+Tim Berners-Lee
+#+end_quote
+* Identifying devices on a network
+To communicate, and also to monitor, a network all the devices must be identifiable.
+Like humans, the devices on a network have a name (which can be changed/spoofed) just like us and a fingerprint, which is different for each device (also this can be spoofed).
+These are called:
++ IP (Internet Protocol) address
++ A Media Access Control address (MAC address)
+** IP address
+Is used to identify a host on a network for a period of time, the same IP can be assigned to a different machine in the future.
+An IP is divide in Octet:
++ IPv4
+  | first | second | third | fourth |
+  |   192 |    168 |     1 |      1 |
+  | 0-255 |  0-255 | 0-255 |  0-255 |
++ IPv6
+  | first | second | third | fourth | fifth | sixth |
+  |  2001 | 0db8   |  0000 |   0000 |  1428 | 57ab  |
+The numbers are not random, they are calculated with dedicated algorithm (IP addressing & subnetting).
+The most important part is that IP addresses can change from device to device but cannot be active simultaneously more than once within the same network.
+Here an example:
+On my home network, my PC (currently) have the IP 192.168.1.65, on the home network of one of my friend there could be another PC with the IP 192.168.1.65 because these 2 networks are different, instead there couldn't be 2 PC with the IP 192.168.1.65 both connected to my network.
+** Protocols
+IP addresses follows some protocol to allow different machine to communicate.
+This will be deepened later.
+** Private vs Public
+IP could be private or public, the first one is used to distinguish a device amongst other devices, the second is used to identify the device on the internet.
+For example, on my home network, 192.168.1.65 is used to distinguish my laptop from my raspberry pi 192.168.1.63.
+Here is an explanatory table:
+| Device Name     | IP Addresses | IP Address Type |
+| Desktop-KJE57FD | 192.168.1.77 | Private         |
+| Desktop-KJE57FD | 86.157.52.21 | Public          |
+| CMNatic-PC      | 192.168.1.74 | Private         |
+| CMNatic-PC      | 86.157.52.21 | Public          |
+** IPv4 vs IPv6
+There is a shortage of IP addresses, for the IPv4, for this reasons (and many others of course) a new standard was created a few years ago IPv6.
+For now IPv4 is still in use but in the future will be replaced, of course, by IPv6.
+** MAC Address (Media Access Control)
+Device on a network are connected through dedicated hardware, known as _Network Interface Card_ (NIC), each one of this have a unique code the MAC address.
+It's composed by twelve character in hexadecimal number.
+A table could be more explicative:
+| first half                                  | second half                             |
+| a4:c3:f0                                    | 85:ac:2d                                |
+| Vendor who build the network interface card | Unique address of the network interface |
+| Fun fact: this is Intel                     |                                         |
+** Spoofing
+Just because each MAC address is different this doesn't mean that they cannot be spoofed.
+** Answer 1
+What does the term "IP" stand for?
+#+begin_quote
+Internet Protocol
+#+end_quote
+** Answer 2
+What is each section of an IP address called?
+#+begin_quote
+Octet
+#+end_quote
+** Answer 3
+How many sections (in digits) does an IP address have?
+#+begin_quote
+4
+#+end_quote
+** Answer 4
+What does the term "MAC" stand for?
+#+begin_quote
+Media Access Control
+#+end_quote
+** Answer 5
+Deploy the interactive lab using the "View Site" button and spoof your MAC address to access the site.  What is the flag?
+This interactive section explain, visually, what could happen if you spoof a MAC address.
+Bob with his MAC address cannot connect to the network, on the other hand Alice could.
+Bob spoof Alice's MAC and connect to the network.
+#+begin_quote
+THM{YOU_GOT_ON_TRYHACKME}
+#+end_quote
+*  [[denote:20220911T121657][Ping]] with ICMP (Internet Control Message Protocol)
+Ping uses ICMP (Internet Control Message Protocol) packets to determine the performance of a connection between devices, for example, if the connection exists or is reliable.
+** Answer 1
+Which protocol does ping use?
+#+begin_quote
+ICMP
+#+end_quote
+** Answer 2
+What is the syntax to ping 10.10.10.10
+#+begin_quote
+ping 10.10.10.10
+#+end_quote
+** Answer 3
+What flag do you get when you ping 8.8.8.8? (in the side window site)
+#+begin_quote
+THM{I_PINGED_THE_SERVER}
+#+end_quote
+
+* Continue to LAN room
+No answer needed.

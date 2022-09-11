@@ -1,0 +1,9 @@
+#+title:      Packets & Frame
+#+date:       [2022-09-11 Sun 18:27]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220911T182721
+
+* What are packets and Frames
+They are a small piece of data that, when forming together, make a larger piece of information or message.
+They belongs to different layer in the OSI model.
+A frame is a layer 2 (data link), that sayd in frame there aren't information like IP.

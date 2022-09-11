@@ -10,7 +10,7 @@ Query Internet name servers interactively
 #+end_quote
 * Manual
 Just the output of ~man nslookup~:
-#+begin_verse
+#+begin_example
 NAME
        nslookup - query Internet name servers interactively
 
@@ -125,8 +125,7 @@ INTERACTIVE COMMANDS
                      to  value from its default, port 53. The abbreviation for
                      this keyword is po.
 
-              querytype=value | type=value
-                     This keyword changes the type of the information query to
+              querytype=value | type=value This keyword changes the type of the information query to
                      value.  The  defaults  are A and then AAAA; the abbrevia‐
                      tions for these keywords are q and ty.
 
@@ -178,4 +177,4 @@ FILES
 
 SEE ALSO
        dig(1), host(1), named(8).
-#+end_verse
+#+end_example

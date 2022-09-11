@@ -1,0 +1,245 @@
+#+title:      OSI model
+#+date:       [2022-09-11 Sun 16:01]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220911T160148
+
+* What is the OSI model
+OSI stands for (Open Systems Inerconnection Model).
+It is an absolute fundamental model used in networking.
+One advantage of the OSI model is that devicescan have different functions and designs on a network while communicating with other devices (see Little Endian an Big Endian for example).
+It consist of several layers, at every individual layer thath data travels through, specific processes take place, and piece of information are added to this data.
+The layer, in order, are:
+1. Physical
+2. Data link
+3. Network
+4. Transport
+5. Session
+6. Presentation
+7. Application
+** Answer 1
+What does the "OSI" in "OSI Model" stand for?
+#+begin_quote
+Open Systems Interconnection
+#+end_quote
+** Answer 2
+How many layers (in digits) does the OSI model have?
+#+begin_quote
+7
+#+end_quote
+** Answer 3
+What is the key term for when pieces of information get added to data?
+#+begin_quote
+Encapsulation
+#+end_quote
+* Layer 7 - Application
+It is the layer in which protocols and rules are in places to determine how the user should interact with data sent or received.
+For example:
++ a rendered page on a browser
++ an email on a email clients
+** Answer 1
+What is the name of this Layer?
+#+begin_quote
+Application
+#+end_quote
+** Answer 2
+What is the technical term that is given to the name of the software that users interact with?
+#+begin_quote
+Graphical User Interface
+#+end_quote
+* Layer 6 - Presentation
+This the layer where standardization take place, for example translate from network byte order (Big endian) to host byte order (may vary).
+This work both ways, translate data from layer 5 to layer 7 and viceversa.
+** Answer 1
+What is the name of this Layer?
+#+begin_quote
+Presentation
+#+end_quote
+** Answer 2
+What is the main purpose that this Layer acts as?
+#+begin_quote
+Translator
+#+end_quote
+*** Wrong answer
++ Standardiazation
++ Translation
+* Layer 5 - Session
+Once the data is standardized, the session layer (5), will begin to create a connection to the other computer that the data is destined for.
+When a connection is established, as session is created.
+While this connection is active, so is the session.
+It will ensure that both computers are on the same page before data is sent or received.
+Once this checks are in place, the session layer will begin to split the data to sent in smaller chunks (namely _packets_).
+Sessions are unique, data cannot travel over different sessions, but in fact, only across each session instead.
+** Answer 1
+What is the name of this Layer?
+#+begin_quote
+Session
+#+end_quote
+** Answer 2
+What is the technical term for when a connection is successfully established?
+#+begin_quote
+Session
+#+end_quote
+** Answer 3
+What is the technical term for "small chunks of data"?
+#+begin_quote
+Packets
+#+end_quote
+* Layer 4 - Transport
+Plays a vital part in transmitting data across a network.
+When data is sent between devices, it follows one of two different protocols that are decided based upon several factors:
++ TCP
++ UDP
+** TCP (Transmission Control Protocol)
+It is designed with reliability and guarantee in mind.
+This protocol reserves a constant connection between the two devices for the amount of time it takes for the data to be sent and received.
+If a piece a data were corrupted during the transmission it will be resended, this is accomplished with a error checking into its design.
+Compared with UDP it's slow
+*** Pro
++ Guarantees the accuracy of data
++ Capable of synchronising two devices to prevent each other from being flooded with data
++ Performs a lot more processes for reliability
+*** Cons
++ Requires a reliable connection between the two devices.
+  If one small chunk of data is not received, the the entire chunk of data cannot be used
++ A slow connection can bottleneck another device as the connection will be reserved on the receiving computer the whole time.
++ TCP is significantly slower than UDP because more work has to be done by the devices using this protocol.
+*** When it is used
+For situation where the data is crucial and cannot arrive corrupted.
+** UDP (User Datagram Protocol)
+It's not advanced like TCP.
+There is no synchronization.
+*** Pro
++ UDP is much faster than TCP
++ UDP leaves the application layer (user software) to decide if there is any control over how quickly packets are sent
++ UDP does not reserve a continuos connection on a device as TCP does.
+*** Cons
++ UDP doesn't care if the data is received
++ It is quite flexible to software developers in this sense
++ This means that unstable connections result in a terrible experience for the user
+*** When it is used
+When only small piece of data is being sent, for example ARP and DHCP protocol are based on UDP!
+** Answer 1
+What is the name of this Layer?
+#+begin_quote
+Transmission
+#+end_quote
+** Answer 2
+What does TCP stand for?
+#+begin_quote
+Transmission Control Protocol
+#+end_quote
+** Answer 3
+What does UDP stand for?
+#+begin_quote
+User Datagram Protocol
+#+end_quote
+** Answer 4
+What protocol guarantees the accuracy of data?
+#+begin_quote
+TCP
+#+end_quote
+** Answer 5
+What protocol doesn't care if data is received or not by the other device?
+#+begin_quote
+UDP
+#+end_quote
+** Answer 6
+What protocol would an application such as an email client use?
+#+begin_quote
+TCP
+#+end_quote
+** Answer 7
+What protocol would an application that downloads files use?
+#+begin_quote
+TCP
+#+end_quote
+** Answer 8
+What protocol would an application that streams video use?
+#+begin_quote
+UDP
+#+end_quote
+* Layer 3 - Network
+This is the layer where routing & re-assembly of data takes place (from smaller piece to bigger).
+Firstly, routing simply determines the most optimal path in which these chunks of data shuold be sent.
+Some protocols, at this layer, determine the /optimal/ path to reach another device, we didn't go in deeper for now, what we can says is that at this layer are included OSPF (Open Shortest Path First) and RIP (Routing Information Protocol).
+The factor that decide what route is taken is decided by the following:
++ What path is the shortest? (least amount of device in between (BFS))
++ What path is the most reliable? (have packets been lost on that path before?)
++ Which path has the faster physical connection? (shortest weighted path)
+At this layer, everything is dealt with via IP addresses.
+Device such as routers capable of delivering packets using IP addresses are known as Layer 3 devices.
+** Answer 1
+What is the name of this Layer?
+#+begin_quote
+Network
+#+end_quote
+** Answer 1
+Will packets take the most optimal route across a network? (Y/N)
+#+begin_quote
+Y
+#+end_quote
+** Answer 1
+What does the acronym "OSPF" stand for?
+#+begin_quote
+Open Shortest Path First
+#+end_quote
+** Answer 1
+What does the acronym "RIP" stand for?
+#+begin_quote
+Routing Information Protocol
+#+end_quote
+** Answer 1
+What type of addresses are dealt with at this layer?
+#+begin_quote
+IP addresses
+#+end_quote
+* Layer 2 - Data Link
+This layer focuses on the physical addressing of the transmission.
+It receives a packet from the network layer (including the IP address of the remote computer) and adds in the physical MAC.
+Inside every network enabled PC there is a NIC (Network Interface Card) which come with a unique MAC.
+It's job of data link to present data in a format suitable for transmission
+** Answer 1
+What is the name of this Layer?
+#+begin_quote
+Data link
+#+end_quote
+** Answer 2
+What is the name of the piece of hardware that all networked devices come with?
+#+begin_quote
+Network Interface card
+#+end_quote
+* Layer 1 - Physical
+This layer refer to physical component of the hardware used in networking and is the lowest layer of the OSI model.
+Devices at this level use electrical signals to transfer data (1's and 0's)
+** Answer 1
+What is the name of this Layer?
+#+begin_quote
+Physical
+#+end_quote
+** Answer 2
+What is the name of the numbering system that is both 0's and 1's?
+#+begin_quote
+Binary
+#+end_quote
+** Answer 3
+What is the name of the cables that are used to connect devices?
+#+begin_quote
+Ethernet cables
+#+end_quote
+
+* Pratical - OSI game
+** Answer 1
+*** Order
+1. Physical
+2. Data Link
+3. Network
+4. Transport
+5. Session
+6. Presentation
+7. Application
+*** Answer
+#+begin_quote
+THM{OSI_DUNGEON_ESCAPED}
+#+end_quote
+* Continue Your Learning: Packets & Frames
+No answer needed.

@@ -1,0 +1,16 @@
+#+title:      Pre Security
+#+date:       [2022-09-11 Sun 15:57]
+#+filetags:   :path:tryhackme:
+#+identifier: 20220911T155723
+
+* Introduction to cyber security
+** [[denote:20220909T105412][Intro_to_offensive_security]]
+** [[denote:20220909T195220][Intro to defensive security]]
+** [[denote:20220909T221517][Intro careers in cybersecurity]]
+* Network Fundamentals
+** [[denote:20220911T102120][What is networking]]
+** [[denote:20220911T122804][Intro to Lan]]
+** [[denote:20220911T160148][OSI model]]
+** [[denote:20220911T182721][Packets & Frame]]
+* [[denote:20220910T104500][How the web works]]
+This series of rooms are a little bit short so I've putted all in a single org file.

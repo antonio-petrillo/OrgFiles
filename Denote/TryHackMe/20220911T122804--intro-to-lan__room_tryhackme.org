@@ -1,0 +1,182 @@
+#+title:      Intro to Lan
+#+date:       [2022-09-11 Sun 12:28]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220911T122804
+
+* Introducing LAN Topologies
+** Star topology
+Each device is connected to a central networking device.
+*** Cons:
++ It's a rather expensive connection due to the number of cables, networking equipment and connection needed.
++ The more the network scale the more mainteinance is required
+*** Pros:
++ It is easily scalable, for it's nature.
+  A new end point is just an new cable to place.
+*** Example:
++ my home network have one central router and then all the device are connected to that
+** Bus topology
+Relies on a single connectio to which all device are connected
+*** Pros
++ cost efficient
+*** Cons
++ A lot of data collision
++ Not easily scalable
+** Ring topology
+Each device is connected to the next, forming a loop, like circular linked list.
+*** Pros
++ easy to troubleshoot
++ less prone to bottlenecks
+*** Cons
++ not efficient for data transfer
++ easy to break, just imagine that there are 2 cuts on the edges
+** What is a switch?
+Are dedicated device designed to aggregate multiple other devices such as computers, printers, or any other internet capable device.
+They keep track of what device is connected to which port, this way when they receive a packet, instead of repeating that packet ot every port like a hub would do, it just sends it to the intended target, thus reducing network traffic.
+** What is a router?
+It's a router's job to connect networks and pass data betwwn them.
+It does this by using ruoting.
+Routing is the label given to the process of data travellling across networks.
+Routing involves creating a path between networks so that this data can be successfully delivered.
+** Answer 1
+What does LAN stand for?
+#+begin_quote
+Local Area Network
+#+end_quote
+** Answer 2
+What is the verb given to the job that Routers perform?
+#+begin_quote
+Routing
+#+end_quote
+** Answer 3
+What device is used to centrally connect multiple devices on the local network and transmit data to the correct location?
+#+begin_quote
+Switch
+#+end_quote
+** Answer 4
+What topology is cost-efficient to set up?
+#+begin_quote
+Bus topology
+#+end_quote
+** Answer 5
+What topology is expensive to set up and maintain?
+#+begin_quote
+Star topology
+#+end_quote
+** Answer 6
+Complete the interactive lab attached to this task. What is the flag given at the end?
+#+begin_quote
+THM{TOPOLOGY_FLAWS}
+#+end_quote
+* A Primer on Subnetting
+Networks can be found in all shapes and sized-ranging from small to large.
+Splitting a network into smaller network is called Subnetting.
+A good example is a company in which the:
++ Accounting
++ Finance
++ Human Resources
+All have a dedicated network, now instead of wiring 3 connection, the company, can use subnetting on a bigger network to separate all departments.
+** How it's achieved
+By splitting up the number of hosts that can fit within the network, represented by a subnet mask applied to the IP address.
+Subnets use IP addresses in three different ways:
++ Identify the networks address
++ Identify the hosts address
++ Identify the default gateway
+Better explaination with a table
+| Type            | Purpose                                                                                                                                        | Explanation                                                                                                                                                                                                                                          |       Example |
+|-----------------+------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------|
+| Network Address | This address identifies the start of the actual network and is used to identify a network's existance                                          | A device with the IP 192.168.1.100 will be on the network identified by 192.168.1.0                                                                                                                                                                  |   192.168.1.0 |
+| Host Address    | An IP address here is used to identify a device on the subnet                                                                                  | For example, a device will have the network address of 192.168.1.1                                                                                                                                                                                   | 192.168.1.100 |
+| Default Gateway | The default gateway address is a special address assigned to a device on the network that is capable of sending information to another network | Any data that needs to go to a device that isn't on the same network (i.e. is not on 192.168.1.0) will be sent to this device. These device can use any host address but usually use either the first or last host address in a network (.1 or .254) | 192.168.1.254 |
+** Benefits of subnettin
++ Efficiency (think at it like a load balancer)
++ Security
++ Full control
+** Answer 1
+What is the technical term for dividing a network up into smaller pieces?
+#+begin_quote
+Subnetting
+#+end_quote
+** Answer 2
+How many bits are in a subnet mask?
+#+begin_quote
+32
+#+end_quote
+** Answer 3
+What is the range of a section (octet) of a subnet mask?
+#+begin_quote
+0-255
+#+end_quote
+** Answer 4
+What address is used to identify the start of a network?
+#+begin_quote
+Network address
+#+end_quote
+** Answer 5
+What address is used to identify devices within a network?
+#+begin_quote
+Host address
+#+end_quote
+** Answer 6
+What is the name used to identify the device responsible for sending data to another network?
+#+begin_quote
+Default gateway
+#+end_quote
+* The ARP Protoocol
+ARP stands for (Address Resolution Protocol), it is the technology responsible for allowing devices to identify themselves on a network.
+** How it work
+*** Intro
+ARP allow a device to associate its MAC with an IP address on the network.
+Each device on a network will keep a log of the MAC addresses associated with other devices.
+When devices wish to communicate with another, they will send a broadcast to the entire network searching for the specific device.
+Devices can use the ARP protocol to find the MAC (and therefore the physical identifier) of a device for communication.
+*** More in depth
+In order to map IP and MAC addresses, the ARP protocol sends two types of messages:
+1. ARP Request
+2. ARP Reply
+When an _ARP Request_ is sent, a message is broadcasted to every other device found on a network by the device, asking whether or not the device's MAC matches the requested IP.
+If it does have the requested IP, an _ARP reply_ is returned to the initial device to acknoledge this.
+The initial device will now remember this and store it within its cache (an ARP reply).
+** Answer 1
+What does ARP stand for?
+#+begin_quote
+Address Resolution Protocol
+#+end_quote
+** Answer 1
+What category of ARP Packet asks a device whether or not it has a specific IP address?
+#+begin_quote
+ARP request
+#+end_quote
+** Answer 1
+What address is used as a physical identifier for a device on a network?
+#+begin_quote
+MAC Address
+#+end_quote
+** Answer 1
+What address is used as a logical identifier for a device on a network?
+#+begin_quote
+IP Address
+#+end_quote
+* The DHCP protocol
+DHCP stands for (Dynamic Host Configuration Protocol)
+IP address can be assigned either manually or automatically and, most commonly, by using DHCP server.
+When a device connect to a network, if it has not already been manually assigned an IP address, it sends out a request (_DHCP Discover_) to see if any DHCP servers are on the network.
+The DHCP server then replies back with an IP address the device could use (_DHCP Offer_).
+The device then sends a reply confirming it wants the offered IP Address (_DHCP Request_), and then lastly, the DHCP server sends a reply acknowledging this has been completed, and the device can start using the IP Address (_DHCP ACK_).
+** Answer 1
+What type of DHCP packet is used by a device to retrieve an IP address?
+#+begin_quote
+DHCP discover
+#+end_quote
+** Answer 2
+What type of DHCP packet does a device send once it has been offered an IP address by the DHCP server?
+#+begin_quote
+DHCP request
+#+end_quote
+** Answer 3
+Finally, what is the last DHCP packet that is sent to a device from a DHCP server?
+#+begin_quote
+DHCP ack
+#+end_quote
+
+* Continue Your Learning: OSI MODEL
+No answer needed.

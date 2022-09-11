@@ -18,5 +18,10 @@ This path is already completed but I want to refresh my memory.
 * DONE <2022-09-10 Sat> Start room - Putting all together
 CLOSED: [2022-09-11 Sun 10:05]
 This path is already completed but I want to refresh my memory.
-* TODO <2022-09-11 Sun> Start room - What is Networking
+* DONE <2022-09-11 Sun> Start room - What is Networking
+CLOSED: [2022-09-11 Sun 12:27]
 Just an introduction to networking
+* DONE <2022-09-11 Sun> Start room - Intro to LAN
+CLOSED: [2022-09-11 Sun 15:56]
+* DONE <2022-09-11 Sun> Start room - OSI model
+CLOSED: [2022-09-11 Sun 18:23]

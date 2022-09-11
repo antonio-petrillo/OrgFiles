@@ -1,0 +1,602 @@
+#+title:      how the web works
+#+date:       [2022-09-10 Sat 10:45]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220910T104500
+
+* Note
+The following lesson are marked as _in detail_, but they are introductory of course.
+* DNS in detail
+** What is DNS?
+#+begin_quote
+DNS (Domain Name System) provides a simple way for us to communicate with devices on the internet without remembering complex numbers.
+#+end_quote
+Long story short: ~DNS map Name to an IP address~, like ~google.com => 8.8.8.8~
+*** Answer
+#+begin_quote
+DNS stand for Domain Name System
+#+end_quote
+** Domain Hierarchy
+*** TLP (Top Level Domain)
+The rightmost part of a domain name, like:
++ .edu
++ .com
++ .gov
+The TLP Domain are divided in gTLD (generic TLD), like .com for commercial website, .org for organisation, and ccTLD (country code TLD), like .it for Italy, .co.uk for United Kingdom.
+*** SLD (Second Level Domain)
+The part before the TLD, for example in [[https://tryhackme.com][tryhackme.com]] .com is the TLD and tryhackme is the SLD.
+The SLD is limited to 63 characters, only a-z,0-9, ~hyphens i.e. (-)~, cannot start with ~-~ and cannot have consecutive ~-~.
+*** Subdomain
+Are on the left-side of the SLD.
+Subdomain are separared through a ~dot i.e. (.)~, for example in the domain ~admin.tryhackme.com~ admin is the subdomain.
+There are the same restriction as the SLD.
+It's possible to use multiple subdomain, each one separated by dots, there is no limit to the number of subdomain, the only one is one number of characters which must not exced 253 chars.
+**** Answer 1
+What is the maximum length of a subdomain?
+#+begin_quote
+63
+#+end_quote
+**** Answer 2
+Which of the following characters cannot be used in a subdomain (3 b _ - )?
+#+begin_quote
+_
+#+end_quote
+**** Answer 3
+What is the maximum length of a domain name?
+#+begin_quote
+253
+#+end_quote
+**** Answer 4
+What type of TLD is ~.co.uk~
+#+begin_quote
+ccTLD (country code TLD)
+#+end_quote
+** Record Types
+#+begin_verse
+DNS isn't just for websites though, and multiple types of DNS record exist. We'll go over some of the most common ones that you're likely to come across.
+#+end_verse
++ A record, for IPv4 address
++ AAAA record, for IPv6 address
++ CNAME record, resolve to another domain name, example
+  1. request for ~store.tryhackme.com~
+  2. returns CNAME record with ~shops.shopify.com~
+  3. request for ~shops.shopify.com~
+  4. return A record or AAAA record
++ MX record, resolve to the address of the server that handles email for the domain, it has a priority flag.
++ TXT record, records are free text fields.
+*** Answer 1
+What type of record would be used to advise where to send email?
+#+begin_quote
+MX
+#+end_quote
+*** Answer 2
+What type of record handles IPv6 addresses?
+#+begin_quote
+AAAA
+#+end_quote
+** Making a request
+Guided example of a DNS request
+*** Answer 1
+What field specifies how long a DNS should be cached for?
+#+begin_quote
+TTL
+#+end_quote
+*** Answer 2
+What type of DNS Server is usually provided by the ISP?
+#+begin_quote
+Recursive DNS
+#+end_quote
+*** Answer 3
+What type of server holds all the records for a domain?
+This means: given a TLD which type of server holds all the records for the domain?
+#+begin_quote
+Authoritative
+#+end_quote
+** Practical
+Follow the instuction to query a DNS.
+There is GUI to generate a prober command with [[denote:20220910T142055][nslookup]].
+*** Answer 1
+What is the CNAME of shop.website.thm?
+***** Executed command:
+#+begin_quote
+nslookup --type=CNAME shop.website.thm
+#+end_quote
+***** Output:
+#+begin_quote
+Server: 127.0.0.53
+Address: 127.0.0.53#53
+
+Non-authoritative answer:
+shop.website.thm canonical name = shops.myshopify.com
+#+end_quote
+Hence the answer is ~shops.myshopify.com~
+*** Answer 2
+What is the value of the TXT record of website.thm
+***** Executed command:
+#+begin_quote
+nslookup --type=TXT website.thm
+#+end_quote
+***** Output:
+#+begin_quote
+Server: 127.0.0.53
+Address: 127.0.0.53#53
+
+Non-authoritative answer:
+website.thm text = "THM{7012BBA60997F35A9516C2E16D2944FF}"
+#+end_quote
+Hence the answer is ~THM{7012BBA60997F35A9516C2E16D2944FF}~
+*** Answer 3
+What is the numerical priority value for MX record?
+***** Executed command:
+#+begin_quote
+nslookup --type=MX website.thm
+#+end_quote
+***** Output:
+#+begin_quote
+Server: 127.0.0.53
+Address: 127.0.0.53#53
+
+Non-authoritative answer:
+website.thm mail exchanger = 30 alt4.aspmx.l.google.com
+#+end_quote
+Hence the answer is ~30~
+*** Answer 4
+What is the IP address for the A record of www.website.thm?
+***** Executed command:
+#+begin_quote
+nslookup --type=A shop.website.thm
+#+end_quote
+***** Output:
+#+begin_quote
+Server: 127.0.0.53
+Address: 127.0.0.53#53
+
+Non-authoritative answer:
+Name: website.thm
+Address: 10.10.10.10
+#+end_quote
+Hence the answer is ~10.10.10.10~
+
+* HTTP in detail
+** What is HTTP
+HTTP stand for ~Hyper Text Transfer Protocol~.
+Is a set of rules used for communicating with web servers for the transmitting data (image, html, ecc...).
+Is a stateless protocoll, so it doesn't have memory.
+*** HTTPS (HTTP Secure)
+Is a secure version of HTTP, basically the request and the data, while surfing on a network, is encrypted and furthermore it also ensure that the request is directed to the correct web server.
+*** Answer 1
+What does HTTP stand for?
+#+begin_quote
+Hyper Text Transfer Protocol
+#+end_quote
+*** Answer 2
+What does the S in HTTP stand for?
+#+begin_quote
+Secure
+#+end_quote
+*** Answer 3
+On the mock webpage on the right there is an issue, once you've found it, click on it. What is the challenge flag?
+#+begin_quote
+THM{INVALID_HTTP_CERT}
+#+end_quote
+** Requests and Responses
+*** What is a URL (Uniform Resource Locator)?
+A URL is predominantly an instruction on how to access a resource on the internet.
+**** Component of a URL (in order):
+1. Scheme: what protocol use (HTTPS, HTTP, FTP, FTPS)
+2. User: some service require a login, like FTPS, at least I hope.
+3. Host: domain name (see DNS above)
+4. Port: port to which connect
+5. Path: path to access a specific resource
+6. Query String: selfexplanatory, example an URL like ~https://randomblog-number42.com/blog?id=1~ will tell the blog that we are interested in blog post with ~id=1~, most likely the first post
+7. Fragment: location in the page requested
+*** Example request
+#+begin_quote
+GET / HTTP/1.1
+Host: tryhackme.com
+User-Agent: Mozilla/5.0 Firefox/87.0
+Referer: https://tryhackme.com/
+
+#+end_quote
+*** Example Response:
+#+begin_quote
+HTTP/1.1 200 OK
+Server: nginx/1.15.8
+Date: Fri, 09 Apr 2021 13:34:03 GMT
+Content-Type: text/html
+Content-Length: 98
+
+<html>
+<head>
+    <title>TryHackMe</title>
+</head>
+<body>
+    Welcome To TryHackMe.com
+</body>
+</html>
+#+end_quote
+*** Answer 1
+What HTTP protocol is being used in the above example?
+#+begin_quote
+HTTP/1.1
+#+end_quote
+*** Answer 2
+What response header tells the browser how much data to expect?
+#+begin_quote
+Content-Length
+#+end_quote
+** HTTP Methods
+There are many methods, each one can be used by the user to show their intended action, the must used/common are:
++ GET request: to get info from the web server
++ POST request: used to submit data to the web server (for example for a signup)
++ PUT request: submit data to a web server to update information
++ DELETE request: used to delete information from the webserver
+*** Answer 1
+What method would be used to create a new user account?
+#+begin_quote
+POST
+#+end_quote
+*** Answer 2
+What method would be used to update your email address?
+#+begin_quote
+PUT
+#+end_quote
+*** Answer 3
+What method would be used to remove a picture you've uploaded to your account?
+#+begin_quote
+DELETE
+#+end_quote
+*** Answer 4
+What method would be used to view a news article?
+#+begin_quote
+GET
+#+end_quote
+** HTTP Status Code
+An HTTP response always have a response code to inform the requester on the outcome.
+**** Range for HTTP response code:
+| 100-199 Information Response | First part of the request is ok, continue to send rest of the request     |
+| 200-299 Success              | Request successful                                                        |
+| 300-399 Redirection          | Redirect the client's to another resource                                 |
+| 400-499 Client Errors        | Used to inform the client that there was an error (did you ever see 404?) |
+| 500-599 Server Errors        | Internal server error                                                     |
+**** Common status code
+| 200 OK                     | The request was completed successfully                                |
+| 201 Created                | A resource has been created (new user, new blog post, ecc...)         |
+| 301 Permanent Redirect     | The page has moved somewhere else                                     |
+| 302 Temporary Redirect     | The page has moved somewhere else, temporarly                         |
+| 400 Bad Request            | Something is missing in the request                                   |
+| 401 Not Authorised         | Not allowed to see the resource until you login                       |
+| 403 Forbidden              | Not allowed to see the resource indipendently than the login          |
+| 404 Page Not Found         | Everybody is familiar with this, the page doesn't exist               |
+| 405 Method Not Allowed     | For example, send a GET request to the resource when POST is expected |
+| 500 Internal Service Error | The server encountered an error and don't know how to handle it       |
+| 503 Service Unavailable    | Cannot handle request (overloaded/down for maintenance)               |
+**** Answer 1
+What response code might you receive if you've created a new user or blog post article?
+#+begin_quote
+201
+#+end_quote
+**** Answer 2
+What response code might you receive if you've tried to access a page that doesn't exist?
+#+begin_quote
+404
+#+end_quote
+**** Answer 3
+What response code might you receive if the web server cannot access its database and the application crashes?
+#+begin_quote
+503
+#+end_quote
+**** Answer 4
+What response code might you receive if you try to edit your profile without logging in first?
+#+begin_quote
+401
+#+end_quote
+** Headers
+Headers are additional bits of data you can send to the web server when making requests.
+*** Common request header
+| Host            | Some web server host multiple website, this is used to specify one |
+| User-Agent      | Browser and versions number (curl, firefox, chrome)                |
+| Content-Length  | Tells how much data there is in this request                       |
+| Accept-Encoding | Tells the web server what type of compression the browser support  |
+| Cookie          | Data sent to the server to help remember your information          |
+*** Common response header
+| Set-Cookie       | Information to store which gets sent back to the web server on each request               |
+| Cache-Cookie     | How long to store the content of the response in the browser's cache, with a time to live |
+| Content-Type     | Tell the requester which kind of data is being returned                                   |
+| Content-Encoding | What method has been used to compress data to make it smaller                        |
+*** Answer 1
+What header tells the web server what browser is being used?
+#+begin_quote
+User-Agent
+#+end_quote
+*** Answer 2
+What header tells the browser what type of data is being returned?
+#+begin_quote
+Content-Type
+#+end_quote
+*** Answer 3
+What header tells the web server which website is being requested?
+#+begin_quote
+Host
+#+end_quote
+** Cookies
+They are just a small piece of _data_ stored in the computer.
+Are saved when a ~Set-Cookie~ header is received from the web server.
+They can have a Time To Live.
+Cookie are used to support the HTTP, as sayd before HTTP is stateless so it don't keep tracks of previous requests.
+Some example are: save some settings, keep an user logged and unfortunately user profiling, they are the main reason for the /pertinent/ announcment on non related website, like a book you are intersted in  on amazon while reading a cuisine blog.
+*** Answer 1
+Which header is used to save cookies to your computer?
+#+begin_quote
+Set-Cookie
+#+end_quote
+** Making Requests
+Hand-on http request.
+*** Answer 1
+Make a GET request to /room
+#+begin_quote
+THM{YOU'RE_IN_THE_ROOM}
+#+end_quote
+*** Answer 2
+Make a GET request to /blog and using the gear icon set the id parameter to 1 in the URL field
+#+begin_quote
+THM{YOU_FOUND_THE_BLOG}
+#+end_quote
+*** Answer 3
+Make a DELETE request to /user/1
+#+begin_quote
+THM{USER_IS_DELETED}
+#+end_quote
+*** Answer 4
+Make a PUT request to /user/2 with the username parameter set to admin
+#+begin_quote
+THM{USER_HAS_UPDATED}
+#+end_quote
+*** Answer 5
+POST the username of thm and a password of letmein to /login
+#+begin_quote
+THM{HTTP_REQUEST_MASTER}
+#+end_quote
+*** Example from answer 5
+**** Request
+#+begin_verse
+POST /login HTTP/1.1
+Host: tryhackme.com
+User-Agent: Mozilla/5.0 Firefox/87.0
+Content-Length: 33
+
+username=thm&password=letmein
+#+end_verse
+**** Response
+#+begin_verse
+HTTP/1.1 200 Ok
+Server: nginx/1.15.8
+Sat, 10 Sep 2022 17:45:29 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 237
+Last-Modified: Sat, 10 Sep 2022 17:45:29 GMT
+
+<html>
+<head>
+    <title>TryHackMe</title>
+</head>
+<body>
+    You logged in! Welcome Back THM{HTTP_REQUEST_MASTER}
+</body>
+</html>
+#+end_verse
+* How website work
+** Intro
+A website is made up by two major component:
++ Front end (client-side), the way the broser render a website
++ Back end (server-side), a server (usually referred a web server) that process request and returns response.
+*** Answer 1
+What term best describes the side your browser renders a website?
+#+begin_quote
+Client side
+#+end_quote
+** HTML
+HTML stands for (HyperText Markup Language), is the language the website are written in.
+Important: it's a markup language, as the acronym says, not a programming language.
+Example of HTML code:
+#+begin_src html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Page title</title>
+	</head>
+	<body>
+		<h1>Example Headign</h1>
+		<p>Example paragraph..</p>
+   </body>
+</html>
+#+end_src
+*** Answer 1
+No answer needed
+*** Answer 2
+One of the images on the cat website is broken - fix it, and the image will reveal the hidden text answer!
+#+begin_quote
+HTMLHERO
+#+end_quote
+*** Answer 3
+Add a dog image to the page by adding another img tag (<img>) on line 11. The dog image location is img/dog-1.png. What is the text in the dog image?
+#+begin_quote
+DOGHTML
+#+end_quote
+** Javascript (JS)
+Is the most popular coding language in the world and allow page to become interactive, for example changing the visibility of some HTML block.
+Javascript can be embedded inside HTML code and can be loaded within ~<script>~ tags.
+#+begin_src html
+<script src="/location/of/javascript_file.js"></script>
+#+end_src
+*** Answer 1
+**** Snippet used
+#+begin_src html
+  <!DOCTYPE html>
+<html>
+    <head>
+        <title>TryHackMe Editor</title>
+    </head>
+    <body>
+        <div id="demo">Hi there!</div>
+        <script type="text/javascript">
+            // add your JavaScript here
+            document.getElementById("demo").innerHTML = "Hack the Planet"
+        </script>
+    </body>
+</html>
+#+end_src
+**** Result
+#+begin_quote
+JSISFUN
+#+end_quote
+*** Answer 2
+No answer needed, just a mini snippet to copy paste.
+**** Snippet used
+#+begin_src html
+  <!DOCTYPE html>
+<html>
+    <head>
+        <title>TryHackMe Editor</title>
+    </head>
+    <body>
+        <div id="demo">Hi there!</div>
+        <script type="text/javascript">
+            // add your JavaScript here
+            document.getElementById("demo").innerHTML = "Hack the Planet"
+        </script>
+				<button onclick='document.getElementById("demo").innerHTML = "Button Clicked";'>Click Me!</button>
+    </body>
+</html>
+#+end_src
+** Sensitive Data Exposure
+Occurs when a websiste doesn't properly protect (or remove) sensitive clear-text information to the end-user, it's usually found in front-end source.
+An example
+#+begin_src html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Fake Website</title>
+	</head>
+	<body>
+		<form>
+			<input type='text' name='username'>
+			<input type='password' name='password'>
+			<button>Login</button>
+			<!-- TODO: remove test credentials admin:password123>
+		</form>
+	</body>
+</html>
+#+end_src
+*** Answer 1
+View the website on this task. What is the password hidden in the source code?
+To find the password inspect the source code of the webpage (with C-u or clincking on the hint)
+#+begin_quote
+testpasswd
+#+end_quote
+** HTML injection
+This vulnerability occurs when the user input isn't sanitized (Just like SQL injection), long story short HTML injection is client side, while SQL injection is server side.
+*** Answer 1
+View the website on this task and inject HTML so that a malicious link to http://hacker.com is shown.
+**** Snippet used
+#+begin_src html
+<a href="http://hacker.com">Nto<a>
+#+end_src
+**** Result
+#+begin_quote
+HTML_INJ3CTI0N
+#+end_quote
+* Putting all together
+** Putting all together
+Just an overview.
+*** Answer 1
+No answer needed.
+** Other component
+*** Load balancer
+They take care to distribute the traffic across multiple server, there are various strategies to acomplish that.
+They also check if the web server/s are running correctly, this is called _health check_.
+*** CDN (Content Delivery Networks)
+They are used to store some content for a web server, they are usually near to the /target/ of the web server, the main purpose is to reduce the cost, in time, to delivery content.
+The biggest example is Youtube, if every videos is stored on a single server in America, it will be very frustrating to see a video here in Italy, for this reasons Google introduced various CDN to delivery this type of content more quickly.
+This also introduce a lot of duplicated data.
+The example of Youtube may be a little bit overscale, but CDN are used in every context where a ton of data is delivered through a network.
+Other good example could be Netflix, Prime Video and more generally every media platform like that.
+*** Databases
+Web servers comunicate with database to store and recall data.
+They can vary from a simple plain text file, a spreadsheet to a more sofisticated software like MySQL, MariaDB, PostgreSQL, Oracle, MongoDB, ecc...
+*** WAF (Web Application Framework)
+A WAF sits between web request and the web server,
+Their main objective is to secure the web server from hacking or DOS (Denial Of Service) attacks.
+*** Answer 1
+What can be used to host static files and speed up a clients visit to a website?
+#+begin_quote
+CDN
+#+end_quote
+*** Answer 2
+What does a load balancer perform to make sure a host is still alive?
+#+begin_quote
+health check
+#+end_quote
+*** Answer 3
+What can be used to help against the hacking of a website?
+#+begin_quote
+WAF
+#+end_quote
+** How Web Server Work
+*** What is a Web Server?
+A web server is a software that listens for incoming connections and then utilies HTTP to communicate to deliver web content to its client.
+Some well known web servers:
++ Apache, one of the first killer app on Linux
++ Nginx
++ IIS
++ NodeJS
+*** Virtual Hosts
+As mentioned in _HTTP in detail_, one web server can have multiple website, to achieve this, they use virtual hosts.
+The web server try to match the HTTP header with one of it's virtual hosts, if there is a match, the correct website will be sended in response, otherwise an error in the ~4XX~ range.
+There is no limit to the number of website a web server can handle.
+*** Static vs Dynamic Content
+Static content, as the name suggests, never change, hence once generated the first time it will be served to all the requester.
+On the other hand Dynamic content is generated on the fly, an example may be more explicative:
+You open the homepage of amazon.com, it's part of the common that we don't expect to see everytime the same product, this because on each request amazon's homepage take our preference, our latest search (with the cookies for example) and ask a database for similar product, then generate a dedicated webpage to us.
+One consequences of this is that a static website ,usually , have a simpler, and less elaborated backend, than a dynamic one.
+*** Scripting and Backend Languages
+Any language can be used as backend language, even ~C~ if you hate yourself (I love C but it's not the best choice in this context).
+Honorable mension:
++ PHP
++ Python
++ Ruby
++ NodeJS
++ Perl
++ Clojure
++ [[https://github.com/FreedomBen/awk-hack-the-planet/blob/master/server.sh][AWK]]
+*** Answer 1
+What does web server software use to host multiple sites?
+#+begin_quote
+Virtual hosts
+#+end_quote
+*** Answer 2
+What is the name for the type of content that can change?
+#+begin_quote
+Dynamic
+#+end_quote
+*** Answer 3
+Does the client see the backend code? Yay/Nay
+#+begin_quote
+Nay (if this is the case there are some problem)
+#+end_quote
+*** Quiz
+**** Order
+1. Request tryhackme.com in your browser
+2. Check Local Cache for IP Address
+3. Check your recursive DNS Server for Address
+4. Query root server to find authoritative DNS Server
+5. Authoritative DNS server advises the IP address for the website
+6. Request passes through a Web Application Firewall
+7. Request passes through a Load Balancer
+8. Connect to Webserver on port 80 or 443
+9. Web server receives the GET request
+10. Web Application talks to Database
+11. Your Browser renders the HTML into a viewable website
+**** Answer
+#+begin_quote
+THM{YOU_GOT_THE_ORDER}
+#+end_quote

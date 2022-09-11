@@ -9,6 +9,7 @@ From kali website:
 Brute force URIs including directories and files as well as DNS subdomains
 #+end_quote
 * Manual
+Just the output of ~gobuster --help~:
 #+begin_example
 Usage:
   gobuster [command]

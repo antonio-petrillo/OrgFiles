@@ -1,0 +1,7 @@
+#+title:      Sunday 11 September 2022
+#+date:       [2022-09-11 Sun 10:06]
+#+filetags:   :journal:
+#+identifier: 20220911T100613
+
+* Thoughts
+I'm using [[https://tryhackme.com][tryhackme]] for a couple of days and I'm integrating my /learning path/ with denote, it seems pretty awesome 🙂.

@@ -3,10 +3,20 @@
 #+filetags:   :emacs:knowledge:linux:tryhackme:
 #+identifier: 20220909T101107
 
-* <2022-09-09 Fri> Starting journey
+* DONE <2022-09-09 Fri> Starting journey
+CLOSED: [2022-09-10 Sat 20:28]
 Starting learning path on [[https://tryhackme.com/paths][tryhackme]].
 I've already started the learning path a year ago, but I'm not happy with the way I studied from it, so I'm starting from the beginning.
 ** What I will use
 + Emacs
 + Kali linux (maybe in the future I will try something else, see [[https://blackarch.org/][blackarch]], [[https://www.parrotsec.org][parrot]])
 + Denote, as a logbook and notetaking
+** Completed intro to cybersecurity
+* DONE <2022-09-10 Sat> Start room - How the web works
+CLOSED: [2022-09-10 Sat 20:28]
+This path is already completed but I want to refresh my memory.
+* DONE <2022-09-10 Sat> Start room - Putting all together
+CLOSED: [2022-09-11 Sun 10:05]
+This path is already completed but I want to refresh my memory.
+* TODO <2022-09-11 Sun> Start room - What is Networking
+Just an introduction to networking

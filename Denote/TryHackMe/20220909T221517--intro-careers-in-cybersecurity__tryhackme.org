@@ -1,0 +1,15 @@
+#+title:      intro careers in cybersecurity
+#+date:       [2022-09-09 Fri 22:15]
+#+filetags:   :tryhackme:
+#+identifier: 20220909T221517
+
+* Section 1
+Nothing to do here.
+* Section 2 to 8
+Overview on different careers, each section is dedicated to a different professional figure.
+* Section 9
+Quiz to search the most fitting figure for me.
+** Result
+#+begin_quote
+Security enginner
+#+end_quote

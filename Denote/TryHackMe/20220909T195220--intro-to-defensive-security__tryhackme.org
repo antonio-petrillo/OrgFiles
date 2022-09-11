@@ -1,0 +1,35 @@
+#+title:      intro to defensive security
+#+date:       [2022-09-09 Fri 19:52]
+#+filetags:   :tryhackme:
+#+identifier: 20220909T195220
+
+* First section
+Go through some principle of defensive security.
+Red team are dedicated to offensive security, Blue team to defensive security.
+** Answer
+#+begin_quote
+blue team
+#+end_quote
+* Second section
+** Answer 1
+#+begin_quote
+Security Operation Center
+#+end_quote
+** Answer 2
+#+begin_quote
+Digital Forensic and Incident Respond
+#+end_quote
+** Answer 3
+#+begin_quote
+Ransomware
+#+end_quote
+* Third section
+Pratical exercise (really simple)
+** Note
+.1 /Malicious/ IP  ~143.110.250.149~
+.2 There is a first failed connection attempt from this IP at ~05:25:28:235~
+.3 Then a successful connecion, from the same IP, at ~05:27:00:347~
+** Answer
+#+begin_quote
+THM{THREAT-BLOCKED}
+#+end_quote

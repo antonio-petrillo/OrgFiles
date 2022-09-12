@@ -1,0 +1,102 @@
+#+title:      Linux Fundamentals 2
+#+date:       [2022-09-12 Mon 18:56]
+#+filetags:   :linux:room:tryhackme:
+#+identifier: 20220912T185626
+
+* Introduction
+No answer needed
+* Accessing Your Linux Machine Using SSH (Deploy)
+No answer needed
+* Introduction to Flags and Switches
+** Answer 1
+Explore the manual page of the ls command
+#+begin_quote
+No answer needed
+#+end_quote
+** Answer 2
+What directional arrow key would we use to navigate down the manual page?
+#+begin_quote
+down
+#+end_quote
+** Answer 3
+What flag would we use to display the output in a "human-readable" way?
+#+begin_quote
+-h
+#+end_quote
+* Filesystem Interaction Continued
+** Answer 1
+How would you create the file named "newnote"?
+#+begin_quote
+touch newnote
+#+end_quote
+** Answer 2
+On the deployable machine, what is the file type of "unknown1" in "tryhackme's" home directory?
+#+begin_quote
+ASCII text
+#+end_quote
+** Answer 3
+How would we move the file "myfile" to the directory "myfolder"
+#+begin_quote
+No answer needed
+#+end_quote
+** Answer 4
+What are the contents of this file?
+#+begin_quote
+THM{FILESYSTEM}
+#+end_quote
+** Answer 5
+Continue to apply your knowledge and practice the commands from this task.
+#+begin_quote
+No answer needed
+#+end_quote
+* Permission 101
+** Answer 1
+On the deployable machine, who is the owner of "important"?
+#+begin_quote
+user2
+#+end_quote
+** Answer 2
+What would the command be to switch to the user "user2"?
+#+begin_quote
+su user2
+#+end_quote
+** Answer 3
+Now switch to this user "user2" using the password "user2"
+#+begin_quote
+No answer needed
+#+end_quote
+** Answer 4
+Output the contents of "important", what is the flag?
+#+begin_quote
+THM{SU_USER2}
+#+end_quote
+* Common directories
+** Answer 1
+Read me!
+#+begin_quote
+No answer needed
+#+end_quote
+** Answer 4
+What is the directory path that would we expect logs to be stored in?
+#+begin_quote
+/var/log
+#+end_quote
+** Answer 4
+What root directory is similar to how RAM on a computer works?
+#+begin_quote
+/tmp
+#+end_quote
+** Answer 4
+Name the home directory of the root user
+#+begin_quote
+/root
+#+end_quote
+** Answer 4
+Now apply your learning and navigate through these directories on the deployed Linux machine.
+#+begin_quote
+No answer needed
+#+end_quote
+* Conclusions and Summaries
+No answer needed
+* Linux Fundamentals Part 3
+No answer needed

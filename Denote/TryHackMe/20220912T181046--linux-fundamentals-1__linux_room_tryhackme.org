@@ -1,0 +1,87 @@
+#+title:      Linux Fundamentals 1
+#+date:       [2022-09-12 Mon 18:10]
+#+filetags:   :linux:room:tryhackme:
+#+identifier: 20220912T181046
+
+* Introduction
+No answer needed.
+* A Bit of Background on Linux
+Linux is considerably much more lightweight.
+Linux powers:
++ Website
++ Car entertainment/control panels
++ Point of Sale (PoS) systems
++ Critical infrastructures
+* Flavors of Linux
+An intro on the distros.
+** Answer 1
+Research: What year was the first release of a Linux operating system?
+#+begin_quote
+1991
+#+end_quote
+* Interacting With Your First Linux Machine (In-Browser)
+No answer needed.
+* Running Your First few Commands
+** Answer 1
+If we wanted to output the text "TryHackMe", what would our command be?
+#+begin_quote
+echo TryHackMe
+#+end_quote
+** Answer 2
+What is the username of who you're logged in as on your deployed Linux machine?
+#+begin_quote
+tryhackme
+#+end_quote
+* Interacting with the file system
+** Answer 1
+On the Linux machine that you deploy, how many folders are there?
+~ls -lh | grep "^d" | wc -l~
+#+begin_quote
+4
+#+end_quote
+** Answer 2
+Which directory contains a file?
+#+begin_quote
+folder4
+#+end_quote
+** Answer 3
+What is the contents of this file?
+#+begin_quote
+Hello World!
+#+end_quote
+** Answer 4
+Use the cd command to navigate to this file and find out the new current working directory. What is the path?
+#+begin_quote
+/home/tryhackme/folder4
+#+end_quote
+* Searching file
+** Answer 1
+~grep "THM" access.log~
+#+begin_quote
+THM{ACCESS}
+#+end_quote
+* An introduction to shell operators
+** Answer 1
+If we wanted to run a command in the background, what operator would we want to use?
+#+begin_src shell
+&
+#+end_src
+** Answer 1
+If I wanted to replace the contents of a file named "passwords" with the word "password123", what would my command be?
+#+begin_src shell
+echo password123 > passwords
+#+end_src
+** Answer 3
+Now if I wanted to add "tryhackme" to this file named "passwords" but also keep "passwords123", what would my command be
+#+begin_src shell
+echo tryhackme >> passwords
+#+end_src
+** Answer 4
+Now use the deployed Linux machine to put these into practice.
+#+begin_quote
+No answer needed
+#+end_quote
+* Conclusions & Summaries
+No answer needed
+* Linux Fundamentals Part 2
+No answer needed

@@ -1,0 +1,60 @@
+#+title:      windows fundamentals 3
+#+date:       [2022-09-12 Mon 17:13]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220912T171329
+
+* Introduction
+No answer needed
+* Windows Update
+Windows Update is a service provided by Microsoft to provide security updates, feature enhancements, and patches for the Windows operating system and other Microsoft products, such as Microsoft Defender.
+Updates are typically released on the 2nd Tuesday of each month. This day is called Patch Tuesday.
+** Tips
+~control /name Microsoft.WindowsUpdate.~ to access windows update.
+** Answer 1
+There were two definition updates installed in the attached VM. On what date were these updates installed?
+#+begin_quote
+5/3/2021
+#+end_quote
+* Windows Security
+** Answer 1
+In the above image, which area needs immediate attention?
+#+begin_quote
+Virus & threat protection
+#+end_quote
+* Virus & threat protection
+** Answer 1
+Specifically, what is turned off that Windows is notifying you to turn on?
+#+begin_quote
+Real-time protection
+#+end_quote
+* Firewall & network protection
+** Tips
+~WF.msc~ to access windows firewall.
+** Answer 1
+If you were connected to airport Wi-Fi, what most likely will be the active firewall profile?
+#+begin_quote
+Public network
+#+end_quote
+* App & browser control
+** Answer 1
+No answer needed.
+* Device security
+** Answer 1
+What is TPM?
+#+begin_quote
+Trusted Platform Module
+#+end_quote
+* Bitlocker
+** Answer 1
+What must a user insert on computers that DO NOT have a TPM version 1.2 or later?
+#+begin_quote
+USB startup key
+#+end_quote
+* Volume Shadow Copy Service (VSS)
+** Answer 1
+What is VSS?
+#+begin_quote
+Volume Shadow Copy Service
+#+end_quote
+* Conclusion
+No answer needed.

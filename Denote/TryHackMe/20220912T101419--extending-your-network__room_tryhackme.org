@@ -1,0 +1,128 @@
+#+title:      extending your network
+#+date:       [2022-09-12 Mon 10:14]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220912T101419
+
+* Introduction to Port Forwarding
+With port forwarding it possible to made a PC, on a local network, reachable on the internet, so other PC can communicate with it.
+Port Fordwarding is achieved with Routers.
+The scheme in the room are much more concise than a lot of words here.
+** Answer 1
+What is the name of the device that is used to configure port forwarding?
+#+begin_quote
+Router
+#+end_quote
+* Firewall 101
+Is a device inside a network responsible for determining what traffic is allowed to enter and exit, like a border security for a network.
+An admin can configure firewall to _permit_ or _deny_ traffic from entering the network.
+Some parameters for that are:
++ Where the traffic is coming from?
++ Where is the traffic going to?
++ What port is the traffic for?
++ What protocol is the traffic using?
+Firewalls perform _packet inspection_ to determine the answers to these questions.
+** Firewall category
+*** Stateful
+This type of firewall uses the entire information from a connection; rather than inspecting an indvidual packet, this firewall determinies the behaviour of a device based upon the entire connection.
+This type of firewall consume more resource than a stateless one.
+*** Stateless
+This type uses a static set of rules to determine whether or not _individual packets_ are acceptable or not.
+For example, a device sending a bad packet will not necessarily mean that the entire device is then blocked.
+As said above this kind of firewalls isn't smart like a stateful one but it's great when receiving a large amount of traffic from a set of hosts (such as a Distributed Denial-of-Service attack)
+** Answer 1
+What layers of the OSI model do firewalls operate at?
+#+begin_quote
+Layer 3, Layer 4
+#+end_quote
+** Answer 2
+What category of firewall inspects the entire connection?
+#+begin_quote
+Stateful
+#+end_quote
+** Answer 2
+What category of firewall inspects individual packets?
+#+begin_quote
+Stateless
+#+end_quote
+* Practical - Firewall
+** Answer 1
+What is the flag?
+#+begin_quote
+THM{FIREWALLS_RULE}
+#+end_quote
+* VPN Basics
+A Virtual Private Network (VPN) is a technology that allows devices on separate networks to communicate securely by creating a dedicated path between each otehr over the internet (known as a tunnel).
+Devices connected withing this tunnel form their own private network.
+** Benefits of VPNs
++ Allows networks in different geographical locations to be connected
++ Offers privacy (useful when connected to a public WiFi)
++ Offers anonymity
+** VPN Technology
+*** PPP
+This technology is used to PPTP (see below) to allow for authentication and provide encryption of data. VPNs work by using a private key and public cerificate (similar to SSH).
+A private key & certificate must match for you to connect.
+This technology is not capable of leaving a network by itself (non-routable).
+*** PPTP
+The Point-to-Point Tunneling Protocol (PPTP) is the technology that allows the data from PPP to travel and leave a network.
+PPTP is very easy to set up and is supported by most devices. It is, however, weakly encrypted in comparison to alternatives.
+*** IPSec
+Internet Protocol Security (IPSec) encrypts data using the existing Internet Protocol (IP) framework.
+It is difficult to setup in comparison to alternatives, but it has a strong encryption.
+** Answer 1
+What VPN technology only encrypts & provides the authentication of data?
+#+begin_quote
+PPP
+#+end_quote
+** Answer 2
+What VPN technology uses the IP framework?
+#+begin_quote
+IPSec
+#+end_quote
+* LAN Networking Devices
+** What is a Router
+It's a router job to connect networks and pass data between them. It does this by using routing (hence the name).
+Routing is the label given to the process of data travelling across networks.
+Routing involves creating a path between networks so that this data can be successfully delivered.
+Routers operate at Layer 3 (Network) of OSI model, they often have website or console to interact with, to setup port forwarding or firewalling.
+** What is a Switch?
+Is a dedicated networking device responsible for providing a means of connecting to multiple devices.
+Switches can facilitate may devices (from 3 to 63) using Ethernet cables.
+They can operate on Layer 2 (Data link) and Layer 3 (Networking) of the OSI model, these are exclusive, in the sense that a swith that operate at Layer 2 cannot operate at Layer 3 and viceversa.
+** Answer 1
+What is the verb for the action that a router does?
+#+begin_quote
+Routing
+#+end_quote
+** Answer 1
+What are the two different layers of switches? Separate these by a comma I.e.: LayerX,LayerY
+#+begin_quote
+Layer 2, Layer 3
+#+end_quote
+* Practical - Network Simulator
+** Answer 1
+What is the flag from the network simulator?
+*** Log
+The log is quite interesting:
+#+begin_quote
+HANDSHAKE: Starting TCP/IP Handshake between computer1 and computer3
+HANDSHAKE: Sending SYN Packet from computer1 to computer3
+ROUTING: computer1 says computer3 is not on my local network sending to gateway: router
+ARP REQUEST: Who has router tell computer1
+ARP RESPONSE: Hey computer1, I am router
+ARP REQUEST: Who has computer3 tell router
+ARP RESPONSE: Hey router, I am computer3
+HANDSHAKE: computer3 received SYN Packet from computer1, sending SYN/ACK Packet to computer1
+HANDSHAKE: computer1 received SYN/ACK Packet from computer3, sending ACK packet to computer3
+HANDSHAKE: computer3 received ACK packet from computer1, Handshake Complete
+TCP: Sending TCP packet from computer1 to computer3
+TCP: computer3 received TCP Packet from computer1, sending ACK Packet to computer1
+#+end_quote
+*** Answer
+#+begin_quote
+THM{YOU'VE_GOT_DATA}
+#+end_quote
+** Answer 1
+How many HANDSHAKE entries are there in the Network Log?
+#+begin_quote
+5
+#+end_quote

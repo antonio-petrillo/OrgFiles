@@ -1,0 +1,109 @@
+#+title:      windows fundamentals 2
+#+date:       [2022-09-12 Mon 16:09]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220912T160903
+
+* Introduction
+No answer needed.
+* System Configuration
+System Configuration ~MSConfig~ is for advanced troubleshooting, [[https://docs.microsoft.com/en-us/troubleshoot/windows-client/performance/system-configuration-utility-troubleshoot-configuration-errors][docs here]].
+Again this question, seem to me at least, a little bit stupid, it's just a waste of time searching in menu for the answer, whenever I need this kind of information I just search on the internet (obviuosly it's better to know).
+** Answer 1
+What is the name of the service that lists Systems Internals as the manufacturer?
+#+begin_quote
+PsShutdown
+#+end_quote
+** Answer 2
+Whom is the Windows license registered to?
+#+begin_quote
+Windows user
+#+end_quote
+** Answer 3
+What is the command for Windows Troubleshooting?
+#+begin_quote
+C:\Windows\System32\control.exe /name Microsoft.Troubleshooting
+#+end_quote
+** Answer 4
+What command will open the Control Panel? (The answer is  the name of .exe, not the full path)
+#+begin_quote
+control.exe
+#+end_quote
+* Change UAC settings
+** Answer
+What is the command to open User Account Control Settings? (The answer is the name of the .exe file, not the full path)
+#+begin_quote
+UserAccountControlSettings.exe
+#+end_quote
+* Computer managment
+The _Computer Management_ (compmgmt) utility has three sections:
++ System tools
++ Storage
++ Services and Applications
+** System tools
++ Task scheduler
++ Event Viewer
++ Local User and Group
++ Performance Monitor
++ Windows Server Backup
++ Disk Management
+** Answer 1
+What is the command to open Computer Management? (The answer is the name of the .msc file, not the full path)
+#+begin_quote
+compmgmt.msc
+#+end_quote
+** Answer 1
+At what time every day is the GoogleUpdateTaskMachineUA task configured to run?
+#+begin_quote
+6:15 AM
+#+end_quote
+** Answer 1
+What is the name of the hidden folder that is shared?
+#+begin_quote
+sh4r3dF0Ld3r
+#+end_quote
+* System information
+Command: ~msinfo32~
+** Answer 1
+What is the command to open System Information? (The answer is the name of the .exe file, not the full path)
+#+begin_quote
+msinfo32.exe
+#+end_quote
+** Answer 1
+What is listed under System Name?
+#+begin_quote
+THM-WINFUN2
+#+end_quote
+** Answer 1
+Under Environment Variables, what is the value for ComSpec?
+#+begin_quote
+%systemroot%\system32\cmd.exe
+#+end_quote
+* Resource monitor
+Command: ~resmon~
+** Answer 1
+What is the command to open Resource Monitor? (The answer is the name of the .exe file, not the full path)
+#+begin_quote
+resmon.exe
+#+end_quote
+* Command Prompt
+** Answer 1
+In System Configuration, what is the full command for Internet Protocol Configuration?
+#+begin_quote
+C:\Windows\System32\cmd.exe /k %windir%\system32\ipconfig.exe
+#+end_quote
+** Answer 1
+For the ipconfig command, how do you show detailed information?
+#+begin_quote
+ipconfig /all
+#+end_quote
+* Registry Editor
+The Windows Registry (per Microsoft) is a central hierarchical database used to store information necessary to configure the system for one or more users, applications, and hardware devices.
+** Answer 1
+What is the command to open the Registry Editor? (The answer is the name of  the .exe file, not the full path)
+#+begin_quote
+regedt32.exe
+#+end_quote
+*** Wrong answer
++ regedit.exe
+* Conclusion
+No answer needed.

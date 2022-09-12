@@ -1,0 +1,6 @@
+* Study for DSA exam
+Trying new book, from S.Skiena
+* TryHackMe paths todo [0/2]
+<2022-09-19 Mon>
+** TODO [[https://tryhackme.com/room/bashscripting][bash scripting]]
+** TODO [[https://tryhackme.com/room/catregex][regex]]

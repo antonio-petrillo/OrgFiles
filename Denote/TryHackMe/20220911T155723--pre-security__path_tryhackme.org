@@ -12,5 +12,15 @@
 ** [[denote:20220911T122804][Intro to Lan]]
 ** [[denote:20220911T160148][OSI model]]
 ** [[denote:20220911T182721][Packets & Frame]]
+** [[denote:20220912T101419][extending your network]]
 * [[denote:20220910T104500][How the web works]]
 This series of rooms are a little bit short so I've putted all in a single org file.
+* Windows fundamentals
+** [[denote:20220912T115810][windows fundamentals 1]]
+** [[denote:20220912T160903][windows fundamentals 2]]
+** [[denote:20220912T171329][windows fundamentals 3]]
+* Linux fundamentals
+** [[denote:20220912T181046][Linux Fundamentals 1]]
+** [[denote:20220912T185626][Linux Fundamentals 2]]
+** [[denote:20220912T190909][Linux Fundamentals 3]]
+* Path completed

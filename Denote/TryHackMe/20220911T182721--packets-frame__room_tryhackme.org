@@ -7,3 +7,164 @@
 They are a small piece of data that, when forming together, make a larger piece of information or message.
 They belongs to different layer in the OSI model.
 A frame is a layer 2 (data link), that sayd in frame there aren't information like IP.
+Once the information for the layer 3 (network) is added (put an envelope in another envelope/encapsulation) it become a packet.
+#+begin_example
+frame (data link), work with MAC and NIC ➡ encapsulated ➡ packet (network), work with IPs
+packet (network), work with IPs ➡ de-encapsulated ➡ frame (data link), work with MAC and NIC
+#+end_example
+Because packets have a small size there is a lower chanse to bottleneck a network.
+** Packets header
+| Header              | Description                                                                                                        |
+| TTL (Time To Live)  | Sets an expire timer for the packet to not clug up the network, in case it never manages to reach a host or escape |
+| Checksum            | Provides integrity checking for protocols such as TCP/IP                                                           |
+| Source Address      | The IP of the device that the packet is being sent from, so data knows where to return to                          |
+| Destination Address | The device's IP address the packet is being sent to, so it know where to travel next                               |
+** Answer 1
+What is the name for a piece of data when it does have IP addressing information?
+#+begin_quote
+Packet
+#+end_quote
+** Answer 2
+What is the name for a piece of data when it does not have IP addressing information?
+#+begin_quote
+frame
+#+end_quote
+* TCP/IP (The Three-Way Handshake)
+The TCP/IP is very similar to the OSI model.
+The OSI model was never really used, for many reasons:
++ too slow
++ developed by IBM who own to much power (this may be a bullshit)
++ many other that I don't know now
+The TCP/IP have few layer compared to the OSI model, in the sense that some layer are left to the developer to implement, let me explain; because OSI model has become a model to which the other protocol take inspiration.
+** Layer of the TCP/IP
++ Application
++ Transport
++ Internet
++ Network Interface
+** Peculiarity
+It's a _connection-based_ protocol.
+It guarantees that any data sent will be received on the other side.
+** Pros & Cons
+| Advantges of TCP                                                                                          | Disadvantages of TCP                                                                                                             |
+| Guarantees the integrity of data                                                                          | Require a reliable connection between two devices.                                                                               |
+| Capable of synchronising two devices to prevent each other from being flooded with data in th wrong order | A slow connection (like mine) can bottleneck another device as the connection will be reserved on the other device the wole time |
+| Performs a lot more processes for reliability                                                             | TCP is significantly slower than UDP, for obvious reasons                                                                     |
+** TCP packet header
+| Header                | Description                                                                                                          |
+| Source Port           | The port opened by the sender to send the TCP packet from. This value range in 0-65535                               |
+| Destinatio Port       | Port number that an application or service is running (i.e. web server on 80, ssh on 22)                             |
+| Source Address        | The IP of the device that the packet is being sent from, so data knows where to return to  IP of the sending machine |
+| Destination Port      | Port number that an application or service is running (i.e. web server on 80, ssh on 22)                             |
+| Sequence number       | used during the three way handshake, see later                                                                       |
+| Acknoledgement number | After a piece of data has been given a sequence number, the number for the next piece of number + 1                  |
+| Checksum              | This value is what gives TCP integrity                                                                               |
+| Data                  | Where the data transmitted is hold                                                                                   |
+| Flag                  | Determines how the packet should be handled by either device during the handshake process                            |
+** Three way handshake
+Is the process used to establish a connection between two devices.
+It is achieved with a few special messages.
+*** Step 1 - Message SYN
+A SYN message is the initial packet sent by a client during the handshake.
+This packet is used to initiate a connection and _synchronise_ the two devices together
+*** Step 2 - Message SYN/ACK
+This packet is sent by the device (server) to _acknowledge_ the synchronisation attempt from the client.
+*** Step 3 - Message ACK
+The acknowledgment packet can be used by either the client or server to acknowledge that a series of messages/packets have successfully received.
+*** Step 4 - Message DATA
+Once a connection has been established, data (such as bytes of a file) is sent via the "DATA" message.
+*** Step 5 - Message FIN
+This packet is used to cleanly (properly (i.e. not like a ~kill -9 pid~ does)) close the connection after it has been complet.
+*** Step # - Message RST
+This packet abruptly ends all connection.
+This is the last resort and indicates there was some problem during the process.
+For example, if the service or application is not working correctly, or the system has faults such as low resources.
+** Diagram
+Any sent data is given a random number sequence and is reconstructed using this number sequence and incrementing by 1.
+Both computer must agree on the same number sequence for data to be sent in the correct order.
+This order is ageed upon during theese steps:
+1. SYN - Client: Here's my _Initial Sequence Number_ (ISN) to SYNchronise (0)
+2. SYN/ACK - Server: Here's my ISN to SYNchronise with (5000), and I ACKnowledge your ISN (0)
+3. ACK - Client: I ACKnowledge your ISN of (5000), here is some data that is my ISN+1 (5000+1)
+| Device          | ISN | Final Number Sequence |
+| Client (Sender) |   0 | 0 + 1 = 1             |
+| Client (Sender) |   1 | 1 + 1 = 2             |
+| Clietn (Sender) |   2 | 2 + 1 = 3             |
+** TCP closing connection
+*** Step 1 - Message FIN
+The client send a FIN message to the server.
+*** Step 2 - Message ACK/FIN
+The server ACKnowledge the client, then send the FIN message.
+*** Step 3 - Message ACK
+The client ACKnowledge the serverl
+** Answer 1
+What is the header in a TCP packet that ensures the integrity of data?
+#+begin_quote
+Checksum
+#+end_quote
+** Answer 2
+Provide the order of a normal Three-way handshake (with each step separated by a comma)
+#+begin_quote
+SYN,SYN/ACK,ACK
+#+end_quote
+* Practical - Handshake
+** Answer 1
+What is the value of the flag given at the end of the conversation?
+#+begin_quote
+THM{TCP_CHATTER}
+#+end_quote
+* UDP/IP
+UDP is a stateless protocol that doesn't require a stable connection between the two devices for data to be sent.
+The ~Three-Way-Handshake~ doesn't occur.
+| Advantages of UDP                                                                                               | Disadvantages of UDP                                                               |
+| UDP is much faster than TCP.                                                                                    | UDP doesn't care if the data is received or not.                                   |
+| UDP leaves the application (user software) to decide if there is any control over how quickly packets are sent. | It is quite flexible to software developers in this sense.                         |
+| UDP does not reserve a continuous connection on a device as TCP does.                                           | This means that unstable connections result in a terrible experience for the user. |
+As mentioned, no process takes places in setting up a connection between two devices.
+UDP packets are much simpler compared to TCP.
+** UDP header
+| Header              | Description                                                                                                                       |
+| Time To Live (TTL)  | This field sets an expiry timer for the packet, so it doesn't clog up your network if it never manages to reach a host or escape! |
+| Source Address      | The IP address of the device  that the packet is being sent from, so that data knows where to return to                           |
+| Destination Address | The device's IP address the packet is being sent to so that data knows where to travel next                                       |
+| Source Port         | This value is the port that is openend by the sender to send the TCP packet from.                                                 |
+| Destination Port    | This value is the port number that an application or service is running on the remote host                                        |
+| Data                | This header is where the data, i.e. bytes of a file that is being transmitted, is stored                                 |
+** Answer 1
+What does the term "UDP" stand for?
+#+begin_quote
+User Datagram Protocol
+#+end_quote
+** Answer 1
+What type of connection is "UDP"?
+#+begin_quote
+Stateless
+#+end_quote
+** Answer 1
+What protocol would you use to transfer a file?
+#+begin_quote
+TCP
+#+end_quote
+** Answer 1
+What protocol would you use to have a video call?
+#+begin_quote
+UDP
+#+end_quote
+* Ports 101 (Practical)
+** Resources
++ [[http://www.vmaxx.net/techinfo/ports.htm][Port 1 - 1024]]
+** Some common one
+| Protocol                                   | Port Number | Description                                                              |
+| File Transfer Protocol (FTP)               |          21 | Used by file-sharing application, built on a client-server model         |
+| Secure Shell (SSH)                         |          22 | Used to secure login to systems via a text based interface for managment (CLI) |
+| HyperText Transfer Protocol (HTTP)         |          80 | Used in the World Wide Web                                               |
+| HyperText Transfer Protocol Secure (HTTPS) |         443 | An encrypted version of HTTP (use SSL)                                   |
+| Server Message Block (SMB)                 |         445 | Similar to FTP, it allow you to share device, like a printer             |
+| Remote Desktop Protocol (RDP)              |        3389 | This protocol is a secure means of logging int to a system using a visual desktop interface (GUI) |
+** Answer 1
+What is the flag received from the challenge?
+Use [[denote:20220912T094757][Netcat]] to solve: ~nc 8.8.8.8 1234~
+#+begin_quote
+THM{YOU_CONNECTED_TO_A_PORT}
+#+end_quote
+*  Continue Your Learning: Extending Your Network
+No answer needed

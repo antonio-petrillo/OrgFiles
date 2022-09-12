@@ -1,0 +1,10 @@
+#+title:      Open Source Software
+#+date:       [2022-09-12 Mon 10:40]
+#+filetags:   :opensource-software:
+#+identifier: 20220912T104010
+
+* Editor
+** [[https://www.gnu.org/software/emacs/][Emacs]]
+* Networking
+** [[https://www.snort.org/][Snort firewall]]
+** [[https://www.pfsense.org/][pfsense firewall]] (more like a dedicated linux distro)

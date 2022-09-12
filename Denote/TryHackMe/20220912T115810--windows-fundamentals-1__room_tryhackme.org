@@ -1,0 +1,108 @@
+#+title:      windows fundamentals 1
+#+date:       [2022-09-12 Mon 11:58]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220912T115810
+
+* Introduction to Windows
+No answer needed.
+* Windows Editions
+** Answer 1
+What encryption can you enable on Pro that you can't enable in Home?
+#+begin_quote
+Bitlocker
+#+end_quote
+* The Desktop (GUI)
+I'm hating this question...
+** Answer 1
+Which selection will hide/disable the Search box?
+#+begin_quote
+Hidden
+#+end_quote
+** Answer 2
+Which selection will hide/disable the Task View button?
+Right click on menu bar.
+#+begin_quote
+Show Task View Button
+#+end_quote
+** Answer 3
+Besides Clock and Network, what other icon is visible in the Notification Area?
+Right click on notifications icons on the lower right.
+#+begin_quote
+Action center
+#+end_quote
+* The File system
+Windows use ~NTFS~, which stands for (New Technology File System), as file system, before that it used FAT16/FAT32 (File Allocation Table (Table's size)) or HPFS (High Performance File System)
+** Feature
++ Support more than 4GB
++ Set specific permisison on folders and file
++ Folder and File compression
++ Encryption (EFS := Encryption File System)
++ ADS (Alternate Data Streams) [[https://www.malwarebytes.com/blog/news/2015/07/introduction-to-alternate-data-streams][(see here)]]
+** Docs
+official [[https://docs.microsoft.com/en-us/troubleshoot/windows-client/backup-and-storage/fat-hpfs-and-ntfs-file-systems][microsoft]] documentation.
+** Answer 1
+ What is the meaning of NTFS?
+#+begin_quote
+New Technology File System
+#+end_quote
+** Suggested room
+[[https://tryhackme.com/room/adventofcyber2][Advent of cyber]], in particular day 2.
+* The Windows\System32 Folders
+Located in ~C:\Windows~, known as the folder which contains the Windows operating system.
+Delete a file or a folder in this path may render Windows OS inoperational ([[https://www.howtogeek.com/346997/what-is-the-system32-directory-and-why-you-shouldnt-delete-it/][see here]]).
+** Answer 1
+What is the system variable for the Windows folder?
+#+begin_quote
+%windir%
+#+end_quote
+* User Accounts, Profiles, and Permissions
+Some typical kind of accounts on a windows system:
++ Administrator: can make changes to the system
++ Standard: can make changes only to folders/files attributed to the user
+Useful command:
++ ~lusrmgr.msc~ Local User and Group Management
+** Answer 1
+What is the name of the other user account?
+#+begin_quote
+tryhackmebilly
+#+end_quote
+** Answer 2
+What groups is this user a member of?
+#+begin_quote
+Remote Desktop Users, Users
+#+end_quote
+** Answer 3
+What built-in account is for guest access to the computer?
+#+begin_quote
+Guest
+#+end_quote
+** Answer 4
+What is the account status?
+This question is horrible, there is no info on status on the GUI, and furthermore the GUI to use in this question is pure garbage.
+#+begin_quote
+account is disabled
+#+end_quote
+* User Account Control
+Is used to protect the account with high privileges.
+Learn more [[https://docs.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works][here]].
+** Answer 1
+What does UAC mean?
+Is the /sudo/ GUI when you try to install a program!
+#+begin_quote
+User Account Control
+#+end_quote
+* Settings and the Control Panel
+** Answer 1
+In the Control Panel, change the view to Small icons. What is the last setting in the Control Panel view?
+#+begin_quote
+Windows Defender Firewall
+#+end_quote
+* Task Manager
+See [[https://tryhackme.com/room/btwindowsinternals][Core Windows Processes]].
+** Answer 1
+What is the keyboard shortcut to open Task Manager?
+#+begin_quote
+Ctrl+Shift+Esc
+#+end_quote
+* Conclusion
+No answer needed

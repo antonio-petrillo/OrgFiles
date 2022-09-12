@@ -1,0 +1,130 @@
+#+title:      Linux Fundamentals 3
+#+date:       [2022-09-12 Mon 19:09]
+#+filetags:   :linux:room:tryhackme:
+#+identifier: 20220912T190909
+
+* Introduction
+No answer needed
+* Deploy Your Linux Machine
+No answer needed
+* Terminal Text Editors
+** Answer 1
+Create a file using Nano
+#+begin_quote
+No answer needed
+#+end_quote
+** Answer 2
+Edit "task3" located in "tryhackme"'s home directory using Nano. What is the flag?
+#+begin_quote
+THM{TEXT_EDITORS}
+#+end_quote
+* General/Useful Utilities
++ wget
++ curl
++ scp
++ python3
++ python3 -m http.server
++ [[https://github.com/sc0tfree/updog.git][updog]] (python3, not preinstalled)
+** Answer 1
+Ensure you are connected to the deployed instance
+#+begin_quote
+No answer needed
+#+end_quote
+** Answer 2
+Now, use Python 3's "HTTPServer" module to start a web server in the home directory of the "tryhackme" user on the deployed instance.
+#+begin_quote
+No answer needed
+#+end_quote
+** Answer 3
+Download the file http://IP-of-the-machine-here/.flag.txt onto the TryHackMe AttackBox
+What are the contents?
+#+begin_quote
+THM{WGET_WEBSERVER}
+#+end_quote
+** Answer 4
+Create and download files to further apply your learning -- see how you can read the documentation on Python3's "HTTPServer" module.
+
+Use Ctrl + C to stop the Python3 HTTPServer module once you are finished.
+#+begin_quote
+No answer needed
+#+end_quote
+* Processes 101
+** Answer 1
+Read me!
+#+begin_quote
+No answer needed
+#+end_quote
+** Answer 2
+If we were to launch a process where the previous ID was "300", what would the ID of this new process be?
+#+begin_quote
+301
+#+end_quote
+** Answer 3
+If we wanted to cleanly kill a process, what signal would we send it?
+#+begin_quote
+SIGTERM
+#+end_quote
+** Answer 4
+Locate the process that is running on the deployed instance (10.10.148.89). What flag is given?
+#+begin_quote
+THM{PROCESSES}
+#+end_quote
+** Answer 5
+What command would we use to stop the service "myservice"?
+#+begin_quote
+systemctl stop myservice
+#+end_quote
+** Answer 6
+What command would we use to start the same service on the boot-up of the system?
+#+begin_quote
+systemctl start myservice
+#+end_quote
+** Answer 7
+What command would we use to bring a previously backgrounded process back to the foreground?
+#+begin_quote
+fg
+#+end_quote
+* Maintaining Your System: Automation
+** Answer 1
+Ensure you are connected to the deployed instance and look at the running crontabs.
+#+begin_quote
+No answer needed
+#+end_quote
+** Answer 2
+When will the crontab on the deployed instance (10.10.148.89) run?
+#+begin_quote
+@reboot
+#+end_quote
+* Maintaining Your System: Automation
+** Answer 1
+Since TryHackMe instances do not have an internet connection...this task only requires you to read through the material.
+#+begin_quote
+No answer needed
+#+end_quote
+*  Maintaining Your System: Logs
+** Answer 1
+Look for the apache2 logs on the deployable Linux machine
+#+begin_quote
+No answer needed
+#+end_quote
+** Answer 2
+What is the IP address of the user who visited the site?
+#+begin_quote
+10.9.232.111
+#+end_quote
+** Answer 3
+What file did they access?
+#+begin_quote
+catsanddogs.jpg
+#+end_quote
+* Conclusions & Summaries
+** Answer 1
+Terminate the machine deployed in this room from task 2.
+#+begin_quote
+No answer needed
+#+end_quote
+** Answer 2
+Continue your learning in other Linux-dedicated rooms
+#+begin_quote
+No answer needed
+#+end_quote

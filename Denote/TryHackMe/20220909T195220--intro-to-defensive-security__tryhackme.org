@@ -3,6 +3,8 @@
 #+filetags:   :tryhackme:
 #+identifier: 20220909T195220
 
+* Link to the room
+[[https://tryhackme.com/room/defensivesecurity][introoffensivesecurity]]
 * First section
 Go through some principle of defensive security.
 Red team are dedicated to offensive security, Blue team to defensive security.

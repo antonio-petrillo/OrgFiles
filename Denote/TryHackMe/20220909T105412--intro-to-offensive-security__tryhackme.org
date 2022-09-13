@@ -3,6 +3,8 @@
 #+filetags:   :tryhackme:
 #+identifier: 20220909T105412
 
+* Link to the room
+[[https://tryhackme.com/room/introtooffensivesecurity][introoffensivesecurity]]
 * First section
 ** [[denote:20220909T111158][Gobuster]]
 #+begin_quote

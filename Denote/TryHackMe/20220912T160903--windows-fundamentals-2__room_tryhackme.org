@@ -3,6 +3,8 @@
 #+filetags:   :room:tryhackme:
 #+identifier: 20220912T160903
 
+* Link to the room
+[[https://tryhackme.com/room/windowsfundamentals2x0x][windowsfundamentals2x0x]]
 * Introduction
 No answer needed.
 * System Configuration

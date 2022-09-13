@@ -3,6 +3,8 @@
 #+filetags:   :room:tryhackme:
 #+identifier: 20220911T102120
 
+* Link to the room
+[[https://tryhackme.com/room/whatisnetworking][whatisnetworking]]
 * What is Networking?
 Networks are simply things connected, basically a graph with vertices and edges.
 In computing the vertices are the computer connected and edges the physical connetions, wifi, bluetooth, ecc... are also physical.

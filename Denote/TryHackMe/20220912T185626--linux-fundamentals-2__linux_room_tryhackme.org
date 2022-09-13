@@ -3,6 +3,8 @@
 #+filetags:   :linux:room:tryhackme:
 #+identifier: 20220912T185626
 
+* Link to the room
+[[https://tryhackme.com/room/linuxfundamentalspart2][linuxfundamentalspart2]]
 * Introduction
 No answer needed
 * Accessing Your Linux Machine Using SSH (Deploy)

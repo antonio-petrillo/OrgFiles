@@ -43,3 +43,12 @@ CLOSED: [2022-09-12 Mon 18:56]
 CLOSED: [2022-09-12 Mon 19:09]
 ** DONE <2022-09-12 Mon> Start room - Linux Fundamentals 3
 CLOSED: [2022-09-12 Mon 19:36]
+* DONE Intersting room in date: <2022-09-13 Tue>  [100%]
+CLOSED: [2022-09-13 Tue 11:59]
+** DONE [[denote:20220913T102536][Bash Scripting]]
+CLOSED: [2022-09-13 Tue 10:52]
+** DONE [[denote:20220913T105347][Regular expression]]
+CLOSED: [2022-09-13 Tue 11:59]
+* TODO Start path - Web Fundamentals [0%]
+** TODO [[denote:20220913T102239][Walking An Application]]
+* TODO <2022-09-13 Tue> Start room - Intorductory Networking

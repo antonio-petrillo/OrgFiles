@@ -3,6 +3,8 @@
 #+filetags:   :linux:room:tryhackme:
 #+identifier: 20220912T190909
 
+* Link to the room
+[[https://tryhackme.com/room/linuxfundamentalspart3][linuxfundamentalspart3]]
 * Introduction
 No answer needed
 * Deploy Your Linux Machine
@@ -24,7 +26,7 @@ THM{TEXT_EDITORS}
 + scp
 + python3
 + python3 -m http.server
-+ [[https://github.com/sc0tfree/updog.git][updog]] (python3, not preinstalled)
++ [[denote:20220913T101310][updog]]  (python3, not preinstalled) [github link -> [[https://github.com/sc0tfree/updog.git][updog]]]
 ** Answer 1
 Ensure you are connected to the deployed instance
 #+begin_quote

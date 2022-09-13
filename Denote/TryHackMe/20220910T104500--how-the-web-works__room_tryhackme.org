@@ -6,6 +6,8 @@
 * Note
 The following lesson are marked as _in detail_, but they are introductory of course.
 * DNS in detail
+** Link to the room
+[[https://tryhackme.com/room/dnsindetail][dnsindetail]]
 ** What is DNS?
 #+begin_quote
 DNS (Domain Name System) provides a simple way for us to communicate with devices on the internet without remembering complex numbers.
@@ -157,6 +159,8 @@ Address: 10.10.10.10
 Hence the answer is ~10.10.10.10~
 
 * HTTP in detail
+** Link to the room
+[[https://tryhackme.com/room/httpindetail][httpindetail]]
 ** What is HTTP
 HTTP stand for ~Hyper Text Transfer Protocol~.
 Is a set of rules used for communicating with web servers for the transmitting data (image, html, ecc...).
@@ -385,6 +389,8 @@ Last-Modified: Sat, 10 Sep 2022 17:45:29 GMT
 </html>
 #+end_verse
 * How website work
+** Link to the room
+[[https://tryhackme.com/room/howwebsiteswork][howwebsitework]]
 ** Intro
 A website is made up by two major component:
 + Front end (client-side), the way the broser render a website

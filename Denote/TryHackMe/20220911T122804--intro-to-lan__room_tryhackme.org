@@ -3,6 +3,8 @@
 #+filetags:   :room:tryhackme:
 #+identifier: 20220911T122804
 
+* Link to the room
+[[https://tryhackme.com/room/introtolan][introtolan]]
 * Introducing LAN Topologies
 ** Star topology
 Each device is connected to a central networking device.

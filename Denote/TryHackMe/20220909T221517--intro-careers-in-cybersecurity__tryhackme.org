@@ -3,6 +3,8 @@
 #+filetags:   :tryhackme:
 #+identifier: 20220909T221517
 
+* Link to the room
+[[https://tryhackme.com/room/careersincyber][careersincyber]]
 * Section 1
 Nothing to do here.
 * Section 2 to 8

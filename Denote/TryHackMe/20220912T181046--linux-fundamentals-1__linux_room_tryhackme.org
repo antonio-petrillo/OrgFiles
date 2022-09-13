@@ -3,6 +3,8 @@
 #+filetags:   :linux:room:tryhackme:
 #+identifier: 20220912T181046
 
+* Link to the room
+[[https://tryhackme.com/room/linuxfundamentalspart1][linuxfundamentalspart1]]
 * Introduction
 No answer needed.
 * A Bit of Background on Linux

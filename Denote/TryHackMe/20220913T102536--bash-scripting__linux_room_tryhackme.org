@@ -1,0 +1,104 @@
+#+title:      Bash Scripting
+#+date:       [2022-09-13 Tue 10:25]
+#+filetags:   :linux:room:tryhackme:
+#+identifier: 20220913T102536
+
+* Linkt to the room
+[[https://tryhackme.com/room/bashscripting][bashscripting]]
+* Introduction
+No answer needed.
+* Our first simple bash scripts
+** Answer 1
+What piece of code can we insert at the start of a line to comment out our code?
+#+begin_quote
+#
+#+end_quote
+** Answer 2
+What will the following script output to the screen, echo “BishBashBosh”
+#+begin_quote
+BishBashBosh
+#+end_quote
+* Variables
+Intro to variables and ~$~.
+** How to debug at a certain point
+Put ~set -x~ to indicate the beginning of the part to debub and ~set +x~ to mark the end.
+** Answer 1
+What would this code return?
+#+begin_quote
+Jammy is 21 years old
+#+end_quote
+** Answer 1
+How would you print out the city to the screen?
+#+begin_quote
+echo $city
+#+end_quote
+** Answer 1
+How would you print out the country to the screen?
+#+begin_quote
+echo $country
+#+end_quote
+* Parameters
+** Answer 1
+How can we get the number of arguments supplied to a script?
+#+begin_quote
+$#
+#+end_quote
+** Answer 1
+How can we get the filename of our current script(aka our first argument)?
+#+begin_quote
+$0
+#+end_quote
+** Answer 1
+How can we get the 4th argument supplied to the script?
+#+begin_quote
+$4
+#+end_quote
+** Answer 1
+If a script asks us for input how can we direct our input into a variable called ‘test’ using “read”
+#+begin_quote
+read test
+#+end_quote
+** Answer 1
+What will the output of “echo $1 $3” if the script was ran with “./script.sh hello hola aloha”
+#+begin_quote
+hello aloha
+#+end_quote
+* Arrays
+0-indices based (thanks god)
+Define an array:
+#+begin_src shell
+transport=('car' 'train' 'bike' 'bus')
+echo "${transport[@]}" # car train bike bus
+echo "${transport[1]}" # train
+unset transport[1]
+#+end_src
+Note:
+zsh seems to use 1-indices based arrays ([[https://github.com/LegolasTheElf/mannaggia.git][mannaggia]]).
+** Answer 1
+What would be the command to print audi to the screen using indexing.
+#+begin_src shell
+echo "${cars[1]}"
+#+end_src
+** Answer 2
+If we wanted to remove tesla from the array how would we do so?
+#+begin_src
+unset cars[3]
+#+end_src
+** Answer 3
+How could we insert a new value called toyota to replace tesla?
+#+begin_quote
+cars[3]='toyota'
+#+end_quote
+* Conditionals
+** Answer 1
+What is the flag to check if we have read access to a file?
+#+begin_src shell
+test -r
+#+end_src
+** Answer 2
+What is the flag to check to see if it's a directory?
+#+begin_src shell
+test -d
+#+end_src
+* Further reading
+No answer needed.

@@ -1,0 +1,21 @@
+#+title:      updog
+#+date:       [2022-09-13 Tue 10:13]
+#+filetags:   :tool:tryhackme:
+#+identifier: 20220913T101310
+
+* What it is?
+A replacement for Python's ~SimpleHTTPServer~, basically a more advanced version of ~python -m http.server~.
+You can spawn a simple HTTP/S server and then use it for you purpouse.
+* Website
+Link to [[https://github.com/sc0tfree/updog][updog]] github.
+* Usage
+~updog [-d DIRECTORY] [-p PORT] [--password PASSWORD] [--ssl]~
+** Table
+| Argument                            | Description                                      |
+|-------------------------------------+--------------------------------------------------|
+| -d DIRECTORY, --directory DIRECTORY | Root directory [Default=.]                       |
+| -p PORT, --port PORT                | Port to serve [Default=9090]                     |
+| --password PASSWORD                 | Use a password to access the page. (No username) |
+| --ssl                               | Enable transport encryption via SSL              |
+| --version                           | Show version                                     |
+| -h, --help                          | Show help                                        |

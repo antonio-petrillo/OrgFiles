@@ -1,0 +1,176 @@
+#+title:      Regular expression
+#+date:       [2022-09-13 Tue 10:53]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220913T105347
+
+* Link to the room
+[[https://tryhackme.com/room/catregex][catregex]]
+* Introduction
+No answer needed.
+* Charset
+** Answer 1
+Match all of the following characters: c, o, g
+#+begin_src sh
+[cog]
+#+end_src
+** Answer 2
+Match all of the following words: cat, fat, hat
+#+begin_src shell
+[chf]at
+#+end_src
+** Answer 3
+Match all of the following words: Cat, cat, Hat, hat
+#+begin_src shell
+[CcHh]at
+#+end_src
+** Answer 4
+Match all of the following filenames: File1, File2, file3, file4, file5, File7, file9
+#+begin_src shell
+[Ff]ile[1-9]
+#+end_src
+** Answer 5
+Match all of the filenames of question 4, except "File7" (use the hat symbol)
+#+begin_src shell
+[Ff]ile[^7]
+#+end_src
+* Wildcards and optional characters
+** Answer 1
+Match all of the following words: Cat, fat, hat, rat
+#+begin_src shell
+.at
+#+end_src
+** Answer 2
+Match all of the following words: Cat, cats
+#+begin_src shell
+[Cc]ats?
+#+end_src
+** Answer 3
+Match the following domain name: cat.xyz
+#+begin_src shell
+[ch]ats?\.xyz
+#+end_src
+** Answer 4
+Match all of the following domain names: cat.xyz, cats.xyz, hats.xyz
+#+begin_src shell
+[ch]ats?\.xyz
+#+end_src
+** Answer 5
+Match every 4-letter string that doesn't end in any letter from n to z
+#+begin_src shell
+...[^n-z]
+#+end_src
+** Answer 6
+Match bat, bats, hat, hats, but not rat or rats (use the hat symbol)
+#+begin_src shell
+[^r]ats?
+#+end_src
+* Metacharacters and repetitions
+This is kinda interesting.
+Some new metacharacter:
++ \d -> match a single digit
++ \D -> match a non-digit
++ \w -> match a alphanum char
++ \W -> match a non alphanum char
++ \s -> match whitespace char
++ \S -> match everything else than \s
+** Answer 1
+Match the following word: catssss
+#+begin_src shell
+cats{4}
+#+end_src
+** Answer 2
+Match all of the following words (use the * sign): Cat, cats, catsss
+#+begin_src shell
+[Cc]ats*
+#+end_src
+** Answer 3
+Match all of the following sentences (use the + sign): regex go br, regex go brrrrrr
+#+begin_src shell
+regex go br+
+#+end_src
+** Answer 4
+Match all of the following filenames: ab0001, bb0000, abc1000, cba0110, c0000 (don't use a metacharacter)
+#+begin_src shell
+[abc]{1,3}[01]{4}
+#+end_src
+** Answer 5
+Match all of the following filenames: File01, File2, file12, File20, File99
+#+begin_src shell
+[Ff]ile\d{1,2}
+#+end_src
+** Answer 6
+Match all of the following folder names: kali tools, kali     tools
+#+begin_src shell
+kali\s+tools
+#+end_src
+** Answer 7
+Match all of the following filenames: notes~, stuff@, gtfob#, lmaoo!
+#+begin_src shell
+\w{5}\W
+#+end_src
+** Answer 8
+Match the string in quotes (use the * sign and the \s, \S metacharacters): "2f0h@f0j0%!     a)K!F49h!FFOK"
+#+begin_src shell
+\S*\s*\S*
+#+end_src
+** Answer 9
+Match every 9-character string (with letters, numbers, and symbols) that doesn't end in a "!" sign
+#+begin_src shell
+\S{8}[^!]
+#+end_src
+** Answer 10
+Match all of these filenames (use the + symbol): .bash_rc, .unnecessarily_long_filename, and note1
+#+begin_src shell
+\.\w*
+#+end_src
+* Starts with/ ends with, groups, and either/ or
+** Answer 1
+Match every string that starts with "Password:" followed by any 10 characters excluding "0"
+#+begin_src shell
+^Password:[^0]{10}
+#+end_src
+** Answer 2
+Match "username: " in the beginning of a line (note the space!)
+#+begin_src shell
+^username:\s
+#+end_src
+** Answer 3
+Match every line that doesn't start with a digit (use a metacharacter)
+#+begin_src shell
+^\D
+#+end_src
+** Answer 4
+Match this string at the end of a line: EOF$
+#+begin_src shell
+EOF\$$
+#+end_src
+** Answer 5
+Match all of the following
++ I use nano
++ I use vim
+#+begin_src shell
+alias vim="emacs"
+alias nano="emacs"
+I use (vim|nano)
+#+end_src
+** Answer 6
+Match all lines that start with $, followed by any single digit,
+followed by $, followed by one or more non-whitespace characters
+#+begin_src shell
+^\$\d\$\S+
+#+end_src
+** Answer 7
+Match every possible IPv4 IP address (use metacharacters and groups)
+#+begin_src shell
+(\d{1,3}\.){3}\d{1,3}
+#+end_src
+** Answer 8
+Match all of these emails while also adding the username and the domain name (not the TLD) in separate groups (use \w):
++ hello@tryhackme.com
++ username@domain.com
++ dummy_email@xyz.com
+#+begin_src shell
+(\w+)@(\w+)\.com
+#+end_src
+* Conclusion
+No answer needed.

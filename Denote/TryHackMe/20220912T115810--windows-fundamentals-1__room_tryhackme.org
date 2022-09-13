@@ -3,6 +3,8 @@
 #+filetags:   :room:tryhackme:
 #+identifier: 20220912T115810
 
+* Link to the room
+[[https://tryhackme.com/room/windowsfundamentals1xbx][windowsfundamentals1xbx]]
 * Introduction to Windows
 No answer needed.
 * Windows Editions

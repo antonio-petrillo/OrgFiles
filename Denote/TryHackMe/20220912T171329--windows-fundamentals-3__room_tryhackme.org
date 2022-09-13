@@ -3,6 +3,8 @@
 #+filetags:   :room:tryhackme:
 #+identifier: 20220912T171329
 
+* Link to the note
+[[https://tryhackme.com/room/windowsfundamentals3xzx][windowsfundamentals3xzx]]
 * Introduction
 No answer needed
 * Windows Update

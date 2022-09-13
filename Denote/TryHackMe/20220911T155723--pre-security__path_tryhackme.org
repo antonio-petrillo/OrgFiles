@@ -3,6 +3,8 @@
 #+filetags:   :path:tryhackme:
 #+identifier: 20220911T155723
 
+* Link to the room
+[[https://tryhackme.com/room/beginnerpathintro][beginnerpathintro]]
 * Introduction to cyber security
 ** [[denote:20220909T105412][Intro_to_offensive_security]]
 ** [[denote:20220909T195220][Intro to defensive security]]

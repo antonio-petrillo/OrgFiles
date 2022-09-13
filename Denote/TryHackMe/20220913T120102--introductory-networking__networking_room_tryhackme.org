@@ -1,0 +1,7 @@
+#+title:      Introductory Networking
+#+date:       [2022-09-13 Tue 12:01]
+#+filetags:   :networking:room:tryhackme:
+#+identifier: 20220913T120102
+
+* Link to the room
+[[https://tryhackme.com/room/introtonetworking][introtonetworking]]

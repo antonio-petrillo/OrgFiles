@@ -3,6 +3,8 @@
 #+filetags:   :room:tryhackme:
 #+identifier: 20220911T182721
 
+* Link to the room
+[[https://tryhackme.com/room/packetsframes][packetsframes]]
 * What are packets and Frames
 They are a small piece of data that, when forming together, make a larger piece of information or message.
 They belongs to different layer in the OSI model.

@@ -3,6 +3,8 @@
 #+filetags:   :room:tryhackme:
 #+identifier: 20220911T160148
 
+* Link to the room
+[[https://tryhackme.com/room/osimodelzi][osimodel]]
 * What is the OSI model
 OSI stands for (Open Systems Inerconnection Model).
 It is an absolute fundamental model used in networking.

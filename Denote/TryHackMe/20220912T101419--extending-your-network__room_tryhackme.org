@@ -3,6 +3,8 @@
 #+filetags:   :room:tryhackme:
 #+identifier: 20220912T101419
 
+* Link to the room
+[[https://tryhackme.com/room/extendingyournetwork][extendingyournetwork]]
 * Introduction to Port Forwarding
 With port forwarding it possible to made a PC, on a local network, reachable on the internet, so other PC can communicate with it.
 Port Fordwarding is achieved with Routers.

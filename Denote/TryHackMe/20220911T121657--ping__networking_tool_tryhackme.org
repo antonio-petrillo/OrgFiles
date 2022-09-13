@@ -1,6 +1,6 @@
 #+title:      ping
 #+date:       [2022-09-11 Sun 12:16]
-#+filetags:   :tool:tryhackme:
+#+filetags:   :networking:tool:tryhackme:
 #+identifier: 20220911T121657
 
 * What it does

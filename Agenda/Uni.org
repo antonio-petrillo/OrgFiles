@@ -1,6 +1,9 @@
 * Study for DSA exam
 Trying new book, from S.Skiena
-* TryHackMe paths todo [0/2]
+* TryHackMe rooms todo [2/3]
 <2022-09-19 Mon>
-** TODO [[https://tryhackme.com/room/bashscripting][bash scripting]]
-** TODO [[https://tryhackme.com/room/catregex][regex]]
+** DONE [[https://tryhackme.com/room/bashscripting][bash scripting]]
+CLOSED: [2022-09-13 Tue 12:02]
+** DONE [[https://tryhackme.com/room/catregex][regex]]
+CLOSED: [2022-09-13 Tue 12:02]
+** TODO [[https://tryhackme.com/room/introtonetworking][intro to networking]]

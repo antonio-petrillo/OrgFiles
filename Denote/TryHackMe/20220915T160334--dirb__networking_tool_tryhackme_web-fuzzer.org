@@ -1,0 +1,13 @@
+#+title:      dirb
+#+date:       [2022-09-15 Thu 16:03]
+#+filetags:   :networking:tool:tryhackme:web-fuzzer:
+#+identifier: 20220915T160334
+
+* What it does?
+It's a web content scanner
+* Similar package
++ [[denote:20220909T111158][gobuster]]
++ [[denote:20220915T155935][ffuf]]
+* Manual
+See ~man dirb~ for a more in depth doc.
+Don't have a -h manual.

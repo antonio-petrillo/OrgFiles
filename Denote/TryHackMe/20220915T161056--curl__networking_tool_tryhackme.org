@@ -1,0 +1,32 @@
+#+title:      curl
+#+date:       [2022-09-15 Thu 16:10]
+#+filetags:   :networking:tool:tryhackme:
+#+identifier: 20220915T161056
+
+* What it does?
+Transfer a URL.
+It's a tool to transfering data from or to a server.
+Support various protocols.
+* Similar package
++ [[denote:20220915T161456][wget]]
+* Manual
+See ~man curl~ for a more in depth doc.
+#+begin_src shell
+Usage: curl [options...] <url>
+ -d, --data <data>          HTTP POST data
+ -f, --fail                 Fail fast with no output on HTTP errors
+ -h, --help <category>      Get help for commands
+ -i, --include              Include protocol response headers in the output
+ -o, --output <file>        Write to file instead of stdout
+ -O, --remote-name          Write output to a file named as the remote file
+ -s, --silent               Silent mode
+ -T, --upload-file <file>   Transfer local FILE to destination
+ -u, --user <user:password> Server user and password
+ -A, --user-agent <name>    Send User-Agent <name> to server
+ -v, --verbose              Make the operation more talkative
+ -V, --version              Show version number and quit
+
+This is not the full help, this menu is stripped into categories.
+Use "--help category" to get an overview of all categories.
+For all options use the manual or "--help all".
+#+end_src

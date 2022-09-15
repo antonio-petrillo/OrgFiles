@@ -1,0 +1,16 @@
+#+title:      Cos'è una VLAN
+#+date:       [2022-09-14 Wed 19:10]
+#+filetags:   :morrolinux:networking:networking101:
+#+identifier: 20220914T191046
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* Cos'è una VLAN
+Creare e gestire reti logiche.
+* Come realizzarle
+** VLAN Trunk
+Richiede configurazione lato host
+** VLAN Access Link
+Non richiede configurazione lato host
+* Nota
+La VLAN non e' uno strumento di sicurezza.

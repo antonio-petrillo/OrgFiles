@@ -1,6 +1,6 @@
 #+title:      Netcat
 #+date:       [2022-09-12 Mon 09:47]
-#+filetags:   :tool:tryhackme:
+#+filetags:   :networking:tool:tryhackme:
 #+identifier: 20220912T094757
 
 * What it does

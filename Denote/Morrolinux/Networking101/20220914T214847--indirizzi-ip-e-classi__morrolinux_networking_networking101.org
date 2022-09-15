@@ -1,0 +1,69 @@
+#+title:      Indirizzi IP e classi
+#+date:       [2022-09-14 Wed 21:48]
+#+filetags:   :morrolinux:networking:networking101:
+#+identifier: 20220914T214847
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* Classi di indirizzi
+L'indirizzo IP e' un codice unico e compatto, ma contiene al suo interno multiple informazioni, prendiamo ad esempio ~192.168.1.47~ questo IP ci dice che il l'ID della rete e' ~192.168.1~ (Net ID) e l'ID del host e' ~47~ (Host ID).
+Questo esempio non e' generabile a tutti gli IP.
+* Multiple reti
+Ogni switch ha un indirizzo IP univoco, ma esso puo' realizzare piu' di una sola rete separata.
+Immaginiamo la seguente situazione, per rendere l'idea:
++ Switch:
++ Rete 1: Host1-192.168.0.13 Host2-192.168.0.14 Host3-192.168.0.15
++ Rete 2: Host1-192.168.1.13 Host2-192.168.1.14 Host3-192.168.1.15
+Abbiamo due retei ~192.168.0.0~ e ~192.168.1.0~, i computer della rete ~192.168.0.0~ possono comunicare tra loro, ma non possono comunicare con i PC della rete ~192.168.1.0~ e viceversa.
+* Classi di indirizzi
+E' possibile ripartire le varie parti di un indirizzo IP a proprio piacimento per creare le reti desiderate.
+Usero' come esempio l'indirizzo ~192.168.1.13~
+** Classe C
+I primi 24 bit indicano il nome della rete e i restanti 8 il nome dell'host.
++ Net ID: ~192.168.1~
++ Host ID: ~13/24~
+** Classe B
+I primi 16 bit indicano il nome della rete e i restanti 16 il nome dell'host.
++ Net ID: ~192.168~
++ Host ID: ~1.13/16~
+** Classe A
+ 8 bit per la rete e 24 per l'host.
+ + Net ID: ~192~
+ + Host ID: ~168.1.13/8~
+** Cosa indica la parte dopo l'Host ID?
+Sommando i bit riservati al nome della rete otteniamo il valore dopo il ~/~, questo valore e' detto netmask.
+Un modo alternativo per indicare la netmask e' quello di _esplicitare tutti i bit del Net ID con il valore massimo_ e lasciare a 0 i valore dell'host ID.
++ ~255.255.255.0~ indica un classe C, tipo ID: ~192.168.1.13/24~
++ ~255.255.0.0~ indica un classe B, tipo ID: ~192.168.1.13/16~
++ ~255.000.000.0~ indica un classe A, tipo ID: ~192.168.1.13/8~
+** Host ID speciali
+Non possono essere usati da host normali.
+Prendendo ad esempio la rete ID: ~192.168.1~:
++ Indirizzo della rete: ~192.168.1.0~
++ Indirizzo di broadcast ~192.168.1.255~
+* Assegnamento indirizzi IP
+Puo' essere assegnato dinamicamente (da un server DHCP), la configurazione avviene lato rete.
+O puo' avvenire staticamente con configurazione lato host.
+* Indirizzi IP speciali
++ 127.0.0.1: Localhost
++ 0.0.0.0: (tecnicamente non valido) indica tutti gli indirzzi di questo Host, utile lato server o qualora il nostro PC abbia piu' di una NIC
++ 192.168.1.255: come detto prima e' l'indirizzo broadcast
++ 255.255.255.255: indirizzo di broadcast della rete in cui ci troviamo (non dobbiamo specificare l'indirizzo di rete)
+* Classi speciali (secondarie)
+** Classe D
+Vanno da ~224.0.0.0~ a ~239.255.255.255~ (riservati per il multicast)
+** Classe E
+Vanno da ~240.0.0.0~ a ~255.255.255.254~ (riservati per esperimenti futuri, intanto il futuro e' gia' arrivato (IPv6) e non li hanno usati).
+* Range di indirizzi
+** Classe A (Netmask,Cidr: 8)
+Vanno da ~1.0.0.0~ a ~126.255.255.255~
+*** Classe A (loopback)
+L'indirizzo localhost: va da ~127.0.0.0~ a ~127.255.255.255~
+** Classe B (Netmask,Cidr: 16)
+Vanno da ~128.0.0.0~ a ~191.255.255.255~
+** Classe C (Netmask,Cidr: 24)
+Vanno da ~192.0.0.0~ a ~223.255.255.255~
+** Classe D (Netmask,Cidr: -)
+Vanno da ~224.0.0.0~ a ~239.255.255.255~
+** Classe E (Netmask,Cidr: -)
+Vanno da ~240.0.0.0~ a ~255.255.255.255~

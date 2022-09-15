@@ -1,0 +1,23 @@
+#+title:      Modello ISO-OSI e il modello TCPIP
+#+date:       [2022-09-14 Wed 16:35]
+#+filetags:   :morrolinux:networking101:
+#+identifier: 20220914T163515
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* Modello ISO-OSI
++ Physical layer
++ Data Link layer
++ Network Layer
++ Transport Layer
++ Session Layer
++ Presentation Layer
++ Application Layer
+The ISO-OSI model never entered the market properly, but the standar today, the TCP/IP model is inspired to the ISO-OSI (even if it is older), for this reason the ISO-OSI is keep until today for demonstrating purpouse, specially to demenostrate the layers and encapsulation.
+* TCP/IP
++ Applicaion Layer
++ Transport Layer
++ Network Layer
++ Data Link & Physical Layer
+* Quiz
+Result: 5/6

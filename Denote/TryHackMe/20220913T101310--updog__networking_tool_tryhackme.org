@@ -1,6 +1,6 @@
 #+title:      updog
 #+date:       [2022-09-13 Tue 10:13]
-#+filetags:   :tool:tryhackme:
+#+filetags:   :networking:tool:tryhackme:
 #+identifier: 20220913T101310
 
 * What it is?

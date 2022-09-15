@@ -1,0 +1,27 @@
+#+title:      Il protocollo ARP
+#+date:       [2022-09-14 Wed 21:22]
+#+filetags:   :morrolinux:networking:networking101:
+#+identifier: 20220914T212210
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* Il protocollo ARP (Address Resolution Protocol)
+In internet e' possibile inviare data ad un indirizzo IP:
+#+begin_example
+user1:188.13.126.14 ➡ vuole mandare un messaggio a ➡ user2: 88.18.112.41
+#+end_example
+Se il destinataio non e' sulla stessa rete, il processo e' leggermente diverso:
++ user1:188.13.126.14 ➡ vuole mandare un messaggio a ➡ user2: 88.18.112.41
++ user2 non e' sulla stessa rete.
++ Si cerca il percorso piu' breve per arrivare a user2
++ Si trova user3 che puo' raggiungere user2 ed e' raggiungibile da user1
++ user1 ➡ invia a user3 ➡ user3 invia a user 2
+Ovviamente ci puo' essere anche piu' di un salto da fare.
+Inviare il messaggio al prossimo host piu' vicino (nel percorso scelto dal routing) e' detto ~next hop~.
+Il problema ora e' che gli host si identificano tramite MAC come posso sapere l'indirizzo IP?
+* Entra in gioco il protocollo ARP
+Step del protocollo ARP
++ Arp request: si invia un messaggio broadcast per vedere se c'e' l'indirizzo desiderato, o se indirettamente qualche altro host lo sa
++ Arp respose: si sono io, oppure no, ma ti posso trovarlo per te
++ Nota: gli IP vengono salvati nella ARP cache
++ Comando [[denote:20220914T214215][arp]]

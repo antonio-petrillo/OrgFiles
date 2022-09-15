@@ -24,3 +24,4 @@ DEADLINE: <2022-09-05 Mon>
 + [ ] Monitor AOC
 + [ ] Silverstone powerbutton
 + [ ] case NZXT (S340)? (troppo rovinato e spedizione costosa)
+* TODO <2022-09-17 Sat> Move Denote configuration to a dedicated file

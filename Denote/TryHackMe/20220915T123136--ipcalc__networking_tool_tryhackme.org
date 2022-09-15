@@ -1,0 +1,60 @@
+#+title:      ipcalc
+#+date:       [2022-09-15 Thu 12:31]
+#+filetags:   :networking:tool:tryhackme:
+#+identifier: 20220915T123136
+
+* What it does?
+It's a program to compute a network, here an example:
+#+begin_example
+┌──(nto㉿kali)-[~]
+└─$ ipcalc 192.168.1.1/23
+Address:   192.168.1.1          11000000.10101000.0000000 1.00000001
+Netmask:   255.255.254.0 = 23   11111111.11111111.1111111 0.00000000
+Wildcard:  0.0.1.255            00000000.00000000.0000000 1.11111111
+=>
+Network:   192.168.0.0/23       11000000.10101000.0000000 0.00000000
+HostMin:   192.168.0.1          11000000.10101000.0000000 0.00000001
+HostMax:   192.168.1.254        11000000.10101000.0000000 1.11111110
+Broadcast: 192.168.1.255        11000000.10101000.0000000 1.11111111
+Hosts/Net: 510                   Class C, Private Internet
+#+end_example
+* Manual
+See ~man ipcalc~ for more in depth version.
+#+begin_example
+Usage: ipcalc [options] <ADDRESS>[[/]<NETMASK>] [NETMASK]
+
+ipcalc takes an IP address and netmask and calculates the resulting
+broadcast, network, Cisco wildcard mask, and host range. By giving a
+second netmask, you can design sub- and supernetworks. It is also
+intended to be a teaching tool and presents the results as
+easy-to-understand binary values.
+
+ -n --nocolor  Don't display ANSI color codes.
+ -c --color    Display ANSI color codes (default).
+ -b --nobinary Suppress the bitwise output.
+ -c --class    Just print bit-count-mask of given address.
+ -h --html     Display results as HTML (not finished in this version).
+ -v --version  Print Version.
+ -s --split n1 n2 n3
+               Split into networks of size n1, n2, n3.
+ -r --range    Deaggregate address range.
+    --help     Longer help text.
+
+Examples:
+
+ipcalc 192.168.0.1/24
+ipcalc 192.168.0.1/255.255.128.0
+ipcalc 192.168.0.1 255.255.128.0 255.255.192.0
+ipcalc 192.168.0.1 0.0.63.255
+
+
+ipcalc <ADDRESS1> - <ADDRESS2>  deaggregate address range
+
+ipcalc <ADDRESS>/<NETMASK> --s a b c
+                                split network to subnets
+                                where a b c fits in.
+
+! New HTML support not yet finished.
+
+ipcalc 0.5
+#+end_example

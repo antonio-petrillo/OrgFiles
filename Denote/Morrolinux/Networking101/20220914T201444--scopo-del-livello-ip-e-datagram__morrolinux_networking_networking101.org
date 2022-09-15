@@ -1,0 +1,40 @@
+#+title:      Scopo del livello IP e Datagram
+#+date:       [2022-09-14 Wed 20:14]
+#+filetags:   :morrolinux:networking:networking101:
+#+identifier: 20220914T201444
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* Livello 3 aka Livello IP/Networking
+** IPv4
+Viene assegnato alla NIC, ma e' possibile cambiarlo direttamente dal sistema operativo.
+E' un codice di 32 bit composto da 4 blocchi di numeri nel range 0-255, quindi ogni campo utilizza 8 bit.
+** IPv6
+Utilizza 128 bit anziche' 32.
+I blocchi, in questo caso 6, utilizzano cifre esadecimali.
+Non e' ancora molto diffuso.
+* Altre info
+I messaggi scambiati tra gli host e' il _datagram IP_.
+[[~/Documents/Org/assets/Networking101/Datagram-Header-In-the-picture-above-is-given-an-IP-datagram-format-Each-IP-packet.png]]
+** Vediamo i campi piu' importanti
++ Vers: indica la versione del protocollo (v4, v6)
++ Len: indica la lunghezza dell' header del datagram
++ Total Length: indica la lunghezza totale del datagramma IP
++ Identification: id del datagram (usato per riordinare i datagram)
++ TTL: time to live
++ Protocol: indica quale protocollo applicativo puo' usare questi dati
++ Header checksum: hash per vedere se il pacchetto e' corrotto o meno
++ Source IP address: indirizzo del mandante
++ Destination IP address: indirizzo del ricevente
++ data: dati inviati, aka Payload
+* Bandwidth
+Larghezza di manda <-> Quantita' di dati trasmessi per unita' di tempo.
++ 1 Kbps = 1 kilobit per secondo (Si lavora con bit e non con byte)
++ 1 Mbps = 1 megabit per secondo (Si lavora con bit e non con byte)
++ 1 Gbps = 1 gigabit per secondo (Si lavora con bit e non con byte)
+* Routing
+Scelta del percorso per arrivare dal punto A al punto B.
+* Consegna
+Il protocollo IP fornisce solo una consegna _NON affidabile_:
++ Priva di connessione (ogni pacchetto e' indipendente dagli altri)
++ Consegna non garantita

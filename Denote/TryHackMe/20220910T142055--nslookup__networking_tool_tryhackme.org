@@ -1,6 +1,6 @@
 #+title:      nslookup
 #+date:       [2022-09-10 Sat 14:20]
-#+filetags:   :tool:tryhackme:
+#+filetags:   :networking:tool:tryhackme:
 #+identifier: 20220910T142055
 
 * What it does

@@ -1,0 +1,14 @@
+#+title:       Modalità di trasmissione e modalità di collegamento
+#+date:       [2022-09-14 Wed 17:31]
+#+filetags:   :morrolinux:networking:networking101:
+#+identifier: 20220914T173122
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* Type of transmission
++ Unicast: 1 sender - 1 receiver
++ Mulitcast: 1 sender - n receiver
++ Broadcast: 1 sender - All other device in the network
+* Type of connection
++ Broadcast: the device share a common bus
++ PTP (Point To Point): the device are connected in a /linked list/

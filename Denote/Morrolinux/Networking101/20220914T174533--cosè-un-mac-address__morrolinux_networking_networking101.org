@@ -1,0 +1,26 @@
+#+title:      Cos'è un MAC Address
+#+date:       [2022-09-14 Wed 17:45]
+#+filetags:   :morrolinux:networking:networking101:
+#+identifier: 20220914T174533
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* Cos'è un MAC Address
+Stiamo parlando di una tecnologia di livello 2 nell'OSI (Data link), livello 1 in TCP/IP.
+Affronta le problematiche di interconnessione tra 2 o piu' host e connessione di un host a internet.
+* NIC (Network Interface Card)
+Ogni host collegato ad una reta lo fa tramite una scheda di rete (NIC).
+Ogni NIC ha un indirizzo ethernet che e' unico per ogni NIC, questo indirizzo e' detto MAC (Media Access Control).
+* MAC
+Ogni MAC address e' composto di 48 bit.
+E' suddiviso in 2 parti, la prima composta dai primi 24 bit e la seconda dai rimanenti 24.
+La prima parte identifica la compagnia produttrice della scheda (realtek, intel, ecc...), la seconda e' unico per ogni scheda.
+L'inidirizzo e' espresso in cifre esadecimali:
+#+begin_example
+AA:B6:C1:F4:D2:B0
+#+end_example
+Per un dispositivo nella rete il MAC e' sempre presente, cosa che non succede, per esempio con l'IP.
+A questo livello si lavora con _frames_.
+** Note
++ C'e' un indirizzo specifico per effettuare le comunicazioni broadcast:  ~FF:FF:FF~
++ Il MAC puo' essere modificato

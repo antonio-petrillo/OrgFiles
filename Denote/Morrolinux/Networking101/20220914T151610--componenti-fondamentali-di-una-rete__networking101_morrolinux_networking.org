@@ -1,0 +1,27 @@
+#+title:      Componenti fondamentali di una rete
+#+date:       [2022-09-14 Wed 15:16]
+#+filetags:   :networking101:morrolinux:networking:
+#+identifier: 20220914T151610
+
+* Link to the lesson
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* Link, nodes and networks
+A node is a generic host connected to a network.
+A link is a connection between two hosts.
+A network is defined recursively as:
+#+begin_quote
+Two or more nodes connected by a link _or_ two or more networks connected by a link
+#+end_quote
+* Classifica delle network
+** WAN (Wide Area Network)
+They expand over region, country, continent.
+Basically they are very big.
+** LAN (Local Area Network)
+This kind of network is intended for /private/ use, like my home, the university's campus or an office.
+They are made, usually, with wifi bridges or ethernet cables.
+** PAN (Personal Area Network)
+Usually span across 0-1/0-10 meters, basically it's network that everybody carry on these days, like a smartwatch, or a smartglass, connected to my phone.
+* Protocolli
+They make possible to communicate all kind of different devices on a network.
+The communication between device happens in stack, in each layer of the stack there are different protocols.
+During a communication, ever layer of the stack, of the first device communicate with the same layer (at same level) on the other device.

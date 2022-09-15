@@ -1,0 +1,20 @@
+#+title:      Mezzi trasmissivi e standard
+#+date:       [2022-09-14 Wed 16:50]
+#+filetags:   :morrolinux:networking:networking101:
+#+identifier: 20220914T165002
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* WiFi
+Marchio della _wifi alliance_, si assicurano che gli standard vengano rispettati.
+Standard come il _IEEE 802.11_, con le sue derivate:
++ IEEE 802.11.a
++ IEEE 802.11.b
++ IEEE 802.11.c
+* Ethernet
+  + 100Base-TX
+  + 100Base-X
+  + 100Base-SX
+  + 100Base-LX
+  + 1000Base-T
+  + 1000Base-TX

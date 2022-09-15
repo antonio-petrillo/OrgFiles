@@ -1,0 +1,48 @@
+#+title:      CIDR, Subnetting e Supernetting
+#+date:       [2022-09-15 Thu 12:23]
+#+filetags:   :morrolinux:networking:networking101:
+#+identifier: 20220915T122319
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* CIDR, Subnetting e Supernetting
+* Indirizzi classless
+* Supernetting
+E' possibile definire reti con maggiore granularita'
+Ad esempio e' possibile togliere dei bit dal NET id, consideriamo la rete 192.168.1.13/24, essa puo' ospitare 253 host (2^8 - 2), supponiamo di toglierne 1 bit alla netmask, quindi da ~/24~ diviene ~/23~, ora gli ci sono a disposizione 9 bit per gli host (2^9 - 2 = 510).
+** [[denote:20220915T123136][ipcalc]]
+E' uno strumento per il calcolo delle reti, [[https://jodies.de/ipcalc][online version]].
+#+begin_example
+┌──(nto㉿kali)-[~]
+└─$ ipcalc 192.168.1.1/23
+Address:   192.168.1.1          11000000.10101000.0000000 1.00000001
+Netmask:   255.255.254.0 = 23   11111111.11111111.1111111 0.00000000
+Wildcard:  0.0.1.255            00000000.00000000.0000000 1.11111111
+=>
+Network:   192.168.0.0/23       11000000.10101000.0000000 0.00000000
+HostMin:   192.168.0.1          11000000.10101000.0000000 0.00000001
+HostMax:   192.168.1.254        11000000.10101000.0000000 1.11111110
+Broadcast: 192.168.1.255        11000000.10101000.0000000 1.11111111
+Hosts/Net: 510                   Class C, Private Internet
+#+end_example
+* Subnetting
+E' il processo inverso al Supernetting, dal al Net id bit in piu'.
+In pratica anziche diminuire ~/24~ lo si aumenta ~/25~.
+#+begin_example
+┌──(nto㉿kali)-[~]
+└─$ ipcalc 192.168.1.1/25
+Address:   192.168.1.1          11000000.10101000.00000001.0 0000001
+Netmask:   255.255.255.128 = 25 11111111.11111111.11111111.1 0000000
+Wildcard:  0.0.0.127            00000000.00000000.00000000.0 1111111
+=>
+Network:   192.168.1.0/25       11000000.10101000.00000001.0 0000000
+HostMin:   192.168.1.1          11000000.10101000.00000001.0 0000001
+HostMax:   192.168.1.126        11000000.10101000.00000001.0 1111110
+Broadcast: 192.168.1.127        11000000.10101000.00000001.0 1111111
+Hosts/Net: 126                   Class C, Private Internet
+#+end_example
+* CIDR (Classless Inter-Domain Routing)
+E' la notazione ~/~ utilizzata per il supernetting e subnetting.
+* Quiz
+14/23
+Pretty bad this time.

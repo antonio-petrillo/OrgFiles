@@ -1,0 +1,16 @@
+#+title:      Topologie di rete
+#+date:       [2022-09-14 Wed 17:36]
+#+filetags:   :morrolinux:networking:networking101:
+#+identifier: 20220914T173657
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* Network topology
++ Ring: /circular linked list/
++ Mesh: Ring with some redundat connection to improve the affidabilty of the connection
++ Line: /linked list/
++ Bus: all the device connected to a common bus
++ Tree: just a CS tree
++ Star: all the device connected to a central host, it's job of the central host to route the received packets correctly
+* Quiz
+10/14

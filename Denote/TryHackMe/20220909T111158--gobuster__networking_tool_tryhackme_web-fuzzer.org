@@ -1,6 +1,6 @@
 #+title:      gobuster
 #+date:       [2022-09-09 Fri 11:11]
-#+filetags:   :tryhackme:tool:
+#+filetags:   :networking:tool:tryhackme:web-fuzzer:
 #+identifier: 20220909T111158
 
 * What it does
@@ -8,6 +8,9 @@ From kali website:
 #+begin_quote
 Brute force URIs including directories and files as well as DNS subdomains
 #+end_quote
+* Similar package
++ [[denote:20220915T160334][dirb]]
++ [[denote:20220915T155935][ffuf]]
 * Manual
 Just the output of ~gobuster --help~:
 #+begin_example

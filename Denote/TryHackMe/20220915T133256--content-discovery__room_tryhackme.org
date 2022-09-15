@@ -1,0 +1,314 @@
+#+title:      Content Discovery
+#+date:       [2022-09-15 Thu 13:32]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220915T133256
+
+* Link to the room
+[[https://tryhackme.com/room/contentdiscovery][contentdiscovery]]
+* What is content discovery?
+Is the practice of dicovery file (in the linux sense), they can be:
++ file
++ video
++ picture
++ backup
++ website feature
+The most interesting things to find would be content that is intented for staff usage, config files, admin panels, etc.
+There are three main ways of discovering content on a website:
++ Manually
++ Automated
++ OSINT (Open-Source intelligence)
+** Answer 1
+What is the Content Discovery method that begins with M?
+#+begin_quote
+Manually
+#+end_quote
+** Answer 2
+What is the Content Discovery method that begins with A?
+#+begin_quote
+Automated
+#+end_quote
+** Answer 3
+What is the Content Discovery method that begins with O?
+#+begin_quote
+OSINT
+#+end_quote
+* Manual Discovery - Robots.txt
+Robots.txt is a documents that tell search engines which pages the are and aren't allowed to show on their search engine result, they can also ban specific search engine from crawling.
+It's the same website of [[denote:20220913T102239][Walking An Application]].
+Visiting ~ip-address/robots.txt~ I can see the content of the file:
+#+begin_example
+User-agent: *
+Allow: /
+Disallow: /staff-portal
+#+end_example
+** Answer 1
+What is the directory in the robots.txt that isn't allowed to be viewed by web crawlers?
+#+begin_quote
+/staff-portal
+#+end_quote
+* Manual Discovery - Favicon
+When using a framerwork a default favicon is provided, if the developers don't change that we can get a clue on the used framework.
+[[https://wiki.owasp.org/index.php/OWASP_favicon_database][OWASP]] host a database of common framework icons, it can be used to check against the target.
+Once the framework stack is known, we can use external resources to discover more about it.
+** Practical Exercise:
+Search the following URL [[ https://static-labs.tryhackme.cloud/sites/favicon/]] here I see a basic note saying "Website coming soon...", the tabs confirm me that the site is using a favicon.
+Viewing the page source I can see, at line 6:
+#+begin_src html
+<link rel="shortcut icon" type="image/jpg" href="images/favicon.ico"/>
+#+end_src
+Running the following command on the AttackBox, it will download the favicon and get its md5 hash value wich can be looked up on OWASP.
+#+begin_src bash
+curl https://static-labs.tryhackme.cloud/sites/favicon/images/favicon.ico | md5sum
+#+end_src
+That give me the hash _*f276b19aabcb4ae8cda4d22625c6735f*_, now searching in the [[https://wiki.owasp.org/index.php/OWASP_favicon_database][favicon database]], I found the framework _cgiirc_.
+** Answer 1
+What framework did the favicon belong to?
+#+begin_quote
+cgiirc
+#+end_quote
+* Manual Discovery - Sitemap.xml
+Sitemap.xml, in some way, is the opposite of Robots.txt, it tells the crawlers which file the site wishes to be listed on a search engine.
+Content of ~http:ip-addres/sitemap.xml~
+#+begin_src xml
+<urlset>
+  <url>
+    <loc>http://10.10.238.218/</loc>
+    <lastmod>2021-07-19T13:07:32+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>http://10.10.238.218/news</loc>
+    <lastmod>2021-07-19T13:07:32+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>http://10.10.238.218/news/article?id=1</loc>
+    <lastmod>2021-07-19T13:07:32+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>http://10.10.238.218/news/article?id=2</loc>
+    <lastmod>2021-07-19T13:07:32+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>http://10.10.238.218/news/article?id=3</loc>
+    <lastmod>2021-07-19T13:07:32+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>http://10.10.238.218/contact</loc>
+    <lastmod>2021-07-19T13:07:32+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>http://10.10.238.218/customers/login</loc>
+    <lastmod>2021-07-19T13:07:32+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>http://10.10.238.218/s3cr3t-area</loc>
+    <lastmod>2021-07-19T13:07:32+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+</urlset>
+#+end_src
+At the end there is a path to a secret area ~http:ip-address/s3cr3t-area~, the content of the page is:
+#+begin_example
+You found the sitemap endpoint
+#+end_example
+** Answer 1
+What is the path of the secret area that can be found in the sitemap.xml file?
+#+begin_quote
+/s3cr3t-area
+#+end_quote
+* Manual Discovery - HTTP Headers
+When we send a request to a web server, the server returns various HTTP headers.
+Sometime there could be intersting info in this header.
+Here the output of the following _curl_ command: ~curl http://10.10.238.218 -v~
+#+begin_src shell
+   Trying 10.10.238.218:80...
+ Connected to 10.10.238.218 (10.10.238.218) port 80 (#0)
+> GET / HTTP/1.1
+> Host: 10.10.238.218
+> User-Agent: curl/7.85.0
+> Accept: */*
+>
+ Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< Server: nginx/1.18.0 (Ubuntu)
+< Date: Thu, 15 Sep 2022 12:01:37 GMT
+< Content-Type: text/html; charset=UTF-8
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< X-FLAG: THM{HEADER_FLAG}
+<
+<!--
+This page is temporary while we work on the new homepage @ /new-home-beta
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Acme IT Support - Home</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.12.0/css/all.css" integrity="sha384-ekOryaXPbeCpWQNxMwSWVvQ0+1VrStoPJq54shlYhR8HzQgig1v5fas6YgOqLoKz" crossorigin="anonymous">
+        <link rel="stylesheet" href="/assets/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Acme IT Support</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Home</a></li>
+                    <li><a href="/news">News</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/customers">Customers</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav><div class="container" style="padding-top:60px">
+    <h1 class="text-center">Acme IT Support</h1>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            <img src="/assets/staff.png">
+            <p class="welcome-msg">Our dedicated staff are ready <a href="/secret-page">to</a> assist you with your IT problems.</p>
+        </div>
+    </div>
+</div>
+<script src="/assets/jquery.min.js"></script>
+<script src="/assets/bootstrap.min.js"></script>
+<script src="/assets/site.js"></script>
+</body>
+</html>
+<!--
+Page Generated in 0.05798 Seconds using the THM Framework v1.2 ( https://static-labs.tryhackme.cloud/sites/thm-web-framework )
+ Connection #0 to host 10.10.238.218 left intact
+#+end_src
+Here there are some info on what is currently used by the website:
++ nginx/1.18.0 server (on ubuntu)
++ THM{HEADER_FLAG}
+** Answer 1
+What is the flag value from the X-FLAG header?
+#+begin_quote
+THM{HEADER_FLAG}
+#+end_quote
+* Manual Discovery - Framework Stack
+Once I know about the framework used I can search for vulnerabilities et similaris for the specific framework and in particular for the specific version.
+Let's take a look a the framework website [[https://static-labs.tryhackme.cloud/sites/thm-web-framework/]].
+In the doc I finded the default credentials for the admin page ~admin:admin~, here I get the flag ~THM{CHANGE_DEFAULT_CREDENTIALS}~.
+I've already founded this flag in the previous room  [[denote:20220913T102239][Walking An Application]].
+** Answer 1
+What is the flag from the framework's administration portal?
+#+begin_quote
+THM{CHANGE_DEFAULT_CREDENTIALS}
+#+end_quote
+* OSINT - Google Hacking / Dorking
+Here some advanced search engine features from google:
+| Filter   | Example            | Description                                                   |
+|----------+--------------------+---------------------------------------------------------------|
+| site     | site:tryhackme.com | returns results only from the specified website address       |
+| inurl    | inurl:admin        | returns results that have the specific word in the URL        |
+| filetype | filetype:pdf       | returns results which have a particular file extension        |
+| intitle  | intitle:admin      | returns results that contains the specified word in the title |
+More information here [[https://en.wikipedia.org/wiki/Google_hacking][Google hacking]].
+** Answer 1
+What Google dork operator can be used to only show results from a particular site?
+#+begin_quote
+site:
+#+end_quote
+* OSINT - _Wappalyzer_
+Is an [[https://www.wappalyzer.com/][online tool]] and browser extension that helps identify what technologies a website uses, such frameworks, CMS (Content Management Systems), payment processors an much more, it can find version number as well.
+** Answer 1
+What online tool can be used to identify what technologies a website is running?
+#+begin_quote
+Wappalyzer
+#+end_quote
+* OSINT - Wayback Machine
+Is a [[https://archive.org/web/][historical archive]] of websites that dates back to the late 90s.
+It can help uncover old pages that may still be active on the current website.
+** Answer 1
+What is the website address for the Wayback Machine?
+#+begin_quote
+https://archive.org/web/
+#+end_quote
+* OSINT - GitHub
+You can use GitHub's search feature to look for company names or website names to try and locate repositories belonging to your target. Once discovered, you may have access to source code, passwords or other content that you hadn't yet found.
+Remember the ~INGSW~ project and ~Koomot~ github's?
+** Answer 1
+What is Git?
+#+begin_quote
+version control system
+#+end_quote
+* OSINT - S3 Buckets
+😵 aws, to many nightmares...
+S3 Buckets are a storage service provided by Amazon AWS, allowing people to save files and even static website content in the cloud accessible over HTTP and HTTPS.
+The owner can set access permissions to either make files public, private and even writable.
+Sometimes these access permissions are incorrectly set and inadvertently allow access to files that shouldn't be available to the public.
+The format is _http(s)://{name}.s3.amazonaws.com_.
+S3 bucket can be discovered in many ways, like github, page source, etc.
+** Answer 1
+What URL format do Amazon S3 buckets end in?
+#+begin_quote
+.s3.amazonaws.com
+#+end_quote
+* Automated Discovery
+We can use software to automate the discovery process, tools like:
++ [[denote:20220909T111158][gobuster]]
++ _ffuf_
++ _dirb_
+I used gobuster for this task, I downloaded the Daniel Miessler [[ https://github.com/danielmiessler/SecLists][seclists]] and scanned the ~ACME IT~ website with the command:
+#+begin_src shell
+gobuster dir --url http://10.10.238.218/ -w /Path/to/the/cloned/repo/SecLists/Discovery/Web-Content/common.txt
+#+end_src
+** Output
+#+begin_src shell
+===============================================================
+Gobuster v3.1.0
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.10.238.218/
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /home/nto/Documents/TryHackMe/SecLists/Discovery/Web-Content/common.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.1.0
+[+] Timeout:                 10s
+===============================================================
+2022/09/15 14:36:36 Starting gobuster in directory enumeration mode
+===============================================================
+/assets               (Status: 301) [Size: 178] [--> http://10.10.238.218/assets/]
+/contact              (Status: 200) [Size: 3108]
+/customers            (Status: 302) [Size: 0] [--> /customers/login]
+/development.log      (Status: 200) [Size: 27]
+/monthly              (Status: 200) [Size: 28]
+/news                 (Status: 200) [Size: 2538]
+/private              (Status: 301) [Size: 178] [--> http://10.10.238.218/private/]
+/robots.txt           (Status: 200) [Size: 46]
+/sitemap.xml          (Status: 200) [Size: 1391]
+
+===============================================================
+2022/09/15 14:37:04 Finished
+===============================================================
+#+end_src
+** Answer 1
+What is the name of the directory beginning "/mo...." that was discovered?
+#+begin_quote
+/monthly
+#+end_quote
+** Answer 2
+What is the name of the log file that was discovered?
+#+begin_quote
+/development.log
+#+end_quote

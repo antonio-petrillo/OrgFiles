@@ -1,0 +1,38 @@
+#+title:      Accesso residenziale
+#+date:       [2022-09-14 Wed 19:18]
+#+filetags:   :morrolinux:networking:networking101:
+#+identifier: 20220914T191829
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* Accesso residenziale
+Come arriva internete a casa.
+La maggiorparte sono del tipo PTP (Point To Point), tra il cliente e l'ISP (Internet Service Provider).
+* Modalita' di accesso piu' comuni della storia
++ Dial-UP aka modem 56K
++ ISDN (Integrated Service Digital Network)
++ xDSl (x Digital Subscribe Line) e' una famiglia
+  + ADSL (Asymmetric DSL)
+  + HDSL (High-bitrate DSL)
+  + VHDSL (Very-High-bitrate DSL), vincolo sulla distanza, max 300m dalla cabina.
++ Fibra ottica
+* Protocollo PPP (Point to Point Protocol)
+Il collegamento a internet avviene tramite collegamento punto-punto tra cliente e ISP, PPP e' il protocollo usate per stabilire la connessione.
+Dato che ci sono solo 2 intemediari (cliente e ISP) il protocollo e' molto semplice.
+** Fasi del PPP
++ Stabilimento della connessione
++ Autenticazione (optional)
++ Configurazione del protocollo di rete che verra' usato
++ Terminazione della connessione
+** Struttura di un frame PPP
+|     Flag |  Address |  Control | Protocol | Data | Check |     Flag |
+| 01111110 | 11111111 | 00000011 |          |      |       | 01111110 |
++ Flag: delimita il frame (inizio/fine) PPP
++ Address: indirizzo destinatario, inutile si sa gia' con chi si comunica
++ Control: previsto per usi futuri, per ora e' inutilizzato
++ Protocol: Protocollo di livello superiore a cui il frame viene passato (ES: IP)
++ Data (chiamato anche Info): e' il messaggio di livello superiore (vedi encapsulation)
++ Check: controllo di correttezza, tipo hash ma piu' semplice
+* Quiz
+8/14
+Alcune domande erano un po' vaghe.

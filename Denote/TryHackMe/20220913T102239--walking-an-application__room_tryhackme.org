@@ -5,3 +5,119 @@
 
 * Link to the room
 [[https://tryhackme.com/room/walkinganapplication][walkinanapplication]]
+* Walking an Application
+What I will use in this room:
++ View Source
++ Inspector
++ Debugger
++ Network
+** Answer 1
+No answer needed.
+* Exploring The Website
+The first step is ~search for interactive part of the website~, often the vulnerabilities are founded there.
+This section follow with an overview of the webpage of the application.
+** Answer 1
+No answer needed.
+* Viewing The Page Source
+The page source is the human-readable code returned to our browser/client.
+The returned code is (usually):
++ HTLM
++ CSS
++ JavaScript
+** How do I view the Page Source
+Right click on the page or put ~view-source:~ before the URL to go directly to the view source page.
+#+begin_example
+view-source:https://www.google.com
+#+end_example
+** Let's view some Page Source!
+*** Comment are dangerous
+First things to take note, the comment in line 1-3
+#+begin_src html
+<!--
+This page is temporary while we work on the new homepage @ /new-home-beta
+-->
+#+end_src
+Content of the ~new-home-beta~:
+#+begin_quote
+THM{HTML_COMMENTS_ARE_DANGEROUS}
+#+end_quote
+*** Hidden link are dangerous
+At line 41 there is a link to a secret page
+#+begin_src html
+<p class="welcome-msg">Our dedicated staff are ready <a href="/secret-page">to</a> assist you with your IT problems.</p>
+#+end_src
+Content of the secret page
+#+begin_quote
+THM{NOT_A_SECRET_ANYMORE}
+#+end_quote
+*** The assets folder
+I could access this directory and see a file called ~flag.txt~, here the content:
+#+begin_quote
+THM{INVALID_DIRECTORY_PERMISSIONS}
+#+end_quote
+*** Framework outdated could be dangerous
+This site use ~THM Framework v1.2~, but following this [[https://static-labs.tryhackme.cloud/sites/thm-web-framework][link]] it's possible too see the framework's page, the latest is ~v1.3~.
+Searchin for ~/thm-framework-login~ I find a login form ad using the default credentials ,~admin:admin~ see the doc, I got the access.
+I got the flag:
+#+begin_quote
+THM{CHANGE_DEFAULT_CREDENTIALS}
+#+end_quote
+Also reading the changelong I find a directory ~tmp.zip~, this is made by the framework and it's present in the website, now searching in the website I get another flag:
+#+begin_quote
+THM{KEEP_YOUR_SOFTWARE_UPDATED}
+#+end_quote
+** Answer 1
+What is the flag from the HTML comment?
+#+begin_quote
+THM{HTML_COMMENTS_ARE_DANGEROUS}
+#+end_quote
+** Answer 2
+What is the flag from the secret link?
+#+begin_quote
+THM{NOT_A_SECRET_ANYMORE}
+#+end_quote
+** Answer 3
+What is the directory listing flag?
+#+begin_quote
+THM{INVALID_DIRECTORY_PERMISSIONS}
+#+end_quote
+** Answer 4
+What is the framework flag?
+#+begin_quote
+THM{KEEP_YOUR_SOFTWARE_UPDATED}
+#+end_quote
+* Developer Tools - Inspector
+Open inspector tools.
+In the section News, of the site, there is an article available only with a premium account, this is called a paywall.
+On the ~DIV, premium-customer-blocker~ I can see the value ~block~, changing it to ~none~ I can bypass the pywall, so I got the flag:
+#+begin_quote
+THM{NOT_SO_HIDDEN}
+#+end_quote
+** Answer 1
+What is the flag behind the paywall?
+#+begin_quote
+THM{NOT_SO_HIDDEN}
+#+end_quote
+* Developer Tools - Debugger
+In this section I will see how to debug JavaScript code.
+When I reload the [[https://10-10-167-92.p.thmlabs.com/contact][page]] it is possible to see a red popup, this guide me to the [[view-source:https://10-10-167-92.p.thmlabs.com/assets/flash.min.js][flash.min.js]] file in the asset folder put a breakpoint to ~flash['remove']~, reloading the page I can see the flag:
+#+begin_quote
+THM{CATCH_ME_IF_YOU_CAN}
+#+end_quote
+** Answer 1
+What is the flag in the red box?
+#+begin_quote
+THM{CATCH_ME_IF_YOU_CAN}
+#+end_quote
+* Developer Tools - Network
+THM{GOT_AJAX_FLAG}
+The network tab on the dev tools can be used to keep track of every request a webpage makes.
+In the response (I've submitted a dummy form) I can see the flag:
+#+begin_quote
+THM{GOT_AJAX_FLAG}
+#+end_quote
+** Answer 1
+What is the flag shown on the contact-msg network request?
+#+begin_quote
+THM{GOT_AJAX_FLAG}
+#+end_quote

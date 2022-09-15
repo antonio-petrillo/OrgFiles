@@ -1,0 +1,26 @@
+#+title:      Apparati di rete di livello 2
+#+date:       [2022-09-14 Wed 19:01]
+#+filetags:   :morrolinux:networking:networking101:
+#+identifier: 20220914T190136
+
+* Link to the course
+[[https://www.udemy.com/course/networking-101-corso-di-reti-da-zero/learn/lecture/][course link]]
+* Apparati di rete di livello 2
+** HUB
+Sdoppiatore di porte.
+Realizza una rete di tipo BUS.
+Problemi di collisioni e, di conseguenza, di performace.
+*** Dominio di Broadcast
+Intera Rete
+*** Dominio di Collisione
+Intera Rete
+** Switch
+Si comporta da host per i dispotivi connessi.
+Realizza una rete di tipo Star.
+Gli switch possono lavorare anche al livello 3, con un cavillo, se lo switch lavora al livello 3 non puo' lavorare al livello 2 e viceversa.
+*** Dominio di Broadcast
+Intera Rete
+*** Dominio di Collisione
+Host to Host
+** Bridge
+Puo' connettere sulla stessa rete logica due dispositvi su rete fisiche diverse.

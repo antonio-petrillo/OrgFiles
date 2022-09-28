@@ -1,0 +1,10 @@
+#+title:      crackstation
+#+date:       [2022-09-19 Mon 09:54]
+#+filetags:   :crack-hashing:hashing:online-resource:tryhackme:
+#+identifier: 20220919T095455
+
+* Link to the resource
+[[https://crackstation.net/][crackstation.net]]
+* What it does?
+Keep a database, with billions of entry, of hashed value.
+It helps to ~reverse~ an hashed value.

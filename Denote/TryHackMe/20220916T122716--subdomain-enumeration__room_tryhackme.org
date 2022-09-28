@@ -1,0 +1,119 @@
+#+title:      Subdomain Enumeration
+#+date:       [2022-09-16 Fri 12:27]
+#+filetags:   :room:tryhackme:
+#+identifier: 20220916T122716
+
+* Link to the room
+[[https://tryhackme.com/room/subdomainenumeration][subdomainenumeration]]
+* Brief
+We enenumerate subdomain to expand our attack surface and discover more potentials points of vulnerability.
+Type of subdomain enum:
++ Brute Force
++ OSINT (Open-Source Intelligence)
++ Virtual Hosts
+** Answer 1
+What is a subdomain enumeration method beginning with B?
+#+begin_quote
+Brute Force
+#+end_quote
+** Answer 2
+What is a subdomain enumeration method beginning with O?
+#+begin_quote
+OSINT
+#+end_quote
+** Answer 3
+What is a subdomain enumeration method beginning with V?
+#+begin_quote
+Virtual Host
+#+end_quote
+* OSINT - SSL/TLS Certificates
+When an SSL/TLS (Secure Sockets Layer/Transport Layer Security) certificate is created for a domain by a CA (Certificate Authority), CA's take part in what's called "Certificate Transparency (CT) logs".
+These are publicly accessible logs of every SSL/TLS certificate created for a domain name.
+The purpouse of Certificate Transparency logs is to stop malicious and accidentally made certificates from being used.
+We can use this service to our advantage ro discover subdomains belonging to a domain, sites like [[http://crt.sh][crt.sh]] and [[https://ui.ctsearch.entrust.com/ui/ctsearchui][ctsearchui]] offer a searchable database that shows current and historical results.
+** What is the entry of tryhackme.com logged at 2020-12-26 on crt.sh?
+| 3833430615 | docs.tryhackme.com |
+** Answer 1
+What domain was logged on ~crt.sh~ at 2020-12-26?
+#+begin_quote
+store.tryhackme.com
+#+end_quote
+* OSINT - Search Engines
+Use of advanced feature of search engines (on google for example) ~site:www.domain.com site:*.domain.com~ would only contains results leading to the domain name ~domain.com~ but exclude any links to ~www.domain.com~ therefore show us only subdomain names belonging to ~domain.com~.
+** Answer 1
+What is the TryHackMe subdomain beginning with B discovered using the above Google search?
+#+begin_quote
+blog.tryhackme.com
+#+end_quote
+* DNS Bruteforce
+Is the method of trying tens, hundreds, thousands or even millions of different possible subdomains.
+Because this method require a gazillion of requests, we automate it with tools to make the process quicker.
+One of this tools is [[denote:20220916T175804][dnsrecon]].
+** Answer 1
+What is the first subdomain found with the dnsrecon tool?
+#+begin_quote
+api.acmeitsupport.thm
+#+end_quote
+*** Command used
+#+begin_src shell
+dnsrecon -t brt -d acmeitsupport.thm
+#+end_src
+* OSINT - Sublist3r
+To speed up the process of OSINT subdomain discovery, we can automate the above methods with the help of tools like [[denote:20220916T180744][sublist3r]].
+Sublist3r running on the attached site:
+#+begin_src shell
+user@thm:~$ ./sublist3r.py -d acmeitsupport.thm
+
+          ____        _     _ _     _   _____
+         / ___| _   _| |__ | (_)___| |_|___ / _ __
+         \___ \| | | | '_ \| | / __| __| |_ \| '__|
+          ___) | |_| | |_) | | \__ \ |_ ___) | |
+         |____/ \__,_|_.__/|_|_|___/\__|____/|_|
+
+         # Coded By Ahmed Aboul-Ela - @aboul3la
+
+[-] Enumerating subdomains now for acmeitsupport.thm
+[-] Searching now in Baidu..
+[-] Searching now in Yahoo..
+[-] Searching now in Google..
+[-] Searching now in Bing..
+[-] Searching now in Ask..
+[-] Searching now in Netcraft..
+[-] Searching now in Virustotal..
+[-] Searching now in ThreatCrowd..
+[-] Searching now in SSL Certificates..
+[-] Searching now in PassiveDNS..
+[-] Searching now in Virustotal..
+[-] Total Unique Subdomains Found: 2
+web55.acmeitsupport.thm
+www.acmeitsupport.thm
+#+end_src
+** Answer 1
+What is the first subdomain discovered by sublist3r?
+#+begin_quote
+web55.acmeitsupport.thm
+#+end_quote
+* Virtual Hosts
+Some subdomains aren't always hosted in publically accessible DNS results, such as development versions of a web application or administration portals.
+Instead, the DNS record could be kept on a private DNS server or recorded on the developer's machine in their ~/etc/hosts~ or ~C:\windows\system32\drivers\etc\hosts~ which maps domain names to IP address.
+Web servers can host multiple websites, the client, when send the HTTP request, specify an ~HOST~ with the header ~Host~.
+We can utilise this host header by making changes to it and monitoring the response to see if we've discovered a new website.
+Here an, automated, example:
+#+begin_quote
+ffuf -w /usr/share/wordlists/SecLists/Discovery/DNS/namelist.txt -H "Host: FUZZ.acmeitsupport.thm" -u http://10.10.87.86
+#+end_quote
+With this we get the size.
+#+begin_src shell
+user@machine$ ffuf -w /usr/share/wordlists/SecLists/Discovery/DNS/namelist.txt -H "Host: FUZZ.acmeitsupport.thm" -u http://MACHINE_IP -fs {size}
+#+end_src
+The most used size is ~2395~, this exercise had taken a looooooooooooooot of time to complete, for each ~ffuf~ command I waited, at least, 15 minute each time, probably because I have a poor connection.
+** Answer 1
+What is the first subdomain discovered?
+#+begin_quote
+delta
+#+end_quote
+** Answer 1
+What is the second subdomain discovered?
+#+begin_quote
+yellow
+#+end_quote

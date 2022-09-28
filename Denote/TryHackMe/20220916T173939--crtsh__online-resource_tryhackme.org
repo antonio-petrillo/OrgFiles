@@ -1,0 +1,9 @@
+#+title:      crt.sh
+#+date:       [2022-09-16 Fri 17:39]
+#+filetags:   :online-resource:tryhackme:
+#+identifier: 20220916T173939
+
+* What it does
+It's a search engine for SSL/TLS certificate.
+* Link to the resources
+[[http://crt.sh][crt.sh]]

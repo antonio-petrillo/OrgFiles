@@ -1,10 +1,2 @@
-* Study for DSA exam
-Trying new book, from S.Skiena
-* TryHackMe rooms todo [3/3]
-<2022-09-19 Mon>
-** DONE [[https://tryhackme.com/room/bashscripting][bash scripting]]
-CLOSED: [2022-09-13 Tue 12:02]
-** DONE [[https://tryhackme.com/room/catregex][regex]]
-CLOSED: [2022-09-13 Tue 12:02]
-** DONE [[https://tryhackme.com/room/introtonetworking][intro to networking]]
-CLOSED: [2022-09-15 Thu 09:41]
+* TODO <2022-10-05 Wed> Find a good PopCount algorithm
+See  The Go programming language book.

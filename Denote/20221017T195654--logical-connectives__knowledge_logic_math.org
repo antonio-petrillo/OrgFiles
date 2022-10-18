@@ -1,0 +1,46 @@
+#+title:      logical connectives
+#+date:       [2022-10-17 Mon 19:56]
+#+filetags:   :knowledge:logic:math:
+#+identifier: 20221017T195654
+
+* Table of truth
+** And (∧)
+| p | q | p ∧ q |
+| f | f | f     |
+| f | t | f     |
+| t | f | f     |
+| t | t | t     |
+** Or (∨)
+| p | q | p ∨ q |
+| f | f | f     |
+| f | t | t     |
+| t | f | t     |
+| t | t | t     |
+** Not (¬)
+| p | ¬ p |
+| f | t   |
+| t | f   |
+** Xor (⊻)
+| p | q | p ⊻ q |
+| f | f | f     |
+| f | t | t     |
+| t | f | t     |
+| t | t | f     |
+** Nand (⊼)
+| p | q | p ⊼ q |
+| f | f | t     |
+| f | t | t     |
+| t | f | t     |
+| t | t | f     |
+** Imply (⇒)
+| p | q | p ⇒ q |
+| f | f | t     |
+| f | t | t     |
+| t | f | f     |
+| t | t | t     |
+** IFF, if and only if (⬄)
+| p | q | p ⬄ q |
+| f | f | t     |
+| f | t | f     |
+| t | f | f     |
+| t | t | t     |

@@ -1,0 +1,42 @@
+#+title:      Analisi Matematica 1
+#+date:       [2022-10-18 Tue 09:59]
+#+filetags:   :analysis:chapter2:math:
+#+identifier: 20221018T095927
+
+* Assioma di continuita`, pagina 51
+#+begin_quote
+Data una successione [ak, bk] di intervalli dimezzati, esiste uno e un solo punto contenuto in tutti gli intervalli.
+#+end_quote
+** Note:
+L'esempio della radice quadrata di 2 rende molto bene l'idea di intervalli dimezzati, in pratica e' una ricerca tramite di un punto con il metodo di bisezione.
+* Assioma di Archimede, pagina 52
+Nel libro e' indicato anche con ~Teorema 2.1~.
+** Tesi
+#+begin_quote
+Dati due numeri positivi a e b, esiste un intero N t.c.: N*a > b
+#+end_quote
+** Proof
+Consideriamo la successione di intervalli dimezzati ~[0, b], [0, b/2], [0, b/4], ..., [0, b * 2^(-k)]~.
+Per l'assioma di continuita' la loro intersezione e' costituita da uno e un solo punto, che e' evidentemente ~0~.
+Di conseguenza, esiste un numero k t.c. a non appartiene a ~[0, b * 2^(-k)]~, e quindi ~2^k * a > b~.
+~QED~.
+* 𝚴 ⊂ 𝐑, pagina 54
+Inseriamo per induzione N in R.
+1. ~A ∋ 1~
+2. ~x belong to A => x + 1 belong to A~
+Definiamo quindi:
+L'insieme dei numeri naturali e' l'intersezione di tutti i sottoinsiemi induttivi di R.
+* Definizione di maggiorante, pagina 58
+~Sia E un insieme non vuoto di R. Si chiama estremo superiore di E il minimo dei maggioranti di E~
+* Teorema: Un insieme non vuoto ha sempre un maggiorante, pagina 59
+** Tesi
+#+begin_quote
+Un insieme E non vuoto e limitato superiormente ha sempre estremo superiore.
+#+end_quote
+** Proof
+Essendo E limitato superiormente esso ammette un maggiorante, chiamiamolo b1.
+Poiche' E non e' vuoto esiste a1 che non e' un maggiorante di E.
+Consideriamo l'intervallo [a1, b1], dividiamo successivamente questo intervallo (bisezione), l'intersezione di tutti questi intervalli conterra' un solo numero (assioma di continuita'), chiamiamolo X.
+1. X e' un maggiorante (facile provare per assurdo considerando un altro Y contenuto in tutti gli intervalli, porta ad un assurdo)
+2. Nessun valore minore di X e' un maggiorante (si puo' costruire lo stesso assurdo di cui sopra).
+~QED~

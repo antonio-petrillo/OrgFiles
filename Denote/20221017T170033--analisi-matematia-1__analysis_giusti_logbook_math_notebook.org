@@ -1,0 +1,44 @@
+#+title:      Analisi Matematia 1
+#+date:       [2022-10-17 Mon 17:00]
+#+filetags:   :analysis:giusti:logbook:math:notebook:
+#+identifier: 20221017T170033
+
+* Chapter 1: Preliminari
+Nothing to important here, let me explain better, there is a lot of interesting stuff, but it is better explained in another book.
+** Exercise
+I didn't keep track this time, but they are, almost, all done.
+* [[denote:20221018T095927][Chapter 2]]: I numeri reali
+** Esercizi [17/33]
++ [X] 2.1
++ [X] 2.2
++ [X] 2.3
++ [X] 2.4
++ [X] 2.5
++ [X] 2.6
++ [X] 2.7
++ [X] 2.8
++ [X] 2.9
++ [X] 2.10
++ [X] 2.11
++ [X] 2.12
++ [X] 2.13
++ [X] 2.14
++ [X] 2.15
++ [X] 2.16
++ [X] 2.17
++ [ ] 2.18
++ [ ] 2.19
++ [ ] 2.20
++ [ ] 2.21
++ [ ] 2.22
++ [ ] 2.23
++ [ ] 2.24
++ [ ] 2.25
++ [ ] 2.26
++ [ ] 2.27
++ [ ] 2.28
++ [ ] 2.29
++ [ ] 2.30
++ [ ] 2.31
++ [ ] 2.32
++ [ ] 2.33

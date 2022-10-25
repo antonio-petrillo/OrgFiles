@@ -1,0 +1,504 @@
+#+title:      AVL tree
+#+date:       [2022-10-25 Tue 09:32]
+#+filetags:   :datastructure:knowledge:programming:
+#+identifier: 20221025T093213
+
+* Intro
+The [[https://en.wikipedia.org/wiki/AVL_tree][AVL trees]] are a class of [[https://en.wikipedia.org/wiki/Binary_search_tree][BST]] with a logarithmic height (based on the number of nodes).
+* Property
+To mantain the logarithmic height the AVLs need to respect only one property.
+~T~ is an ~AVL~ iff:
++ ~T.left~ is an AVL, ~T.right~ is an AVL.
++ ~abs(height(T.left) - height(T.right)) <= 1~.
+** Proof of the logarithmic height
+*** Build the set of ~minimum AVL~
+Let ~A~ be the set of all the AVLs, let create a new set, say ~A*~, as the partition of ~A~ based on the height of the tree, i.e. ~A*[0]~ contains all the AVLs of height ~0~, ~A*[1]~ contains all the AVLs of height ~1~,... ,~A*[n]~ contains all the AVLs of height ~n~, and so on.
+NOTE: This is a strange partition because it has an infinite number of equivalence class, I don't know if this make sense.
+Now, made a new set, say ~A**~, which contains the highest tree with a fixed number of nodes, or equivalently, the tree with lowest number of nodes given a specific height.
+Now ~A**[0]~ contains all the tree that have height equal to ~0~ and the lowest number of nodes, this will be all leaf nodes.
+~A**[1]~ contains all the tree that have height equal to ~1~ and the lowest number of nodes.
+~A**[n]~ contains all the tree that have height equal to ~n~ and the lowest number of nodes.
+**** Main property of ~minimum AVLs~
+For each equivalence class of ~A**~, say ~A**[i]~, I can say that:
++ ~A**[i] ∈ A*[i]~, but ~A**[i]~ have less or equal number of nodes of ~A*[i]~
+This mean that if I can prove that ~height(A**[i]) ⩰ lg n~ all the AVLs in the same equivalence class have ~h = lg n~.
+In other words, the minimum AVL are the more unbalanced in height when the number of nodes is fixed.
+***** NOTE
+This property need to be proved, this is just an /intuition/.
+*** Property of ~minimum AVLs~
+**** Structure of ~minimum AVLs~
+A minimum AVL should have the following structure:
+~T ∈ A**[i]~ if and only if:
+1. ~T.left ∈ A**[i-1]~
+2. ~T.right ∈ A**[i-2]~
+Or viceversa, this is just to semplify the proof.
+***** Proof
+If ~T.left ∉ A**[i-1]~ this means that ~height(T) != i~, but this is absurd.
+If ~T.right ∉ A**[i-2]~ this means that I can remove node until ~T.right ∈ A**[i-2]~, but this is also an absurd, we supposed that T belong to ~A**[i]~
+QED.
+**** The ~minimum AVLs~ are the most unbalanced.
+This means:
+Taking ~Th ∈ A**[i]~ for all ~T ∈ AVL~ if ~number_of_nodes(Th) = n and number_of_nodes(T) = n~ then ~height(Th) >= height(T)~.
+***** Proof (Reduction ad absurd)
+*Absurd hypothesis* := ~#(Th) = n and #(T) = n~ but ~h(Th) < h(T)~
+For this hypothesis to be true I need a tree ~T~ which is higher than ~Th~.
+Now suppose to cut ~T~ at the same height of ~Th~, there are 2 case:
+1. The cutted tree is not an AVL anymore, this make an absurd
+2. The cutted tree is still an AVL
+In the second case I have a tree that has ~height(T) = height(Th)~ but ~#(T) < #(Th)~ which is absurd because I supposed ~T ∈ minimum AVL~.
+QED.
+****** Note:
+~#(T)~ return the number of nodes of the tree T.
+**** Height of ~minimum AVLs~
+The minimum AVLs have ~h = lg n~.
+***** Proof
+Consider T ∈ minimum AVLs.
+~#(T) = 1 + #(T.left) + #(T.right)~
+This equation reminds a lot the [[https://en.wikipedia.org/wiki/Fibonacci_number][fibonacci sequence]].
+Let's make a table to find some similarities.
+| h :=   | 0 | 1 | 2 | 3 |  4 |  5 |  6 |  7 |
+| Fib(h) | 0 | 1 | 1 | 2 |  3 |  5 |  8 | 13 |
+| #(h)   | 1 | 2 | 4 | 7 | 12 | 20 | 33 | 54 |
+Let's make an assumption:
+~#(h) = Fib(h+3) - 1~, know I will prove this assumption later.
+Knowing that, and also knowing that $Fib(h) = times{\fract{1}{sqrt{5}}}{\exp{\frac{1 + sqrt{5}}{2}}{h}}$:
+#(h) ≅ Fib(h+3) - 1
+lg(#(h)) ≅ lg(Fib(h+3) - 1) (Applying this to the root of an AVL)
+n + 1 ≅ (costant)^(h+3)
+h+3 ≅ lg(n + 1)
+h ≅ {some-costant}*lg(n + 1) - 3
+This means:
+~h = θ(lg n)~
+In particular the costant is (1 / aura_section) ≅ 1.44
+****** Note on fibonacci closed formula
+Formula in PL;
+#+begin_src elisp
+(/ (exp (/ (+ 1 (exp 5 0.5)) 2) h) (exp 5 0.5))
+#+end_src
+See:
+1. [[https://www.youtube.com/watch?v=WT_TGxQrV1k][papa flammy]]
+2. [[https://www.youtube.com/watch?v=WT_TGxQrV1k][same prof as above, another creator]]
+****** Lemma
+~#(h) = Fib(h+3) - 1~
+******* Proof by induction
+******** Base case
+This can be checked on the table above.
+h = 0.
+#(0) = 1 == Fib(3) - 1 = 2 - 1
+******** Induction
+#(h) = 1 + #(h-1) + #(h-2), on ~h-1 and h-2~ I can use the induction hypothesis.
+#(h) = 1 + (Fib(h-1+3) - 1) + (Fib(h-2+3) - 1)
+#(h) = 1 + Fib(h+2) + Fib(h+1) - 1 - 1
+#(h) = Fib(h+2) + Fib(h+1) - 1
+#(h) = Fib(h+3) - 1
+QED.
+*** Logarithmic height
+**** The AVL have logarithmic height
+**** Proof
+When the number of nodes is fixed, the tree will be lower of the ~minimum AVL~ with the same number of nodes, hence the height of mininum AVL is ~h = lg n~, then for all AVLs and for all ~n~ := ~h = Θ(lg n)~
+QED.
+* Code
+** Structure of a node
+#+begin_src go
+type Node struct {
+	key int
+	height int
+	left *Node
+	right *Node
+}
+#+end_src
+** Structure of a tree
+#+begin_src go
+type Tree struct {
+	root *Node
+}
+#+end_src
+** Utility functions
+*** Get Height
+The name is self explanatory.
+#+begin_src go
+func (n *Node) getHeight() int{
+	if n == nil {
+		return -1
+	}
+	return n.height
+}
+#+end_src
+*** Max
+This is also self explanatory, but make the code more readable.
+#+begin_src go
+func max(a, b int) int {
+	if a <= b {
+		return b
+	}
+	return a
+}
+#+end_src
+*** Update Height
+Given an avl node, this function update its height.
+The new height is equal to the max heights of the 2 subtrees + 1.
+#+begin_src go
+func (n *Node) updateHeight() *Node{
+	if n != nil {
+		h1, h2 := n.left.getHeight(), n.right.getHeight()
+		n.height = 1 + max(h1, h2)
+	}
+	return n
+}
+#+end_src
+*** Delete Root
+Similar to the delete root on a normal BST, there are some difference because when removing a node in an AVL we need to update and, if needed, rebalance the tree.
+#+begin_src go
+func (n *Node) deleteRoot() *Node {
+	tmp := n
+	if n.left == nil || n.right == nil {
+		if n.left == nil {
+			n = n.right
+		} else {
+			n = n.left
+		}
+		tmp = nil
+	} else {
+		n = minimumDeconnection(n.right, n)
+		tmp = tmp.balanceLeft()
+		n.left, n.right = tmp.left, tmp.right
+		tmp = nil
+	}
+	return n.updateHeight()
+ }
+#+end_src
+*** Minimum Deconnection
+This is one is used by *deleteRoot* when the targetted node to remove have 2 children.
+#+begin_src go
+func minimumDeconnection(child, parent *Node) *Node{
+	var ret *Node
+	if child.left == nil {
+		ret = child
+		if child == parent.left {
+			parent.left = child.right
+		} else {
+			parent.right = child.right
+			parent = parent.balanceLeft()
+		}
+		parent = parent.updateHeight()
+	} else {
+		ret = minimumDeconnection(child.left, child)
+		child = child.balanceRight()
+	}
+	return ret
+}
+#+end_src
+** Rotation
+This operation is used to keep the tree balanced.
+*** Clockwise rotation
+#+begin_src go
+func (n *Node) clockwise() *Node {
+	pivot := n.left
+	n.left = pivot.right
+	pivot.right = n
+	n = n.updateHeight()
+	return pivot.updateHeight()
+}
+#+end_src
+*** Counter Clockwise rotation
+#+begin_src go
+func (n *Node) counterClockwise() *Node {
+	pivot := n.right
+	n.right = pivot.left
+	pivot.left = n
+	n = n.updateHeight()
+	return pivot.updateHeight()
+}
+#+end_src
+** Balance operation
+The semantic of the balance function is (I'm taking the balance left as an example):
++ if the left subtree is too higher than the right, lower the left and grow the right subtree
+This can be applied on both insertion and deletion:
++ In the first case, the subtree in which the insertion is performed can become to high, this means:
+  1. *insert on the left → balance on the left*
+  2. *delete on the left → balance on the right*
+*** Balance Left
+If the left subtree is to higher than the right one, rebalance.
+#+begin_src go
+func (n *Node) balanceLeft() *Node {
+	n.updateHeight()
+	if n.left.getHeight() - n.right.getHeight() > 1 {
+		if n.left.left.getHeight() <= n.left.right.getHeight() {
+			n.left = n.left.counterClockwise()
+		}
+		n = n.clockwise()
+	}
+	return n
+}
+#+end_src
+*** Balance Right
+If the right subtree is to higher than the left one, rebalance.
+#+begin_src go
+func (n *Node) balanceRight() *Node {
+	n.updateHeight()
+	if n.right.getHeight() - n.left.getHeight() > 1 {
+		if n.right.right.getHeight() <= n.right.left.getHeight() {
+			n.right = n.right.clockwise()
+		}
+		n = n.counterClockwise()
+	}
+	return n
+}
+#+end_src
+** Insertion operation
+*** Insert into the tree
+#+begin_src go
+func (t *Tree) Insert(key int){
+	if t.root == nil {
+		t.root = &Node{key, 0, nil, nil}
+	} else {
+		t.root =t.root.insert(key)
+	}
+}
+#+end_src
+*** Recursive insert for the node
+#+begin_src go
+func (n *Node) insert(key int) *Node{
+	if n == nil {
+		n = &Node{key, 0, nil, nil}
+	} else {
+		if n.key > key {
+			n.left = n.left.insert(key)
+			n = n.balanceLeft()
+		} else if n.key < key {
+			n.right =	n.right.insert(key)
+			n = n.balanceRight()
+		} else {
+			// ignore or update, the choice is up to you.
+		}
+	}
+	return n
+}
+#+end_src
+** Deletion operation
+*** Remove from the tree
+#+begin_src go
+func (t *Tree) Remove(key int) {
+	t.root = t.root.remove(key)
+}
+#+end_src
+*** Recursive remove for the node
+#+begin_src go
+func (n *Node) remove(key int) *Node{
+	if n != nil{
+		if n.key > key {
+			n.left = n.left.remove(key)
+			n = n.balanceRight()
+		} else if n.key < key {
+			n.right = n.right.remove(key)
+			n = n.balanceLeft()
+		} else {
+			n = n.deleteRoot()
+		}
+	}
+	return n
+}
+#+end_src
+** The whole example file
+A very simple AVL's implementation in [[https://go.dev/][golang]].
+*** Source
+#+begin_src go
+package main
+
+import "fmt"
+
+type Node struct {
+	key int
+	height int
+	left *Node
+	right *Node
+}
+
+type Tree struct {
+	root *Node
+}
+
+func (t *Tree) Insert(key int){
+	if t.root == nil {
+		t.root = &Node{key, 0, nil, nil}
+	} else {
+		t.root =t.root.insert(key)
+	}
+}
+
+func (n *Node) insert(key int) *Node{
+	if n == nil {
+		n = &Node{key, 0, nil, nil}
+	} else {
+		if n.key > key {
+			n.left = n.left.insert(key)
+			n = n.balanceLeft()
+		} else if n.key < key {
+			n.right =	n.right.insert(key)
+			n = n.balanceRight()
+		} else {
+			// ignore
+		}
+	}
+	return n
+}
+
+func (n *Node) balanceLeft() *Node {
+	n.updateHeight()
+	if n.left.getHeight() - n.right.getHeight() > 1 {
+		if n.left.left.getHeight() <= n.left.right.getHeight() {
+			n.left = n.left.counterClockwise()
+		}
+		n = n.clockwise()
+	}
+	return n
+}
+
+func (n *Node) balanceRight() *Node {
+	n.updateHeight()
+	if n.right.getHeight() - n.left.getHeight() > 1 {
+		if n.right.right.getHeight() <= n.right.left.getHeight() {
+			n.right = n.right.clockwise()
+		}
+		n = n.counterClockwise()
+	}
+	return n
+}
+
+func (n *Node) clockwise() *Node {
+	pivot := n.left
+	n.left = pivot.right
+	pivot.right = n
+	n = n.updateHeight()
+	return pivot.updateHeight()
+}
+
+func (n *Node) counterClockwise() *Node {
+	pivot := n.right
+	n.right = pivot.left
+	pivot.left = n
+	n = n.updateHeight()
+	return pivot.updateHeight()
+}
+
+func (n *Node) getHeight() int{
+	if n == nil {
+		return -1
+	}
+	return n.height
+}
+
+func max(a, b int) int {
+	if a <= b {
+		return b
+	}
+	return a
+}
+
+func (n *Node) updateHeight() *Node{
+	if n != nil {
+		h1, h2 := n.left.getHeight(), n.right.getHeight()
+		n.height = 1 + max(h1, h2)
+	}
+	return n
+}
+
+func (t *Tree) Print() {
+	fmt.Println("Tree print: ")
+	t.root.print()
+	fmt.Println()
+}
+
+func (n *Node) print() {
+	if n != nil {
+		n.left.print()
+		fmt.Printf("Key := %d\tHeight := %d\n", n.key, n.height)
+		n.right.print()
+	}
+}
+
+func (t *Tree) Remove(key int) {
+	t.root = t.root.remove(key)
+}
+
+func (n *Node) remove(key int) *Node{
+	if n != nil{
+		if n.key > key {
+			n.left = n.left.remove(key)
+			n = n.balanceRight()
+		} else if n.key < key {
+			n.right = n.right.remove(key)
+			n = n.balanceLeft()
+		} else {
+			n = n.deleteRoot()
+		}
+	}
+	return n
+}
+
+func (n *Node) deleteRoot() *Node {
+	tmp := n
+	if n.left == nil || n.right == nil {
+		if n.left == nil {
+			n = n.right
+		} else {
+			n = n.left
+		}
+		tmp = nil
+	} else {
+		n = minimumDeconnection(n.right, n)
+		tmp = tmp.balanceLeft()
+		n.left, n.right = tmp.left, tmp.right
+		tmp = nil
+	}
+	return n.updateHeight()
+ }
+
+func minimumDeconnection(child, parent *Node) *Node{
+	var ret *Node
+	if child.left == nil {
+		ret = child
+		if child == parent.left {
+			parent.left = child.right
+		} else {
+			parent.right = child.right
+			parent = parent.balanceLeft()
+		}
+		parent = parent.updateHeight()
+	} else {
+		ret = minimumDeconnection(child.left, child)
+		child = child.balanceRight()
+	}
+	return ret
+}
+
+func main() {
+  var t Tree
+
+	for i := 0; i < 1000; i++ {
+		t.Insert(i)
+	}
+
+	t.Print()
+
+	for i := 0; i < 1000; i++ {
+		t.Remove(i)
+	}
+
+	t.Print()
+
+}
+#+end_src
+*** Run
+**** Check if all nodes can be reached
+Do ~go run avl.go | awk '{print $NF}' | sort -r | wc -l~, this should print 1000, this means that all the added nodes can be reached
+**** Check if the height is logarithmic
+For a tree with ~1000~ nodes the height should be, at most:
++ *(1/ᵠ) * ln 1000*, which is circa ~1.44 * 10~. (Here *ᵠ* is aura section)
+With the ~go run avl.go | awk '{print $NF}' | sort -r | head -1~ it's possible to obtain the /highest/ node, (obviously I can simply do ~fmt.Print(t.root.height)~, but I was already in the terminal so...) which is ~9~ that is insided the bound.
+A more proper test will be harder to write.
+**** Check if the deletion work
+This test is even simpler than the one on the height, but again a proper test suite require to much time for now.
+Just run:
++ ~go run avl.go | tail -2~
+This should print only *Tree print\n\n*, in this case all the node are removed correctly.

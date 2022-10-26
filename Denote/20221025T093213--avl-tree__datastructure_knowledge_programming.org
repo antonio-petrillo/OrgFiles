@@ -5,53 +5,54 @@
 
 * Intro
 The [[https://en.wikipedia.org/wiki/AVL_tree][AVL trees]] are a class of [[https://en.wikipedia.org/wiki/Binary_search_tree][BST]] with a logarithmic height (based on the number of nodes).
+They are the first class of BST, with logarithmic height, discovered.
 * Property
 To mantain the logarithmic height the AVLs need to respect only one property.
 ~T~ is an ~AVL~ iff:
 + ~T.left~ is an AVL, ~T.right~ is an AVL.
 + ~abs(height(T.left) - height(T.right)) <= 1~.
-** Proof of the logarithmic height
-*** Build the set of ~minimum AVL~
+* Proof of the logarithmic height
+** Build the set of ~minimum AVL~
 Let ~A~ be the set of all the AVLs, let create a new set, say ~A*~, as the partition of ~A~ based on the height of the tree, i.e. ~A*[0]~ contains all the AVLs of height ~0~, ~A*[1]~ contains all the AVLs of height ~1~,... ,~A*[n]~ contains all the AVLs of height ~n~, and so on.
 NOTE: This is a strange partition because it has an infinite number of equivalence class, I don't know if this make sense.
 Now, made a new set, say ~A**~, which contains the highest tree with a fixed number of nodes, or equivalently, the tree with lowest number of nodes given a specific height.
 Now ~A**[0]~ contains all the tree that have height equal to ~0~ and the lowest number of nodes, this will be all leaf nodes.
 ~A**[1]~ contains all the tree that have height equal to ~1~ and the lowest number of nodes.
 ~A**[n]~ contains all the tree that have height equal to ~n~ and the lowest number of nodes.
-**** Main property of ~minimum AVLs~
+*** Main property of ~minimum AVLs~
 For each equivalence class of ~A**~, say ~A**[i]~, I can say that:
 + ~A**[i] ∈ A*[i]~, but ~A**[i]~ have less or equal number of nodes of ~A*[i]~
 This mean that if I can prove that ~height(A**[i]) ⩰ lg n~ all the AVLs in the same equivalence class have ~h = lg n~.
 In other words, the minimum AVL are the more unbalanced in height when the number of nodes is fixed.
-***** NOTE
+**** NOTE
 This property need to be proved, this is just an /intuition/.
-*** Property of ~minimum AVLs~
-**** Structure of ~minimum AVLs~
+** Property of ~minimum AVLs~
+*** Structure of ~minimum AVLs~
 A minimum AVL should have the following structure:
 ~T ∈ A**[i]~ if and only if:
 1. ~T.left ∈ A**[i-1]~
 2. ~T.right ∈ A**[i-2]~
 Or viceversa, this is just to semplify the proof.
-***** Proof
+**** Proof
 If ~T.left ∉ A**[i-1]~ this means that ~height(T) != i~, but this is absurd.
 If ~T.right ∉ A**[i-2]~ this means that I can remove node until ~T.right ∈ A**[i-2]~, but this is also an absurd, we supposed that T belong to ~A**[i]~
-QED.
-**** The ~minimum AVLs~ are the most unbalanced.
+QED ∎.
+*** The ~minimum AVLs~ are the most unbalanced.
 This means:
 Taking ~Th ∈ A**[i]~ for all ~T ∈ AVL~ if ~number_of_nodes(Th) = n and number_of_nodes(T) = n~ then ~height(Th) >= height(T)~.
-***** Proof (Reduction ad absurd)
+**** Proof (Reduction ad absurd)
 *Absurd hypothesis* := ~#(Th) = n and #(T) = n~ but ~h(Th) < h(T)~
 For this hypothesis to be true I need a tree ~T~ which is higher than ~Th~.
 Now suppose to cut ~T~ at the same height of ~Th~, there are 2 case:
 1. The cutted tree is not an AVL anymore, this make an absurd
 2. The cutted tree is still an AVL
 In the second case I have a tree that has ~height(T) = height(Th)~ but ~#(T) < #(Th)~ which is absurd because I supposed ~T ∈ minimum AVL~.
-QED.
+QED ∎.
 ****** Note:
 ~#(T)~ return the number of nodes of the tree T.
-**** Height of ~minimum AVLs~
+*** Height of ~minimum AVLs~
 The minimum AVLs have ~h = lg n~.
-***** Proof
+**** Proof
 Consider T ∈ minimum AVLs.
 ~#(T) = 1 + #(T.left) + #(T.right)~
 This equation reminds a lot the [[https://en.wikipedia.org/wiki/Fibonacci_number][fibonacci sequence]].
@@ -70,6 +71,7 @@ h ≅ {some-costant}*lg(n + 1) - 3
 This means:
 ~h = θ(lg n)~
 In particular the costant is (1 / aura_section) ≅ 1.44
+QED ∎.
 ****** Note on fibonacci closed formula
 Formula in PL;
 #+begin_src elisp
@@ -86,19 +88,40 @@ This can be checked on the table above.
 h = 0.
 #(0) = 1 == Fib(3) - 1 = 2 - 1
 ******** Induction
-#(h) = 1 + #(h-1) + #(h-2), on ~h-1 and h-2~ I can use the induction hypothesis.
-#(h) = 1 + (Fib(h-1+3) - 1) + (Fib(h-2+3) - 1)
-#(h) = 1 + Fib(h+2) + Fib(h+1) - 1 - 1
-#(h) = Fib(h+2) + Fib(h+1) - 1
-#(h) = Fib(h+3) - 1
-QED.
-*** Logarithmic height
-**** The AVL have logarithmic height
-**** Proof
+1. #(h) = 1 + #(h-1) + #(h-2), on ~h-1 and h-2~ I can use the induction hypothesis.
+2. #(h) = 1 + (Fib(h-1+3) - 1) + (Fib(h-2+3) - 1)
+3. #(h) = 1 + Fib(h+2) + Fib(h+1) - 1 - 1
+4. #(h) = Fib(h+2) + Fib(h+1) - 1
+5. #(h) = Fib(h+3) - 1
+6. QED ∎.
+** Logarithmic height
+*** The AVL have logarithmic height
+*** Proof
 When the number of nodes is fixed, the tree will be lower of the ~minimum AVL~ with the same number of nodes, hence the height of mininum AVL is ~h = lg n~, then for all AVLs and for all ~n~ := ~h = Θ(lg n)~
-QED.
+QED ∎.
+* How the Rebalancing work
+There are 4 type of violation for the AVL property, hence there are 4 case in which I need to operate to balance the tree, 2 of this 4 case are dual, hence inverting all the ~left~ with ~right~ and viceversa in the algos.
+** Here are the 4 algos:
+1. Single Clockwise
+2. Double Clockwise
+3. Single Counterclockwise
+4. Double Counterclockwise
+** When to balance?
+I will show only the rebalancing algorithm when inserting on the left, so only on ~Single Clockwise~ & ~Double Clockwise~
+If the ~insert~ function insert in the left subtree, only the left subtree can become /to high/.
+So the condition to see if I need to balance is:
++ ~height(T.left) - height(T.right) > 1~
+** Which balance perform?
+Considering the insert on the left I need one of ~Single clockwise~ or ~Double clockwise~.
+*** When ~Single Clockwise~?
+When ~height(T.left.left) > height(T.left.right)~.
+Just do a Clockwise rotation on the root.
+*** When ~Double Clockwise~?
+When ~height(T.left.left) < height(T.left.right)~.
+Do a Counterclockwise on ~T.left~ and a clockwise rotation on the root ~T~.
 * Code
 ** Structure of a node
+This implementation is not generica and support only the key and not  a <key, value> pair, for simplicity.
 #+begin_src go
 type Node struct {
 	key int
@@ -491,11 +514,11 @@ func main() {
 #+end_src
 *** Run
 **** Check if all nodes can be reached
-Do ~go run avl.go | awk '{print $NF}' | sort -r | wc -l~, this should print 1000, this means that all the added nodes can be reached
+Do ~go run avl.go | awk '{print $NF}' | sort -gr | wc -l~, this should print 1000, this means that all the added nodes can be reached
 **** Check if the height is logarithmic
 For a tree with ~1000~ nodes the height should be, at most:
 + *(1/ᵠ) * ln 1000*, which is circa ~1.44 * 10~. (Here *ᵠ* is aura section)
-With the ~go run avl.go | awk '{print $NF}' | sort -r | head -1~ it's possible to obtain the /highest/ node, (obviously I can simply do ~fmt.Print(t.root.height)~, but I was already in the terminal so...) which is ~9~ that is insided the bound.
+With the ~go run avl.go | awk '{print $NF}' | sort -gr | head -1~ it's possible to obtain the /highest/ node, (obviously I can simply do ~fmt.Print(t.root.height)~, but I was already in the terminal so...) which is ~9~ that is insided the bound.
 A more proper test will be harder to write.
 **** Check if the deletion work
 This test is even simpler than the one on the height, but again a proper test suite require to much time for now.

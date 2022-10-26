@@ -1,0 +1,53 @@
+#+title:      red black tree
+#+date:       [2022-10-25 Tue 18:19]
+#+filetags:   :datastructure:knowledge:programming:
+#+identifier: 20221025T181909
+
+* Intro
+The [[https://en.wikipedia.org/wiki/Red%E2%80%93black_tree][red black trees]] are a class of [[https://en.wikipedia.org/wiki/Binary_search_tree][BST]] with a logarithmic height.
+They are the must used kind of tree in practical because they need less operation to keep the logarithmic height compared to other class of trees such as the [[denote:20221025T093213][AVLs]].
+* Property
+The red black tree are described by 4 property:
+1. The leaf node are a special node, the */NIL/* node.
+2. Each node is */RED/* xor */XOR/*.
+3. The ~NIL~ nodes are black.
+4. If a node is ~RED~ both it's children are ~BLACK~
+5. For all simple path from the root to the leaf ~NIL~, all the path have the same number of black nodes. (~Black height property~)
+* Proof of the logarithmic height
+** Lemma, lower bound for internal nodes.
+Consider the function ~N(x)~ that takes in input a Red-Black tree, an return a lower bound on the internal node of the tree.
++ ~N(x)~, ~x ∈ Red-Black~ → ~N(x) ≥ number of internal node~
++ The effective formula is ~N(x) ≥ 2^bh(x) - 1~, where ~bh(x)~ return the black height of ~x~.
+*** Proof
+Proof by induction.
+It's important to choose well on wich variable I will do induction, I can't do induction on ~bh(x)~ because it may not vary on the same way on the subtrees, so I will do induction on the ~height(x)~.
+**** Base case, ~height(x) = 0~
+In this case ~X~ is composed only by a ~NIL~ leaf, so:
+1. ~N(NIL) ≥ 2^bh(NIL) - 1~ → ~0 ≥ 2^0 - 1~ → ~0 ≥ 0~
+2. In a ~NIL~ leaf node the tree has ~0~ internal node.
+3. The base case is true.
+**** Induction
+Assume true for ~height(x) = h - 1~, prove for ~height(x) = h~.
+The number of internals node of ~x~, where ~height(x) = h~ is equal to the number of internal nodes on the left subtree ~x.left~, plus the number of nodes on the right subtree ~x.right~, plus ~1~ for the root.
+Since ~height(x.left) and height(x.right) < h~ I can use the induction hypothesis.
+1. ~N(x) = N(x.left) + N(x.right) + 1~
+2. ~N(x) = (2^(bh(x) - 1) - 1) + (2^bh(x) - 1) - 1~
+3. ~N(x) = 2*2^(bh(x) - 1) -2 + 1~
+4. ~N(x) = 2^bh(x) - 1~
+5. QED ∎.
+** Logarithmic height
+The Red-Black trees have ~h = Θ(lg n)~
+*** Proof
+1. Consider ~T ∈ Red-Black~.
+2. Apply the previous lemma on the root of ~T~.
+3. ~N(T) > 2^bh(T) - 1~
+4. Since at most half of the nodes from the root the leaf are black (this derive from the black height property, just interleave a black level and a red level), this formula eval to:
+5. ~n ﹥ 2^(h/2) - 1~ where ~n~ are the number of nodes and ~h~ is the height of the tree T.
+6. ~n + 1 ﹥ 2^(h/2)~
+7. ~lg(n + 1) ﹥  h/2~
+8. ~2 * lg(n + 1) ﹥ h~
+9. QED ∎.
+*** Bound for the /unbalancing/
+The proof shows also the max bound for the unbalancing between subtrees.
+Note that ~2 ﹥ 1.44~, where ~1.44~ is the constant for the unbalancing of the AVL Trees, hence The Red-Black admit a bigger gap between subtrees, this means that they need to unbalanced less than AVL.
+This small difference makes the RedBlack the most used in practice.

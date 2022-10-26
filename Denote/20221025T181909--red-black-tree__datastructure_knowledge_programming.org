@@ -66,58 +66,56 @@ Resolve the second problem is simpler than the first.
 There are 3 case of violation.
 *** Type 1
 #+begin_example
-	  			B                B
-	  		/   \             / \
-	  	R			 R   OR      R   R
-	   /									  \
-		R										   R
+          B                B
+        /   \             / \
+      R      R   OR      R   R
+     /                    \
+    R                      R
 #+end_example
 **** Resolution
 Can be resolved locally in the following way:
 #+begin_example
-
-	  			R                R
-	  		/   \             / \
-	  	B			 B   OR      B   B
-	   /									  \
-		R										   R
+          R                R
+        /   \             / \
+      B      B   OR      B   B
+     /                    \
+    R                      R
 #+end_example
 Note that in the considered subtree there are no violation of the Red-Black property, but the root is red so there could be a violation on tree above.
 If a balance operation keep fall on ~TYPE 1~ it will reach the root, then if the root is repainted in ~BLACK~ all the property are restored.
 *** Type 2
 #+begin_example
-	  			B
-	  		/   \
-	  	R			 B
-	   	 \
-		    R
+          B
+        /   \
+      R      B
+       \
+        R
 #+end_example
 **** Resolution
 This ~TYPE 2~ is not resolutive, but it change to a ~TYPE 3~ which is resolutive.
 #+begin_example
-	  			B
-	  		/   \
-	  	R			 B
-	   /
-		R
+          B
+        /   \
+      R      B
+     /
+    R
 #+end_example
 *** Type 3
 #+begin_example
-	  			B
-	  		/   \
-	  	R			 B
-	   /
-		R
+          B
+        /   \
+      R      B
+     /
+    R
 #+end_example
 **** Resolution
 Perform a clockwise rotation on the root and recolor some nodes.
 #+begin_example
-	  			B
-	  		/   \
-	  	R			 R
-	  	        \
-							 B
-
+          B
+        /   \
+      R      R
+              \
+               B
 #+end_example
 *** Detect violation
 They are pretty simple, they just check which topology the subtreess has, if is one of the above return the corresponding enum of the violation.
@@ -128,65 +126,65 @@ To solve that, the balance operation will color the node that substitute ~X~ (if
 *** Type 1
 #+begin_example
          B
-			 /   \
-			DB    R
-			     / \
-					B   B
+       /   \
+      DB    R
+           / \
+          B   B
 #+end_example
 **** Resolution
 Perform a counter clockwise rotation on the root and recolor the following nodes.
 #+begin_example
-	       B
-			/    \
-		R       B
-	 / \
-	DB  B
+         B
+      /    \
+    R       B
+   / \
+  DB  B
 #+end_example
 This don't solve the problem, but now the left subtree is a violation of ~TYPE 2~ with a ~RED~ root which is resolutive, or one of the other (~TYPE 3~, ~TYPE 4~) that will be also resolutive.
 So to terminate this case, the algo need to apply balance ~TYPE 2~ on the left subtree.
 *** Type 2
 #+begin_example
         RB
-			 /  \
-			DB   B
-			    / \
+       /  \
+      DB   B
+          / \
          B   B
 #+end_example
 **** Resolution
 #+begin_example
        2BB
-			 /  \
-			B    R
-			    / \
+       /  \
+      B    R
+          / \
          B   B
 #+end_example
 Move the violation up on tree, if the root was previous ~RED~ this will be resolutive (example: comes from ~TYPE 1~).
 *** Type 3
 #+begin_example
         RB
-			 /  \
-			DB   B
-			    / \
+       /  \
+      DB   B
+          / \
          R   B
 #+end_example
 **** Resolution
 Perform a clockwise rotation on the right subtree and recolor the nodes in the following way.
 #+begin_example
         RB
-			 /  \
-			B    B
-			    / \
+       /  \
+      B    B
+          / \
          B   R
-				    / \
-					 B 	 B
+            / \
+           B   B
 #+end_example
 This is not resolutive, but it will change in a ~TYPE 4~ which will be resolutive.
 *** Type 4
 #+begin_example
         RB
-			 /  \
-			DB   B
-			    / \
+       /  \
+      DB   B
+          / \
          RB  R
             / \
            B   B
@@ -194,11 +192,11 @@ This is not resolutive, but it will change in a ~TYPE 4~ which will be resolutiv
 **** Resolution
 Perform a counter clockwiser rotation on the root.
 #+begin_example
-	        B
-				/   \
-			 RB    R
-			/ \   / \
-	   DB RB  B  B
+          B
+        /   \
+       RB    R
+      / \   / \
+     DB RB  B  B
 #+end_example
 Know there are some recoloration to perform, but there is a particular order.
 1. ~T.right.color = RED~

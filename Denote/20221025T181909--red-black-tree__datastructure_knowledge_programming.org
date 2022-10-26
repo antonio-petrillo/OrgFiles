@@ -51,3 +51,805 @@ The Red-Black trees have ~h = Θ(lg n)~
 The proof shows also the max bound for the unbalancing between subtrees.
 Note that ~2 ﹥ 1.44~, where ~1.44~ is the constant for the unbalancing of the AVL Trees, hence The Red-Black admit a bigger gap between subtrees, this means that they need to unbalanced less than AVL.
 This small difference makes the RedBlack the most used in practice.
+* Code
+** Constants and Types definition
+#+begin_src go
+type Color int
+type InsertViolation int
+type DeleteViolation int
+
+const (
+	RED Color = iota
+	BLACK
+	DOUBLE_BLACK
+)
+
+const (
+	INS_TYPE_1 InsertViolation = iota
+	INS_TYPE_2
+	INS_TYPE_3
+	INS_NONE
+)
+
+const (
+	DEL_TYPE_1 DeleteViolation = iota
+	DEL_TYPE_2
+	DEL_TYPE_3
+	DEL_TYPE_4
+	DEL_NONE
+)
+#+end_src
+** Structure of a node
+#+begin_src go
+type Node struct{
+	key int
+	color Color
+	height int // just to see if the height is approximately logarithmic
+	left *Node
+	right *Node
+}
+#+end_src
+** Structure of a tree
+#+begin_src go
+type Tree struct{
+	root *Node
+}
+// This represent a NIL leaf
+var leaf = &Node{0, BLACK, 0, nil, nil}
+// Simply way to use a single instance for all the leaf.
+// This is not a good implementation.
+#+end_src
+** Utility functions
+*** Init Tree
+#+begin_src go
+func initTree() Tree{
+	var t Tree
+	t.root = leaf
+	leaf.left, leaf.right = leaf, leaf
+	return t
+}
+#+end_src
+*** Max
+#+begin_src go
+func max(a, b int) int {
+	if a <= b {
+		return b
+	}
+	return a
+}
+#+end_src
+*** Update Height
+#+begin_src go
+func (n *Node) updateHeight() *Node {
+	if !n.isLeaf() {
+		n.height = 1 + max(n.left.height, n.right.height)
+	}
+	return n
+}
+#+end_src
+*** Is Red
+#+begin_src go
+func (n *Node) isRed() bool {
+	return n.color == RED
+}
+#+end_src
+*** Is Double Black
+#+begin_src go
+func (n *Node) isDoubleBlack() bool {
+	return n.color == DOUBLE_BLACK
+}
+#+end_src
+*** Is Leaf
+#+begin_src go
+func (n *Node) isLeaf() bool {
+	return n == leaf
+}
+#+end_src
+*** Propagate Black
+#+begin_src go
+func (n *Node) propagateBlack() *Node {
+	if ! n.isRed() {
+		n.color = DOUBLE_BLACK
+	} else {
+		n.color = BLACK
+	}
+	return n
+}
+#+end_src
+*** Minimum Deconnection
+#+begin_src go
+func minimumDeconnection(child, parent *Node) *Node {
+	var tmp *Node
+	if child.left.isLeaf() {
+		tmp = child
+		if child == parent.left {
+			parent.left = child.right
+			parent = parent.balanceRemoveLeft()
+		} else {
+			parent.right = child.right
+			parent = parent.balanceRemoveRight()
+		}
+	} else {
+		tmp = minimumDeconnection(child.left, child)
+		tmp = tmp.balanceRemoveLeft()
+	}
+	return tmp
+}
+#+end_src
+*** Delete Root
+#+begin_src go
+func (n *Node) deleteRoot() *Node {
+	if n.left.isLeaf() || n.right.isLeaf() {
+		tmp := n
+		if n.left.isLeaf() {
+			n = n.right
+		} else {
+			n = n.left
+		}
+		if !tmp.isRed() {
+			n = n.propagateBlack()
+		}
+		tmp = nil // help the garbage collector
+	} else {
+		tmp := minimumDeconnection(n.right, n)
+		tmp.left, tmp.right = n.left, n.right
+		tmp = tmp.balanceRemoveRight()
+		if !n.isRed() {
+			n = n.propagateBlack()
+		}
+		n = tmp
+	}
+	return n
+}
+#+end_src
+** Rotation
+The rotation don't update the color, this action will be performed by fixup/rebalancing function.
+*** Clockwise
+#+begin_src go
+func (n *Node) clockwise() *Node {
+	pivot := n.left
+	n.left = pivot.right
+	pivot.right = n
+	n = n.updateHeight()
+	pivot = pivot.updateHeight()
+	return pivot
+}
+#+end_src
+*** Counterclockwiese
+#+begin_src go
+func (n *Node) counterClockwise() *Node {
+	pivot := n.right
+	n.right = pivot.left
+	pivot.left = n
+	n = n.updateHeight()
+	pivot = pivot.updateHeight()
+	return pivot
+}
+#+end_src
+** Insert function
+*** Insert into the tree
+#+begin_src go
+func (t *Tree) Insert(key int) {
+	t.root = t.root.insert(key)
+	t.root.color = BLACK
+}
+#+end_src
+*** Recursive insert the node
+#+begin_src go
+func (n *Node) insert(key int) *Node {
+	if n == leaf {
+		n = &Node{key, RED, 0, leaf, leaf}
+	} else {
+		if n.key > key {
+			n.left = n.left.insert(key)
+			n = n.balanceInsertLeft()
+			n = n.updateHeight()
+		} else if n.key < key {
+			n.right = n.right.insert(key)
+			n = n.balanceInsertRight()
+			n = n.updateHeight()
+		} else {
+			// Do nothing
+			// Here you can update a key, etc...
+		}
+	}
+	return n
+}
+#+end_src
+*** Insert Balance operation
+**** Balance Left Code
+#+begin_src go
+func (n *Node) balanceInsertLeft() *Node {
+	switch n.typeOfViolationInsertLeft() {
+	case INS_TYPE_1:
+		n.left.color, n.right.color = BLACK, BLACK
+		n.color = RED
+	case INS_TYPE_2:
+		n.left = n.left.counterClockwise()
+		fallthrough
+	case INS_TYPE_3:
+		n = n.clockwise()
+		n.color = BLACK
+		n.right.color = RED
+	}
+	return n
+}
+#+end_src
+**** Balance Right Code
+#+begin_src go
+func (n *Node) balanceInsertRight() *Node {
+	switch n.typeOfViolationInsertRight() {
+	case INS_TYPE_1:
+		n.left.color, n.right.color = BLACK, BLACK
+		n.color = RED
+	case INS_TYPE_2:
+		n.right = n.right.clockwise()
+		fallthrough
+	case INS_TYPE_3:
+		n = n.counterClockwise()
+		n.color = BLACK
+		n.left.color = RED
+	}
+	return n
+}
+#+end_src
+**** Detect violation
+***** Left
+#+begin_src go
+func (n *Node) typeOfViolationInsertLeft() InsertViolation {
+	violation := INS_NONE
+	if n.left.isRed() {
+		if n.left.left.isRed() || n.left.right.isRed() {
+			if n.right.isRed(){
+				violation = INS_TYPE_1
+			} else{
+				if n.left.right.isRed() {
+					violation = INS_TYPE_2
+				} else {
+					violation = INS_TYPE_3
+				}
+			}
+		}
+	}
+	return violation
+}
+#+end_src
+***** Right
+#+begin_src go
+func (n *Node) typeOfViolationInsertRight() InsertViolation {
+	violation := INS_NONE
+	if n.right.isRed() {
+		if n.right.right.isRed() || n.right.left.isRed() {
+			if n.left.isRed() {
+				violation = INS_TYPE_1
+			} else {
+				if n.right.left.isRed() {
+					violation = INS_TYPE_2
+				} else {
+					violation = INS_TYPE_3
+				}
+			}
+		}
+	}
+	return violation
+}
+#+end_src
+** Delete function
+*** Delete into the tree
+#+begin_src go
+func (t *Tree) Remove(key int) {
+	t.root = t.root.remove(key)
+}
+#+end_src
+*** Recursive delete the node
+#+begin_src go
+func (n *Node) remove(key int) *Node{
+	if !n.isLeaf() {
+		if n.key > key {
+			n.left = n.left.remove(key)
+			n = n.balanceRemoveLeft()
+		} else if n.key < key {
+			n.right = n.right.remove(key)
+			n = n.balanceRemoveRight()
+		} else {
+			n = n.deleteRoot()
+		}
+	}
+	return n
+}
+#+end_src
+*** Delete Balance operation
+**** Balance Left Code
+#+begin_src go
+func (n *Node) balanceRemoveLeft() *Node {
+	switch typeOfViolationDeleteLeft(n) {
+	case DEL_TYPE_1:
+		n = n.counterClockwise()
+		n.left.color = RED
+		n.color = BLACK
+		n.left = n.left.balanceRemoveLeft()
+	case DEL_TYPE_2:
+		n.right.color = RED
+		n.left.color = BLACK
+		n = n.propagateBlack()
+	case DEL_TYPE_3:
+		n.right = n.right.clockwise()
+		n.right.color = BLACK
+		n.right.right.color = RED
+	case DEL_TYPE_4:
+		n = n.counterClockwise()
+		n.right.color = BLACK
+		n.color = n.left.color
+		n.left.color = BLACK
+		n.left.left.color = BLACK
+	}
+	return n
+}
+#+end_src
+**** Balance Right Code
+#+begin_src go
+func (n *Node) balanceRemoveRight() *Node {
+	switch DEL_NONE {
+	case DEL_TYPE_1:
+		n = n.clockwise()
+		n.right.color = RED
+		n.color = BLACK
+		n.right = n.right.balanceRemoveRight()
+	case DEL_TYPE_2:
+		n.left.color = RED
+		n.right.color = BLACK
+		n = n.propagateBlack()
+	case DEL_TYPE_3:
+		n.left = n.left.counterClockwise()
+		n.left.color = BLACK
+		n.left.left.color = RED
+	case DEL_TYPE_4:
+		n = n.clockwise()
+		n.left.color = BLACK
+		n.color = n.right.color
+		n.right.color = BLACK
+		n.right.right.color = BLACK
+	}
+	return n
+}
+#+end_src
+**** Detect violation
+***** Left
+#+begin_src go
+func typeOfViolationDeleteLeft(n *Node) DeleteViolation {
+	violation := DEL_NONE
+	if n.left.isDoubleBlack() {
+		if n.right.isRed() {
+			violation = DEL_TYPE_1
+		} else{
+			if !n.right.left.isRed() && !n.right.right.isRed() {
+				violation = DEL_TYPE_2
+			} else {
+				violation = DEL_TYPE_3
+				if n.right.right.isRed() {
+					violation = DEL_TYPE_4
+				}
+			}
+		}
+	}
+	return violation
+}
+#+end_src
+***** Right
+#+begin_src go
+func typeOfViolationDeleteRight(n *Node) DeleteViolation {
+	violation := DEL_NONE
+	if n.right.isDoubleBlack(){
+		if n.left.isRed() {
+			violation = DEL_TYPE_1
+		} else {
+			if !n.left.left.isRed() && !n.left.right.isRed() {
+				violation = DEL_TYPE_2
+			} else {
+				violation = DEL_TYPE_3
+				if n.left.left.isRed() {
+					violation = DEL_TYPE_4
+				}
+			}
+
+		}
+	}
+	return violation
+}
+#+end_src
+** Source code
+*** Source
+#+begin_src go
+package main
+
+import "fmt"
+
+type Color int
+type InsertViolation int
+type DeleteViolation int
+
+const (
+	RED Color = iota
+	BLACK
+	DOUBLE_BLACK
+)
+
+const (
+	INS_TYPE_1 InsertViolation = iota
+	INS_TYPE_2
+	INS_TYPE_3
+	INS_NONE
+)
+
+const (
+	DEL_TYPE_1 DeleteViolation = iota
+	DEL_TYPE_2
+	DEL_TYPE_3
+	DEL_TYPE_4
+	DEL_NONE
+)
+
+type Node struct{
+	key int
+	color Color
+	height int // just to see if the height is approximately logarithmic
+	left *Node
+	right *Node
+}
+
+type Tree struct{
+	root *Node
+}
+// This represent a NIL leaf
+var leaf = &Node{0, BLACK, 0, nil, nil}
+// Simply way to use a single instance for all the leaf.
+// This is not a good implementation.
+
+
+func initTree() Tree{
+	var t Tree
+	t.root = leaf
+	leaf.left, leaf.right = leaf, leaf
+	return t
+}
+
+func max(a, b int) int {
+	if a <= b {
+		return b
+	}
+	return a
+}
+
+func (n *Node) updateHeight() *Node {
+	if !n.isLeaf() {
+		n.height = 1 + max(n.left.height, n.right.height)
+	}
+	return n
+}
+
+func (n *Node) clockwise() *Node {
+	pivot := n.left
+	n.left = pivot.right
+	pivot.right = n
+	n = n.updateHeight()
+	pivot = pivot.updateHeight()
+	return pivot
+}
+
+func (n *Node) counterClockwise() *Node {
+	pivot := n.right
+	n.right = pivot.left
+	pivot.left = n
+	n = n.updateHeight()
+	pivot = pivot.updateHeight()
+	return pivot
+}
+
+func (t *Tree) Insert(key int) {
+	t.root = t.root.insert(key)
+	t.root.color = BLACK
+}
+
+func (n *Node) insert(key int) *Node {
+	if n == leaf {
+		n = &Node{key, RED, 0, leaf, leaf}
+	} else {
+		if n.key > key {
+			n.left = n.left.insert(key)
+			n = n.balanceInsertLeft()
+			n = n.updateHeight()
+		} else if n.key < key {
+			n.right = n.right.insert(key)
+			n = n.balanceInsertRight()
+			n = n.updateHeight()
+		} else {
+			// Do nothing
+			// Here you can update a key, etc...
+		}
+	}
+	return n
+}
+
+func (n *Node) isRed() bool {
+	return n.color == RED
+}
+
+func (n *Node) isDoubleBlack() bool {
+	return n.color == DOUBLE_BLACK
+}
+
+func (n *Node) isLeaf() bool {
+	return n == leaf
+}
+
+func (n *Node) typeOfViolationInsertLeft() InsertViolation {
+	violation := INS_NONE
+	if n.left.isRed() {
+		if n.left.left.isRed() || n.left.right.isRed() {
+			if n.right.isRed(){
+				violation = INS_TYPE_1
+			} else{
+				if n.left.right.isRed() {
+					violation = INS_TYPE_2
+				} else {
+					violation = INS_TYPE_3
+				}
+			}
+		}
+	}
+	return violation
+}
+
+func (n *Node) typeOfViolationInsertRight() InsertViolation {
+	violation := INS_NONE
+	if n.right.isRed() {
+		if n.right.right.isRed() || n.right.left.isRed() {
+			if n.left.isRed() {
+				violation = INS_TYPE_1
+			} else {
+				if n.right.left.isRed() {
+					violation = INS_TYPE_2
+				} else {
+					violation = INS_TYPE_3
+				}
+			}
+		}
+	}
+	return violation
+}
+
+func (n *Node) balanceInsertLeft() *Node {
+	switch n.typeOfViolationInsertLeft() {
+	case INS_TYPE_1:
+		n.left.color, n.right.color = BLACK, BLACK
+		n.color = RED
+	case INS_TYPE_2:
+		n.left = n.left.counterClockwise()
+		fallthrough
+	case INS_TYPE_3:
+		n = n.clockwise()
+		n.color = BLACK
+		n.right.color = RED
+	}
+	return n
+}
+
+func (n *Node) balanceInsertRight() *Node {
+	switch n.typeOfViolationInsertRight() {
+	case INS_TYPE_1:
+		n.left.color, n.right.color = BLACK, BLACK
+		n.color = RED
+	case INS_TYPE_2:
+		n.right = n.right.clockwise()
+		fallthrough
+	case INS_TYPE_3:
+		n = n.counterClockwise()
+		n.color = BLACK
+		n.left.color = RED
+	}
+	return n
+}
+
+func (t *Tree) Print() {
+	// fmt.Println("Tree print:")
+	t.root.print()
+	fmt.Println()
+}
+
+func colorToString(c Color) string {
+	switch c {
+	case BLACK:
+		return "black"
+	case RED:
+		return "red"
+	default:
+		return "double black"
+	}
+}
+
+func (n *Node) print() {
+	if !n.isLeaf() {
+		n.left.print()
+		fmt.Printf("Key: %d\tColor: %s\tHeight: %d\n", n.key, colorToString(n.color), n.height)
+		n.right.print()
+	}
+}
+
+func (t *Tree) Remove(key int) {
+	t.root = t.root.remove(key)
+}
+
+func (n *Node) remove(key int) *Node{
+	if !n.isLeaf() {
+		if n.key > key {
+			n.left = n.left.remove(key)
+			n = n.balanceRemoveLeft()
+		} else if n.key < key {
+			n.right = n.right.remove(key)
+			n = n.balanceRemoveRight()
+		} else {
+			n = n.deleteRoot()
+		}
+	}
+	return n
+}
+
+func typeOfViolationDeleteLeft(n *Node) DeleteViolation {
+	violation := DEL_NONE
+	if n.left.isDoubleBlack() {
+		if n.right.isRed() {
+			violation = DEL_TYPE_1
+		} else{
+			if !n.right.left.isRed() && !n.right.right.isRed() {
+				violation = DEL_TYPE_2
+			} else {
+				violation = DEL_TYPE_3
+				if n.right.right.isRed() {
+					violation = DEL_TYPE_4
+				}
+			}
+		}
+	}
+	return violation
+}
+
+func typeOfViolationDeleteRight(n *Node) DeleteViolation {
+	violation := DEL_NONE
+	if n.right.isDoubleBlack(){
+		if n.left.isRed() {
+			violation = DEL_TYPE_1
+		} else {
+			if !n.left.left.isRed() && !n.left.right.isRed() {
+				violation = DEL_TYPE_2
+			} else {
+				violation = DEL_TYPE_3
+				if n.left.left.isRed() {
+					violation = DEL_TYPE_4
+				}
+			}
+
+		}
+	}
+	return violation
+}
+
+func (n *Node) balanceRemoveLeft() *Node {
+	switch typeOfViolationDeleteLeft(n) {
+	case DEL_TYPE_1:
+		n = n.counterClockwise()
+		n.left.color = RED
+		n.color = BLACK
+		n.left = n.left.balanceRemoveLeft()
+	case DEL_TYPE_2:
+		n.right.color = RED
+		n.left.color = BLACK
+		n = n.propagateBlack()
+	case DEL_TYPE_3:
+		n.right = n.right.clockwise()
+		n.right.color = BLACK
+		n.right.right.color = RED
+	case DEL_TYPE_4:
+		n = n.counterClockwise()
+		n.right.color = BLACK
+		n.color = n.left.color
+		n.left.color = BLACK
+		n.left.left.color = BLACK
+	}
+	return n
+}
+
+func (n *Node) balanceRemoveRight() *Node {
+	switch DEL_NONE {
+	case DEL_TYPE_1:
+		n = n.clockwise()
+		n.right.color = RED
+		n.color = BLACK
+		n.right = n.right.balanceRemoveRight()
+	case DEL_TYPE_2:
+		n.left.color = RED
+		n.right.color = BLACK
+		n = n.propagateBlack()
+	case DEL_TYPE_3:
+		n.left = n.left.counterClockwise()
+		n.left.color = BLACK
+		n.left.left.color = RED
+	case DEL_TYPE_4:
+		n = n.clockwise()
+		n.left.color = BLACK
+		n.color = n.right.color
+		n.right.color = BLACK
+		n.right.right.color = BLACK
+	}
+	return n
+}
+
+func (n *Node) deleteRoot() *Node {
+	if n.left.isLeaf() || n.right.isLeaf() {
+		tmp := n
+		if n.left.isLeaf() {
+			n = n.right
+		} else {
+			n = n.left
+		}
+		if !tmp.isRed() {
+			n = n.propagateBlack()
+		}
+		tmp = nil // help the garbage collector
+	} else {
+		tmp := minimumDeconnection(n.right, n)
+		tmp.left, tmp.right = n.left, n.right
+		tmp = tmp.balanceRemoveRight()
+		if !n.isRed() {
+			n = n.propagateBlack()
+		}
+		n = tmp
+	}
+	return n
+}
+
+func minimumDeconnection(child, parent *Node) *Node {
+	var tmp *Node
+	if child.left.isLeaf() {
+		tmp = child
+		if child == parent.left {
+			parent.left = child.right
+			parent = parent.balanceRemoveLeft()
+		} else {
+			parent.right = child.right
+			parent = parent.balanceRemoveRight()
+		}
+	} else {
+		tmp = minimumDeconnection(child.left, child)
+		tmp = tmp.balanceRemoveLeft()
+	}
+	return tmp
+}
+
+func (n *Node) propagateBlack() *Node {
+	if ! n.isRed() {
+		n.color = DOUBLE_BLACK
+	} else {
+		n.color = BLACK
+	}
+	return n
+}
+
+func main() {
+  t := initTree()
+	for i := 0; i < 1000; i++ {
+		t.Insert(i)
+	}
+	t.Print()
+
+	for i := 0; i < 1000; i++ {
+		t.Remove(i)
+	}
+	t.Print()
+}
+#+end_src
+*** Run
+1. ~go run main.go | awk '{print $NF}' | sort -gr | head -1 → 16~ which is bound, comment t.Remove first.
+2. ~go run main.go | awk '/black/{print $4}' | wc -l → 987 black nodes and 13 red nodes.~
+3. ~go run main.go | awk '{print $NF}' | sort -gr | head -1 → 16~ this means that all the nodes are removed correctly.
+**** NOTE
+This example is not exhaustive.

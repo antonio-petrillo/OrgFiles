@@ -268,7 +268,7 @@ func (n *Node) balanceRight() *Node {
 	return n
 }
 #+end_src
-** Insertion operation
+** Insertion function
 *** Insert into the tree
 #+begin_src go
 func (t *Tree) Insert(key int){
@@ -298,7 +298,7 @@ func (n *Node) insert(key int) *Node{
 	return n
 }
 #+end_src
-** Deletion operation
+** Deletion function
 *** Remove from the tree
 #+begin_src go
 func (t *Tree) Remove(key int) {

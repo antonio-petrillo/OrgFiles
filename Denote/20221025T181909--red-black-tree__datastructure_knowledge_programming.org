@@ -51,6 +51,162 @@ The Red-Black trees have ~h = Θ(lg n)~
 The proof shows also the max bound for the unbalancing between subtrees.
 Note that ~2 ﹥ 1.44~, where ~1.44~ is the constant for the unbalancing of the AVL Trees, hence The Red-Black admit a bigger gap between subtrees, this means that they need to unbalanced less than AVL.
 This small difference makes the RedBlack the most used in practice.
+* How the Rebalancing work
+Red Black trees have different rebalancing for insertion and deletion.
+I will explain only the left balancing algo, on the right they are dual, just invert ~left~ with ~right~ and viceversa.
+** NOTE
++ ~B~ indicates a black node
++ ~R~ indicates a red node
++ ~2B~ indicates a doubl black node
++ ~RB~ indicates that the node could be ~RED~ or ~BLACK~
++ ~2BB~ indicates that the node could be ~DOUBLE BLACK~ or ~BLACK~
+** Insertion
+During the insertion, the new node insert is colored in red so it don't change the black height (which is the most important property), but It can violate the property that no RED node can have a RED child.
+Resolve the second problem is simpler than the first.
+There are 3 case of violation.
+*** Type 1
+#+begin_example
+	  			B                B
+	  		/   \             / \
+	  	R			 R   OR      R   R
+	   /									  \
+		R										   R
+#+end_example
+**** Resolution
+Can be resolved locally in the following way:
+#+begin_example
+
+	  			R                R
+	  		/   \             / \
+	  	B			 B   OR      B   B
+	   /									  \
+		R										   R
+#+end_example
+Note that in the considered subtree there are no violation of the Red-Black property, but the root is red so there could be a violation on tree above.
+If a balance operation keep fall on ~TYPE 1~ it will reach the root, then if the root is repainted in ~BLACK~ all the property are restored.
+*** Type 2
+#+begin_example
+	  			B
+	  		/   \
+	  	R			 B
+	   	 \
+		    R
+#+end_example
+**** Resolution
+This ~TYPE 2~ is not resolutive, but it change to a ~TYPE 3~ which is resolutive.
+#+begin_example
+	  			B
+	  		/   \
+	  	R			 B
+	   /
+		R
+#+end_example
+*** Type 3
+#+begin_example
+	  			B
+	  		/   \
+	  	R			 B
+	   /
+		R
+#+end_example
+**** Resolution
+Perform a clockwise rotation on the root and recolor some nodes.
+#+begin_example
+	  			B
+	  		/   \
+	  	R			 R
+	  	        \
+							 B
+
+#+end_example
+*** Detect violation
+They are pretty simple, they just check which topology the subtreess has, if is one of the above return the corresponding enum of the violation.
+** Deletion
+During the deletion the Red-Black the only property that could be violated is the black height.
+If the operation remove a black node, say ~X~, the black height will change.
+To solve that, the balance operation will color the node that substitute ~X~ (if ~X~ was ~BLACK~ and the substitute is not ~RED~) as ~DOUBLE BLACK~ an try to redistribute that extra black somewhere.
+*** Type 1
+#+begin_example
+         B
+			 /   \
+			DB    R
+			     / \
+					B   B
+#+end_example
+**** Resolution
+Perform a counter clockwise rotation on the root and recolor the following nodes.
+#+begin_example
+	       B
+			/    \
+		R       B
+	 / \
+	DB  B
+#+end_example
+This don't solve the problem, but now the left subtree is a violation of ~TYPE 2~ with a ~RED~ root which is resolutive, or one of the other (~TYPE 3~, ~TYPE 4~) that will be also resolutive.
+So to terminate this case, the algo need to apply balance ~TYPE 2~ on the left subtree.
+*** Type 2
+#+begin_example
+        RB
+			 /  \
+			DB   B
+			    / \
+         B   B
+#+end_example
+**** Resolution
+#+begin_example
+       2BB
+			 /  \
+			B    R
+			    / \
+         B   B
+#+end_example
+Move the violation up on tree, if the root was previous ~RED~ this will be resolutive (example: comes from ~TYPE 1~).
+*** Type 3
+#+begin_example
+        RB
+			 /  \
+			DB   B
+			    / \
+         R   B
+#+end_example
+**** Resolution
+Perform a clockwise rotation on the right subtree and recolor the nodes in the following way.
+#+begin_example
+        RB
+			 /  \
+			B    B
+			    / \
+         B   R
+				    / \
+					 B 	 B
+#+end_example
+This is not resolutive, but it will change in a ~TYPE 4~ which will be resolutive.
+*** Type 4
+#+begin_example
+        RB
+			 /  \
+			DB   B
+			    / \
+         RB  R
+            / \
+           B   B
+#+end_example
+**** Resolution
+Perform a counter clockwiser rotation on the root.
+#+begin_example
+	        B
+				/   \
+			 RB    R
+			/ \   / \
+	   DB RB  B  B
+#+end_example
+Know there are some recoloration to perform, but there is a particular order.
+1. ~T.right.color = RED~
+2. ~T.color = T.left.color~ (remember this could be ~RB~, so it need to retur on the root)
+3. ~T.left.color = BLACK~, pop the double black from the violation
+4. ~T.left.left.color = BLACK~, remove definitely the ~DOUBLE BLACK~
+*** Detect violation (same concepts as the insertion)
+They are pretty simple, they just check which topology the subtreess has, if is one of the above return the corresponding enum of the violation.
 * Code
 ** Constants and Types definition
 #+begin_src go

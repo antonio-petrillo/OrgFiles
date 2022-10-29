@@ -1,2 +1,0 @@
-* TODO <2022-10-05 Wed> Find a good PopCount algorithm
-See  The Go programming language book.

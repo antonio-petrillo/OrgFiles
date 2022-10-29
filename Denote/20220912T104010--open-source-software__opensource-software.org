@@ -8,3 +8,4 @@
 * Networking
 ** [[https://www.snort.org/][Snort firewall]]
 ** [[https://www.pfsense.org/][pfsense firewall]] (more like a dedicated linux distro)
+** [[https://www.gnu.org/software/emacs/][emacs]] (more like an operating system)

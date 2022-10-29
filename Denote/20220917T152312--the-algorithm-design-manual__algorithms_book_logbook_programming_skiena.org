@@ -251,9 +251,8 @@ Exercise page 140
 + [X] exercise 5-14
 + [X] exercise 5-15
 + [X] exercise 5-16
-** Chapter 6
-Skipped for now.
-I've only read the theory for now.
+** TODO Chapter 6
+I've only read the theory.
 *** Probability [0/7]
 + [ ] exercise 6-1
 + [ ] exercise 6-2

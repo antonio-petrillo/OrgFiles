@@ -1002,7 +1002,7 @@ func main() {
 }
 #+end_src
 *** Run
-1. ~go run main.go | awk '{print $NF}' | sort -gr | head -1 → 16~ which is bound, comment t.Remove first.
+1. ~go run main.go | awk '{print $NF}' | sort -gr | head -1 → 16~ which is in bound, comment t.Remove first.
 2. ~go run main.go | awk '/black/{print $4}' | wc -l → 987 black nodes and 13 red nodes.~
 3. ~go run main.go | awk '{print $NF}' | sort -gr | head -1 → 16~ this means that all the nodes are removed correctly.
 **** NOTE

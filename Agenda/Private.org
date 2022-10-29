@@ -1,21 +1,4 @@
-* DONE X220 [2/2]                                                  :ebay:
-CLOSED: [2022-09-09 Fri 09:52] SCHEDULED: <2022-08-29 Mon>
-+ [X] In consegna
-+ [X] Attendi pagamento [2/2]
-  + [X] Ricevi pagamento
-  + [X] Rimborsa 20 Eur per RAM rotta
-* DONE NH-D15 [3/3]                                                  :ebay:
-CLOSED: [2022-09-09 Fri 09:52] SCHEDULED: <2022-08-28 Sun>
-Il prodotto e' arrivato e l'acquirente e' soddisfatto
-Pagamento effettuato da ebay.
-+ [X] Consegnato
-+ [X] Soldi trasf. da ebay
-+ [X] Attendi trasf.
-* DONE RAM [2/2]                                                       :ebay:
-CLOSED: [2022-08-27 Sat 20:26]
-+ [X] Consegnato
-+ [X] Attendi pagamento (l'acquirente sta testando il prodotto)
-* TODO Da vendere: [0/7]                                               :ebay:
+* TODO Da vendere: [0/8]                                               :ebay:
 DEADLINE: <2022-09-05 Mon>
 + [ ] Set ventole noctua
 + [ ] Alimentatore Seasonic
@@ -24,4 +7,4 @@ DEADLINE: <2022-09-05 Mon>
 + [ ] Monitor AOC
 + [ ] Silverstone powerbutton
 + [ ] case NZXT (S340)? (troppo rovinato e spedizione costosa)
-* TODO <2022-09-17 Sat> Move Denote configuration to a dedicated file
++ [ ] fotocamer alpha 6000

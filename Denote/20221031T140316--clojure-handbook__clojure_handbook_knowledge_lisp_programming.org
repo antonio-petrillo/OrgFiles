@@ -512,6 +512,7 @@ It's also possible to give a default value.
 |                    -53 |
 | (10 9 8 7 6 5 4 3 2 1) |
 **** My implementation
+A purely recursive implementation.
 #+begin_src clojure
 (defn my-reduce
   "My version of clojure reduce function."

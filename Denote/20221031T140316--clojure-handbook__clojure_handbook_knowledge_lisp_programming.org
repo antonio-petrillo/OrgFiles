@@ -1,0 +1,596 @@
+#+title:      clojure-handbook
+#+date:       [2022-10-31 Mon 14:03]
+#+filetags:   :clojure:handbook:knowledge:lisp:programming:
+#+identifier: 20221031T140316
+
+* TODO Resources
++ clojure for the brave and true
++ clojure website
++ clojure exercise and learn path
++ youtube channel
+* Language
+** Form
+A ~form~ is valid clojure expression.
+They can be of 2 types:
+1. Literal rappresentation of data structures (numbers, strings, maps, vectors, lists)
+2. Operation, of the form ~(operator operand-1 operand-2 ... operand-n)~
+** Control Flow
+*** If-Else
+#+begin_src clojure
+(if boolean-form
+  then-form
+  else-form)
+#+end_src
+**** Example
+#+begin_src clojure
+(defn even? [x]
+  (if (= (mod x 2) 0)
+    true
+    false))
+
+(even? 10)
+(even? 11)
+#+end_src
+
+#+RESULTS:
+| #'user/even? |
+| true         |
+| false        |
+**** Note
+In the _then-form_ and _else-form_ is admitted only one form.
+There is workaround to that, see ~Do~.
+*** Do
+Extend ~then-form~ and ~else-form~ (See ~If-Else~).
+#+begin_src clojure
+(if boolean-form
+  (do
+    (then-form-1)
+    (then-form-2)
+    (...)
+    (then-form-n))
+  (do
+    (else-form-1)
+    (else-form-2)
+    (...)
+    (else-form-n)))
+#+end_src
+*** When
+It's a combination of ~if~ and ~do~, it let you write the ~then-form~ without use the ~do~, it doesn't support the ~else branch~
+#+begin_src clojure
+(when boolean-form
+    (then-form-1)
+    (then-form-2)
+    (...)
+    (then-form-n))
+#+end_src
+** Nil
+The ~nil~ value is the analogue of ~null~ in java, ~NULL~ in C & C++.
+It indicates the ~no value~.
+** Truth and False
+Both ~nil~ and ~false~ are used to express falsiness.
+All other values are consider true
+*** Example
+#+begin_src clojure
+(map (fn [x] (if x "true" "false"))
+        '(nil false true 1 3.14159 "clojure is cool" (= 1 1) (= 1 0)))
+#+end_src
+NOTE: note that ~(= 1 1)~ and ~(= 1 0)~ are not evaluated inside the ~map~ function, hence ~(= 1 0)~ don't become ~nil~, it's just a function so the output is ~"true"~.
+*** Equality
+Is done with the ~=~ function.
+#+begin_src clojure
+(= 1 0)
+(= 1 1)
+(= "ciao" "hello")
+(= "hello" "hello")
+#+end_src
+
+#+RESULTS:
+| false |
+| true  |
+| false |
+| true  |
+*** Or
+Logical ~or~ is expressed with the function ~or~, it return the ~first truthy~ expression _OR_ the ~last falsey~ expression.
+#+begin_src clojure
+(or nil nil nil nil "Hello" "I'm also true" nil)
+(or nil "first true value" nil nil "Hello" "I'm also true" nil)
+(or nil nil nil nil nil (= "None of us is" "true"))
+(or nil nil nil nil nil (= "None of us is" "true") nil)
+#+end_src
+
+#+RESULTS:
+| "Hello"            |
+| "first true value" |
+| false              |
+| nil                |
+*** And
+Logical ~and~ is expressed with the function ~and~, it return the ~last truthy~ expression _OR_ the ~first falsey~ expression.
+#+begin_src clojure
+(and 1 2 3 4 5)
+(and 1 2 3 4 5 nil)
+(and 1 false 2 3 4 5)
+#+end_src
+
+#+RESULTS:
+| 5     |
+| nil   |
+| false |
+*** Not
+Logical ~not~ is expressed with the function ~not~.
+#+begin_src clojure
+(not nil)
+(not false)
+(not true)
+(not "I'm true")
+#+end_src
+
+#+RESULTS:
+| true  |
+| true  |
+| false |
+| false |
+** Def (Define)
+Bind a ~symbol~ to a ~value~, it's possible to give a ~docstring~, it could be checked with ~(doc symbol-name)~
+NOTE: In clojure every data structure is immutable
+#+begin_src clojure
+(def pi "The most famous number in mathematics." 3.14159)
+#+end_src
+** Defn (Define Function)
+Bind a ~symbol~ to a function, it's also possible to give a ~docstring~, it could be checked with ~(doc function-name)~ in the REPL.
+A function always return the result of her last expression.
+#+begin_src clojure
+(defn double [x]
+  "This function take a number x and double it."
+  (* x 2))
+#+end_src
+*** NOTE
+~defn~ is just shorthand for a ~lambda~ plus a ~def~:
+#+begin_src clojure
+(def double
+  (fn [x]
+    (* x 2)))
+#+end_src
+*** Multi arity
+Give different implementation to a function based on the number of arguments.
+To avoid multiple implementation in the same function, a good practice is to call one arity from another.
+For example a ~1 arity~ call ~2 arity~ or viceversa.
+#+begin_src clojure
+(defn multi-arity
+  ([]
+   (0-arity-function))
+  ([x]
+   (1-arity-function))
+  ([x y]
+   (2-arity-function))
+  ([how many arguments do you want]
+   (execute a function on all that arguments)))
+#+end_src
+*** Destructuring
+It's like pattern matching in haskell.
+An example can explain better:
+**** Use case 1
+Deconstruct a ~list~ or a ~vector~.
+#+begin_src clojure :results output
+(defn split-first-and-rest [[head & tail]]
+  (println "here the head := " head "\there the tail := " tail))
+
+(split-first-and-rest '(1 2 3 4 5))
+(split-first-and-rest '(1))
+(split-first-and-rest '())
+(split-first-and-rest '(3 4 5))
+#+end_src
+
+#+RESULTS:
+: #'user/split-first-and-rest
+**** Use case 2
+Deconstruct a ~map~.
+#+begin_src clojure :results output
+(defn deconstruct-user-map [{n :name l :last j :job}]
+  (println (str "User := " n " " l " work as " j ".")))
+
+(deconstruct-user-map {:name "Elija" :last "Bailey" :job "Detective"})
+(deconstruct-user-map {:name "Kath" :last "H." :job "Career"})
+#+end_src
+
+#+RESULTS:
+: #'user/deconstruct-user-map
+| User := Elija Bailey work as Detective. |
+| User := Kath H. work as Career.         |
+
+***** Alternative version
+There is another way to deconstruct map, I think it's more intuitive.
+#+begin_src clojure :results output
+(defn deconstruct-user-map [{:keys [name last job]}]
+  (println (str "User := " name " " last " work as " job ".")))
+
+(deconstruct-user-map {:name "Elija" :last "Bailey" :job "Detective"})
+(deconstruct-user-map {:name "Kath" :last "H." :job "Career"})
+#+end_src
+
+#+RESULTS:
+: #'user/deconstruct-user-map
+| User := Elija Bailey work as Detective. |
+| User := Kath H. work as Career.         |
+**** Map aliasing
+Note that by deconstructing a map we lost the access to the map inside the function, luckily there is a workaround.
+With the keyword ~:as~ you can give a name to refer to the map.
+#+begin_src clojure
+(defn example [{:keys [how many keys do you want] :as whole-map}]
+  (do-stuff-with-whole-map-and-arguments))
+#+end_src
+*** Lambdas
+Anonymous function can be created with the ~fn~ operand, except for the lack of name and docstring is equal to a named function.
+#+begin_src clojure
+(fn [x] (* x 2))
+((fn [x] (* x 2)) 100)
+((fn [x] (* x 2)) 10)
+((fn [x] (* x 2)) 1)
+#+end_src
+
+#+RESULTS:
+| #function[user/eval7711/fn--7712] |
+|                               200 |
+|                                20 |
+|                                 2 |
+**** Shorthand for Lambdas
+Lambdas can be expressed even shorten with ~#~.
+It's also possible to refer to multiple argument given the /index/ input with: ~%1~, ~%2~, and so on.
+#+begin_src clojure
+#(* % 2)
+(#(* % 2) 100)
+(#(* % 2) 10)
+(#(* % 2) 1)
+#+end_src
+
+#+RESULTS:
+| #function[user/eval7737/fn--7738] |
+|                               200 |
+|                                20 |
+|                                 2 |
+**** Defn is just Def + Lambda
+This is pretty explanatory and is a typical of functional programming.
+Defn internally is just a Def that bind a symbol to a nameless function.
+The following definition are equivalent
+#+begin_src clojure
+(defn double [x]
+  "return x + x"
+  (* x 2))
+
+(def double
+  "return x + x"
+  (fn [x] (* x 2)))
+
+(def double
+  "return x + x"
+  #(* % 2))
+#+end_src
+** Data Strucures
+*** Numbers
+Clojure can reresent ~int~, ~double~, ~ratio~.
+See [[https://clojure.org/data_structures#Data%20Structures-Numbers][this link]], for more information.
+#+begin_src clojure
+93   ;; integer
+1.2  ;; double
+1/5  ;; ratio
+#+end_src
+
+#+RESULTS:
+|  93 |
+| 1.2 |
+| 1/5 |
+*** Strings
+The only note is that clojure allow only "" for strings.
+#+begin_src clojure
+(def name "Chewbacca")
+(str "\"Uggllglglglglglglll\" - " name)
+#+end_src
+
+#+RESULTS:
+| #'user/name                           |
+| "\"Uggllglglglglglglll\" - Chewbacca" |
+*** Maps
+Are the analogous of ~dict~ in ~python~.
+**** Example
+#+begin_src clojure
+;; empty map
+{}
+;; a typical clojure map
+{:name "Elija" :last "Bailey"}
+;; map a string to a function.
+{"string-key" +}
+;; nested map describing a back pack and it's content.
+{:name {:first "John" :middle "Jacob" :last "Jingle"}}
+;; create with a function
+(hash-map :first "John" :last "Doe" :sin :envy)
+#+end_src
+
+#+RESULTS:
+| {}                                                       |
+| {:name "Elija", :last "Bailey"}                          |
+| {"string-key" #function[clojure.core/+]}                 |
+| {:name {:first "John", :middle "Jacob", :last "Jingle"}} |
+| {:sin :envy, :first "John", :last "Doe"}                 |
+**** Define Maps with function
+#+begin_src clojure
+(hash-map :a 1 :c 2 :b 3)
+(sorted-map :a 1 :c 2 :b 3)
+#+end_src
+
+#+RESULTS:
+| {:c 2, :b 3, :a 1} |
+| {:a 1, :b 3, :c 2} |
+**** Access element in a map
+There are 2 ways, use the ~get~ function, or /use the key/ as function.
+There is another function ~get-in~ that could be used to access value in nested map.
+#+begin_src clojure
+(get {:a "hello" :b "world" :c "!"} :a)
+(:a {:a "hello" :b "world" :c "!"})
+({:a "hello" :b "world" :c "!"} :a)
+(get-in {:a {:b "hello"} :b "world" :c "!"} [:a])
+(get-in {:a {:b "hello"} :b "world" :c "!"} [:a :b])
+#+end_src
+
+#+RESULTS:
+| "hello"      |
+| "hello"      |
+| "hello"      |
+| {:b "hello"} |
+| "hello"      |
+*** Keywords
+This is one of the most interesting things in clojure (I think it's a lisp thing).
+They are primarly used as maps' keys, or as maps function to get the corresponding value.
+When used as ~get~ function it is also possible to provide a default value.
+**** Some Keywords
+#+begin_src clojure
+:a
+:b
+:label
+:map-key
+#+end_src
+
+#+RESULTS:
+| :a       |
+| :b       |
+| :label   |
+| :map-key |
+**** As map keys
+#+begin_src clojure
+(:a {:a "value 1" :b "value 2"})
+(:c {:a "value 1" :b "value 2"})
+(:c {:a "value 1" :b "value 2"} "default value")
+#+end_src
+
+#+RESULTS:
+| "value 1"       |
+| nil             |
+| "default value" |
+*** Vector
+They the clojure's array type.
+It's a ~0 index~ collection (I assume is a dynamic array internally).
+**** Example
+#+begin_src clojure
+[1 2 3 4 5]
+(vector 1 2 3 4 5)
+
+(get [1 2 3 4 5] 0)
+#+end_src
+
+#+RESULTS:
+| [1 2 3 4 5] |
+| [1 2 3 4 5] |
+| 1           |
+**** Add element to the vector
+This is done with ~conj~ function in clojure.
+Note that the ~conj~ add to the end.
+#+begin_src clojure
+(conj [1 2 3 4 5] 0)
+#+end_src
+
+#+RESULTS:
+| 1 | 2 | 3 | 4 | 5 | 0 |
+*** List
+They operate like an array, but internally they are a linked list.
+**** Example
+#+begin_src clojure
+'(1 2 3 4 5)
+(list 1 2 3 4 5)
+(nth '(1 2 3 4 5) 0)
+#+end_src
+
+#+RESULTS:
+| (1 2 3 4 5) |
+| (1 2 3 4 5) |
+| 1           |
+**** Add element to the list
+This is done with ~conj~ function in clojure.
+Note that the ~conj~ add to the head.
+#+begin_src clojure
+(conj '(1 2 3 4 5) 0)
+#+end_src
+
+#+RESULTS:
+| 0 | 1 | 2 | 3 | 4 | 5 |
+*** Set
+A collection without duplicate elements.
+Basically they are a map with only key.
+**** Example
+#+begin_src clojure
+#{"Isaac Asimov" :robot 1992}
+(hash-set "Isaac Asimoc" :robot 1992)
+#+end_src
+
+#+RESULTS:
+| #{1992 "Isaac Asimov" :robot} |
+| #{"Isaac Asimoc" 1992 :robot} |
+**** Work with sets
+#+begin_src clojure
+(conj #{:a :b "hello world"} "hello clojure")
+
+(contains? #{:a :b "hello world"} "hello world")
+(contains? #{:a :b "hello world"} :c)
+
+(set [1 1 2 2 2 3 3 3])
+
+(:a #{:a :b "gibbson"})
+(get #{:a :b "gibbson"} "gibbson")
+#+end_src
+
+#+RESULTS:
+| #{"hello world" "hello clojure" :b :a} |
+| true                                   |
+| false                                  |
+| #{1 3 2}                               |
+| :a                                     |
+| "gibbson"                              |
+
+** Expression
+Expression are used as first element of a list to execute operation.
+*** Function
+See ~Defn~ section.
+**** Lambda
+*** Special form
+Special form, like ~if~ and ~def~,  can be used as function but there is a difference, they ~don't always evaluate all of their operands~.
+They can't be used as function argument.
+*** Macros
+** Core Function
+*** Let
+Enable lexical scope inside it's body.
+**** Example
+#+begin_src clojure
+(let [var-1 "value 1"
+      var-2 "value 2"
+      ...
+      var-n "value n"]
+  (do-stuff-with-var-from-1-to-n))
+#+end_src
+*** Loop
+It's another way to do recursion, it take advantage of tail recursive optimization.
+It work in combo with ~recur~ which start a recursive call.
+Loop start with a ~let~ binding then let you do some computation, when ~recur~ is called, it start the loop from the beginning with the updated value.
+**** Example
+#+begin_src clojure :results output
+(loop [iteration 0]
+  (println (str "Iteration := " iteration))
+  (if (> iteration 5)
+    (println "Goodbye!")
+    (recur (inc iteration))))
+#+end_src
+
+#+RESULTS:
+: Iteration := 0
+: Iteration := 1
+: Iteration := 2
+: Iteration := 3
+: Iteration := 4
+: Iteration := 5
+: Iteration := 6
+: Goodbye!
+*** Regular Expression
+Good old pattern matching on text.
+The syntax for regex is ~#"your regex here"~.
+One function that work well with regex is ~re-find~ (regex find), it can test if a string mathches the pattern, return the ~matched text~ if true ~nil~ otherwise.
+**** Example
+#+begin_src clojure
+(re-find #"clojure" "I love clojure." )
+#+end_src
+
+#+RESULTS:
+: clojure
+*** Reduce
+Really similar to ~foldl~ and ~foldr~ in haskell.
+Apply a function to the head of the list, produce a value and the apply the function to the new calculated value and the rest of the list.
+It's also possible to give a default value.
+**** Example
+#+begin_src clojure
+(reduce + [1 2 3 4 5 6 7 8 9 10])
+(reduce - [1 2 3 4 5 6 7 8 9 10])
+(reduce conj '() [1 2 3 4 5 6 7 8 9 10])
+#+end_src
+
+#+RESULTS:
+|                     55 |
+|                    -53 |
+| (10 9 8 7 6 5 4 3 2 1) |
+**** My implementation
+#+begin_src clojure
+(defn my-reduce
+  "My version of clojure reduce function."
+  ([f coll]
+   (my-reduce f (first coll) (rest coll)))
+  ([f value coll]
+   (if (empty? coll)
+     value
+     (my-reduce f (f value (first coll)) (rest coll)))))
+
+(my-reduce + [1 2 3 4 5 6 7 8 9 10])
+#+end_src
+
+#+RESULTS:
+| #'user/my-reduce |
+|               55 |
+***** A better implementation
+A tail recursive implementation that use ~loop~ to improveme performance.
+#+begin_src clojure
+(defn my-reduce-tail-rec
+  "A tail recursive implementaion of reduce."
+  ([f [head & tail]]
+   (my-reduce-tail-rec f head tail))
+  ([f value coll]
+   (loop [result value
+          remaining coll]
+     (if (empty? remaining)
+       result
+       (recur (f result (first remaining)) (rest remaining))))))
+
+(my-reduce-tail-rec + [1 2 3 4 5 6 7 8 9 10])
+(my-reduce-tail-rec + 55 [1 2 3 4 5 6 7 8 9 10])
+#+end_src
+
+#+RESULTS:
+| #'user/my-reduce-tail-rec |
+|                        55 |
+|                       110 |
+*** Map
+Just like ~map~ in haskell.
+It take a function and a collection as input and apply the function to all the element in the collection, it return the /mapped/ collection.
+**** Example
+#+begin_src clojure
+(map inc [1 2 3 4 5 6 7 8 9 10])
+(map str [1 2 3 4 5 6 7 8 9 10])
+(map (fn [x] (clojure.string/replace (str x) #"\d" "𝛌")) [1 2 3 4 5 6 7 8 9 10])
+(map inc [1 2 3 4 5])
+(map inc '(1 2 3 4 5))
+#+end_src
+
+#+RESULTS:
+| (2 3 4 5 6 7 8 9 10 11)                    |
+| ("1" "2" "3" "4" "5" "6" "7" "8" "9" "10") |
+| ("𝛌" "𝛌" "𝛌" "𝛌" "𝛌" "𝛌" "𝛌" "𝛌" "𝛌" "𝛌𝛌") |
+| (2 3 4 5 6)                                |
+| (2 3 4 5 6)                                |
+**** My implementation
+This is not one hundred percent the ~map~ function, see the last example.
+#+begin_src clojure
+(defn my-map
+  "My implementation of the clojure core function map."
+  [f coll]
+  (reduce (fn [acc curr] (conj acc (f curr))) [] coll))
+
+(my-map inc [1 2 3 4 5 5 6 7 8 9 10])
+(my-map str [1 2 3 4 5 6 7 8 9 10])
+(my-map (fn [x] (clojure.string/replace (str x) #"\d" "𝛌")) [1 2 3 4 5 6 7 8 9 10])
+
+(my-map inc [1 2 3 4 5])
+(my-map inc '(1 2 3 4 5))
+#+end_src
+
+#+RESULTS:
+| #'user/my-map                              |
+| [2 3 4 5 6 6 7 8 9 10 11]                  |
+| ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"] |
+| ["𝛌" "𝛌" "𝛌" "𝛌" "𝛌" "𝛌" "𝛌" "𝛌" "𝛌" "𝛌𝛌"] |
+| [2 3 4 5 6]                                |
+| [2 3 4 5 6]                                |
+
+* Leiningen
+* Library
